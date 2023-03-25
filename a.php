@@ -16,3 +16,4 @@ header('Content-Type: application/json');
 
 // Step 6: Send the response
 echo $response;
+echo "afnan";
