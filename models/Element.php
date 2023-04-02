@@ -162,7 +162,7 @@ class Element
 
     public function get_attributes($element_id)
     {
-        $stmt = $this->conn->prepare("SELECT a.attribute_name, e.attribute_value FROM attribute a INNER JOIN element e ON a.attribute_id = e.attribute_id WHERE e.element_id = :element_id");
+        $stmt = $this->conn->prepare("SELECT a.attribute_name, e.attribute_value FROM attribute a INNER JOIN element_attribute e ON a.attribute_id = e.attribute_id WHERE e.element_id = :element_id");
         $stmt->bindParam(":element_id", $element_id, PDO::PARAM_INT);
         $stmt->execute();
         $attributes = array();
