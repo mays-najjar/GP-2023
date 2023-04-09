@@ -1,4 +1,6 @@
 <?php 
+// $conn = mysqli_connect('localhost','root','','html-tag') or die('connection failed');
+
 class Database {
     private $host = 'localhost';
     private $dbname = 'html_tag';
@@ -8,12 +10,18 @@ class Database {
 
     public function connect() {
         if ($this->conn == null){
-  
+
         try {
           $this->conn = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->dbname, $this->username, $this->userpass);
+          var_dump($this->conn);
+
           $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          var_dump($this->conn);
+
         } catch(PDOException $e) {
           echo 'Connection Error: ' . $e->getMessage();
+          var_dump($this->conn);
+
         }
       }
         return $this->conn;
