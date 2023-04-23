@@ -115,19 +115,34 @@ display: inline-block;
   float: left;
   margin-top: 30px;
 }
-.tool {
-  background-color: #f0f0f0;
-  padding: 10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
 
+
+////
+/* 
 .tool-item {
   background-color: #d0d0d0;
   padding: 10px;
   margin-top: 10px;
   display: none;
-}
+} */
+
+ /* Styles for draggable elements */
+ .element {
+  /* position: absolute; */
+  width: 50px;
+  height: 50px;
+  background-color: #aaa;
+  cursor: pointer;
+  border: violet;
+  border-width: 5;
+  border-style: inset;
+ } 
+
+.tags {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;}
 
 /* --------------------------CANVAS------------------------------- */
   #canvas {

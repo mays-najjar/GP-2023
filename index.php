@@ -1,4 +1,14 @@
-<!DOCTYPE html>  
+<!DOCTYPE html>
+<?php
+include('config/Database.php');
+$conn = mysqli_connect('localhost','root','','html_tag') or die('connection failed');
+
+$result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل البيانات  result 
+// يحط البيانات في اريه 
+
+
+?>
+  
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -48,7 +58,19 @@
         <div id="toolbar">
         <span style="color:#Fff ;">TOOLBAR</span>
         <br>
-        <div class="tool" onclick="showNestedBlock('tool-1')">
+<!-- -->
+<div class='tool'>
+  <?php
+       while($row= mysqli_fetch_array($result)){
+        echo"
+        <div class='element' draggable='true' style=' margin-left:10px; '>
+        $row[tag_name]
+       </div>
+       ";}?>
+</div>
+      
+
+        <!-- <div class="tool" onclick="showNestedBlock('tool-1')">
             Block 1
             <div id="tool-1">
                 <div class="tool-item">
@@ -58,31 +80,10 @@
                     2
                 </div>
             </div>
-        </div>
+        </div> -->
     
-        <div class="tool" onclick="showNestedBlock('tool-2')">
-            Block 2
-            <div id="tool-2">
-                <div class="tool-item">
-                    1
-                </div>
-                <div class="tool-item">
-                    2
-                </div>
-            </div>
-        </div>
+       
     
-        <div class="tool" onclick="showNestedBlock()">
-            Block 3
-            <div id="tool-3" onclick="stopPropagation()">
-                <div class="tool-item">
-                    1
-                </div>
-                <div class="tool-item">
-                    2
-                </div>
-            </div>
-        </div>
 
         <script>
             function showNestedBlock() {

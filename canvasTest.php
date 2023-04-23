@@ -33,7 +33,6 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
             margin: 0 10px;
             padding: 10px;
             cursor: pointer;
-            /* display: inline-block; */
             width: 50px;
             height: 50px;
             background-color: #aaa;
@@ -41,7 +40,7 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
             border: violet;
             border-width: 5;
             border-style: inset;
-            display: inline-block;
+            /* display: inline-block; */
         }
 
         /* Styles for canvas */
@@ -53,8 +52,8 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
         }
 
         /* Styles for draggable elements */
-        .canvas .element {
-            position: absolute;
+       .element {
+            /* position: absolute; */
             width: 50px;
             height: 50px;
             background-color: #aaa;
@@ -63,6 +62,14 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
             border-width: 5;
             border-style: inset;
            
+        }
+
+        .nelement{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #aaa;
+            cursor: pointer;
         }
   </style>
   <body>
@@ -83,12 +90,12 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
         const canvas = document.getElementById('canvas');
 
         // Add event listener for dragging elements from toolbar
-        document.querySelectorAll('.element').forEach(element => {
-            element.addEventListener('dragstart', (event) => {
+        document.querySelectorAll('.element').forEach(element => {           
+            element.addEventListener('dragstart', (event) => {                                                   //يعني نفّذ أمر معيّن لما تتغير قيمة readyState
                 // Set the data being dragged
-                event.dataTransfer.setData('text/plain', event.target.textContent);
-            });
-        });
+                event.dataTransfer.setData('text/plain', event.target.textContent);                                //the event object is used to access information about the drag event. 
+            });                                                                                                      // The event.target property refers to the element that triggered the event, which is the element being dragged in this case.   
+        });                                                                                                              // The textContent property of the dragged element is used as the data being dragged.  ,,,The event.dataTransfer object is used to set the data being dragged. In this case, the setData method is called with two arguments: the first argument is the data type, which is set to 'text/plain', and the second argument is the data itself, which is set to the textContent of the dragged element.
 
         // Add event listener for dropping elements onto canvas
         canvas.addEventListener('dragover', (event) => {
@@ -99,7 +106,7 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
             event.preventDefault();
             const elementText = event.dataTransfer.getData('text/plain');
             const newElement = document.createElement('div');
-            newElement.className = 'element';
+            newElement.className = 'nelement';
             newElement.textContent = elementText;
             newElement.style.left = event.clientX.canvas + 'px';
             newElement.style.top = event.clientY.canvas + 'px';
