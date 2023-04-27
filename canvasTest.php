@@ -1,3 +1,7 @@
+    <!-- <script>  <link rel="icon" type="image/gif" href="animated_favicon1.gif" /> </script>
+    
+    <link rel="shortcut icon" href="favicon.ico" /> -->
+
 <!-- db= html_tag -->
 <?php
 include('config/Database.php');
@@ -10,7 +14,7 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
 ?>
 
 
-<html>
+<!-- <html>
 
 <style> 
       .test{
@@ -138,6 +142,112 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
     </script>
 </body>
 
-</html>
+</html> -->
+1111111111111111
 
+ <!-- <div id="toolbar">
+   <div class="element" draggable="true" data-properties="width,height,color">
+      Rectangle
+   </div>
+   <div class="element" draggable="true" data-properties="radius,color">
+      Circle
+   </div>
+</div>
 
+<div id="canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
+   Drop elements here
+</div>
+
+<script>
+   function allowDrop(event) {
+      event.preventDefault();
+   }
+   
+   function drop(event) {
+      event.preventDefault();
+      var element = event.dataTransfer.getData("text");
+      var properties = event.target.getAttribute("data-properties");
+      var message = "Set properties for " + element + ": " + properties;
+      alert(message);
+      // create and insert element into the canvas
+   }
+   
+   var elements = document.querySelectorAll(".element");
+   for (var i = 0; i < elements.length; i++) {
+      elements[i].addEventListener("dragstart", function(event) {
+         event.dataTransfer.setData("text", event.target.textContent);
+      });
+   }
+</script> -->
+222
+<!-- Toolbar with draggable elements
+<div id="toolbar">
+   <div class="element" draggable="true">Element 1</div>
+   <div class="element" draggable="true">Element 2</div>
+   <div class="element" draggable="true">Element 3</div>
+</div>
+
+// Canvas where the elements will be dropped 
+<div id="canvas" style="height: 100px;"></div>
+
+// Block that will appear when an element is dropped 
+<div id="block" style="display: none;">
+   <h3>Please set the element's properties:</h3>
+   <label for="property1">Property 1:</label>
+   <input type="text" id="property1"><br>
+   <label for="property2">Property 2:</label>
+   <input type="text" id="property2"><br>
+   <button id="save">Save</button>
+   <button id="cancel">Cancel</button>
+</div>
+
+<script>
+    // Get the toolbar and canvas elements
+const toolbar = document.getElementById("toolbar");
+const canvas = document.getElementById("canvas");
+
+// Add an event listener to each element in the toolbar
+const elements = toolbar.querySelectorAll(".element");
+elements.forEach(element => {
+   element.addEventListener("dragstart", () => {
+      // Hide the block when dragging starts
+      const block = document.getElementById("block");
+      block.style.display = "none";
+   });
+});
+
+// Add an event listener to the canvas to show the block when an element is dropped
+canvas.addEventListener("drop", (event) => {
+   // Prevent the default behavior of dropping
+   event.preventDefault();
+   
+   // Get the element that was dropped
+   const element = document.getElementById(event.dataTransfer.getData("text"));
+   
+   // Show the block and position it relative to the dropped element
+   const block = document.getElementById("block");
+   block.style.display = "block";
+   block.style.left = `${event.clientX}px`;
+   block.style.top = `${event.clientY}px`;
+   
+   // Add event listeners to the save and cancel buttons
+   const saveButton = document.getElementById("save");
+   const cancelButton = document.getElementById("cancel");
+   saveButton.addEventListener("click", () => {
+      // TODO: Save the element's properties and add it to the canvas
+      block.style.display = "none";
+   });
+   cancelButton.addEventListener("click", () => {
+      // TODO: Remove the element from the canvas
+      block.style.display = "none";
+   });
+});
+
+// Add an event listener to the canvas to prevent the default behavior of dragging over it
+canvas.addEventListener("dragover", (event) => {
+   event.preventDefault();
+});
+
+</script> -->
+
+333
