@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2023 at 12:51 AM
+-- Generation Time: Apr 27, 2023 at 10:25 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -57,22 +57,50 @@ INSERT INTO `attribute` (`attribute_id`, `attribute_name`) VALUES
 CREATE TABLE `element` (
   `element_id` int(11) NOT NULL,
   `tag_id` int(11) NOT NULL,
-  `attribute_id` int(11) NOT NULL,
-  `attribute_value` varchar(11) NOT NULL,
   `content` varchar(50) DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL,
-  `child_order` int(11) DEFAULT NULL
+  `children_order` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `element`
 --
 
-INSERT INTO `element` (`element_id`, `tag_id`, `attribute_id`, `attribute_value`, `content`, `parent_id`, `child_order`) VALUES
-(1, 15, 8, '1', NULL, NULL, NULL),
-(3, 17, 8, '1', NULL, 1, 1),
-(4, 16, 8, '1', '\'My Web Page\'', 3, 1),
-(5, 1, 8, '1', NULL, 1, 2);
+INSERT INTO `element` (`element_id`, `tag_id`, `content`, `parent_id`, `children_order`) VALUES
+(1, 15, NULL, NULL, NULL),
+(3, 17, NULL, 1, 1),
+(4, 16, '\'My Web Page\'', 3, 1),
+(5, 1, NULL, 1, 2),
+(6, 9, 'para one ', 5, 1),
+(7, 9, 'para two', 5, 2),
+(8, 8, NULL, 5, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `element_attribute`
+--
+
+CREATE TABLE `element_attribute` (
+  `element_id` int(11) NOT NULL,
+  `attribute_id` int(11) NOT NULL,
+  `attribute_value` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `element_attribute`
+--
+
+INSERT INTO `element_attribute` (`element_id`, `attribute_id`, `attribute_value`) VALUES
+(1, 8, '1'),
+(3, 8, '1'),
+(4, 8, '1'),
+(5, 8, '1'),
+(6, 8, '1'),
+(7, 8, '2'),
+(8, 2, '400'),
+(8, 3, '400'),
+(8, 5, 'K');
 
 -- --------------------------------------------------------
 
@@ -153,6 +181,13 @@ ALTER TABLE `element`
   ADD PRIMARY KEY (`element_id`);
 
 --
+-- Indexes for table `element_attribute`
+--
+ALTER TABLE `element_attribute`
+  ADD PRIMARY KEY (`element_id`,`attribute_id`),
+  ADD KEY `attribute_id` (`attribute_id`);
+
+--
 -- Indexes for table `tag`
 --
 ALTER TABLE `tag`
@@ -178,7 +213,7 @@ ALTER TABLE `attribute`
 -- AUTO_INCREMENT for table `element`
 --
 ALTER TABLE `element`
-  MODIFY `element_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `element_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tag`
@@ -191,6 +226,17 @@ ALTER TABLE `tag`
 --
 ALTER TABLE `tag_attribute`
   MODIFY `tag_attribute` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `element_attribute`
+--
+ALTER TABLE `element_attribute`
+  ADD CONSTRAINT `element_attribute_ibfk_1` FOREIGN KEY (`element_id`) REFERENCES `element` (`element_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `element_attribute_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `attribute` (`attribute_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

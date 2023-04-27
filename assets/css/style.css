@@ -1,35 +1,33 @@
-body{
-  background-color: #484a72;
-
+html body{
+  /* background-color: #484a72; */
+  background:radial-gradient(#484a72, #7a8eb7);
+  min-width: 760px;
 }
+/* .nelement::selection {
+  color: red;
+  background: yellow;
+} */
+/* -------------------------NAV------------------------------ */
 #nav {
   text-align: center;
-    background-color: #484a72;
+    /* background-color: #484a72; */
+    background:none;
     min-height: 60px;
     min-width: 100%;
     color: rgb(237, 228, 228);
-    
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1px;
   }
 
+#nav> div {
+  margin: 10px;
+  text-align: center;
+  align-self: center;
 
-  #proparities {
-    width: 120px;
-    float: right;
-    background-color: #2d2561;
-    min-height: 400px;
-    margin-top: 30px;
-    text-align: center;
+}
 
-  }
-  .save-and-publish-buttons{
-    text-align: right;
-    padding-right: 10px;
-    padding-top: 10px;
-    display:inline-block ;
-    float: right;
- 
-
-  }
+/* save & preview butttons */
    .save-button {
     background-color: #e27625;
     border: none;
@@ -46,7 +44,7 @@ body{
     margin-right: 10px;
     border-radius: 10px;
 }
-.publish-button {
+.preview-button {
     background-color: #fff;
     border-radius: 2px ;
     height: 40px; 
@@ -94,26 +92,47 @@ width: 120px;
 .empty-button:hover .hedden-content{
 display: inline-block;  
 }
+.empty-button:hover .save-and-preview-buttons{
+margin-right: 0px;
+}
+
 .modes{
+  /* background:radial-gradient(#484a72, #4b6db1); */
   align-self: center;
   text-size-adjust: 300;
-  padding-top: 20px;
-  margin-left: 300px;
+  /* margin-top: 20px; */
+  /* margin-left: 300px; */
+  /* padding: 5px; */
 }
 
 .mode{
   background-color: #ddd;
   border-radius: 5px;
 }
-
+/* --------------------------properties-------------------------- */
+#properties {
+  background:radial-gradient(#7a8eb7,#484a72 );
+  width: 15%;
+  float: right;
+  background-color: #2d2561;
+  min-height: 400px;
+  margin-top: 30px;
+  text-align: center;
+  border-radius:5px;
+ display: none;
+}
 /* ------------- TOOLBAR ------------- */
 #toolbar {
   text-align: center;
-  width: 120px;
+  width: 15%;
   background-color: #2d2561;
-  min-height: 400px;
+  min-height: fit-content;
   float: left;
   margin-top: 30px;
+  margin-left:2px;
+  margin-right:2px;
+  background:radial-gradient(#7a8eb7,#484a72 );
+  border-radius:5px;
 }
 
 
@@ -129,18 +148,21 @@ display: inline-block;
  /* Styles for draggable elements */
  .element {
   /* position: absolute; */
-  width: 50px;
-  height: 50px;
+  width: 40%;
+  height: 30px;
+  margin-top: 5px;
   background-color: #aaa;
   cursor: pointer;
-  border: violet;
-  border-width: 5;
-  border-style: inset;
+  border: #7a8eb7;
+  border-width: 2;
+  border-style: double;
+  display: inline-block;
+  margin-right: 2%;
  } 
 
 .tags {
-  background-color: #f0f0f0;
-  padding: 10px;
+  /* background-image: linear-gradient(to bottom right,#7a8eb7,thistle ) ; */
+  /* padding: 10px; */
   margin-bottom: 10px;
   cursor: pointer;}
 
@@ -151,7 +173,10 @@ display: inline-block;
     min-height: 530px;
     background-color: #444;
     border-radius: 10px;
-    min-width: 500px;
+    padding: 0;
+    overflow: hidden;
+    /* min-width: 500px; */
+
   }
   .canvas-head{
     background: #333;
@@ -159,6 +184,7 @@ display: inline-block;
     padding: 0px 0px 0px 11px;
     text-align: center;
     border-top-left-radius: 10px;
+    width : 100%;
   }
  .left {
   display: block;
@@ -167,7 +193,6 @@ display: inline-block;
   float: left;
   border-radius: 13px;
   margin-right: 6px;
-  /* */
 }
 .three-circle{
   padding-top :10px; 
