@@ -29,7 +29,6 @@ if ($num > 0) {
             'children_order' => $children_order,
             'parent_id' => $parent_id,
             'content' => $content,
-            'attribute_value' => $attribute_value,
             'element_id' => $element_id
         );
 
