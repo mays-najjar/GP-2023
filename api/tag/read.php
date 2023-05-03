@@ -18,28 +18,27 @@
   
   // Get row count
   $num = $result->rowCount();
-
 // Check if any tag
 if ($num > 0) {
-    // tag array
-    $tag_arr = array();
+  // tag array
+  $tag_arr = array();
 
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        extract($row);
+  while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+      extract($row);
 
-        $tag_item = array(
-            'tag_id' => $tag_id,
-            'tag_name' => $tag_name
-        );
+      $tag_item = array(
+          'tag_id' => $tag_id,
+          'tag_name' => $tag_name
+      );
 
-        // Push to array
-        array_push($tag_arr, $tag_item);
-    }
+      // Push to array
+      array_push($tag_arr, $tag_item);
+  }
 
-    // Encode the array without the "data" key
-    echo json_encode($tag_arr);
+  // Encode the array without the "data" key
+  echo json_encode($tag_arr);
 } else {
-    // No tags found
-    echo json_encode(array('message' => 'No tag found'));
+  // No tags found
+  echo json_encode(array('message' => 'No tag found'));
 }
-}
+
