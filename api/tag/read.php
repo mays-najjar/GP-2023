@@ -20,8 +20,11 @@
   $num = $result->rowCount();
 // Check if any tag
 // Check if any tag
+// Check if any tag
 if ($num > 0) {
-    // Loop through the tags and encode each one separately
+    // tag array
+    $tag_arr = array();
+
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
 
@@ -30,17 +33,14 @@ if ($num > 0) {
             'tag_name' => $tag_name
         );
 
-        // Encode the tag item as a JSON object
-        echo json_encode($tag_item);
-
-        // Add a comma separator if not the last item
-        if ($row !== $result->fetch(PDO::FETCH_ASSOC)) {
-            echo ",";
-        }
+        // Push to array
+        array_push($tag_arr, $tag_item);
     }
+
+    // Encode the array without the "data" key
+    echo json_encode($tag_arr);
 } else {
     // No tags found
     echo json_encode(array('message' => 'No tag found'));
-}
-
+}}
 
