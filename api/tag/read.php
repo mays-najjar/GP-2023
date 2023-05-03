@@ -38,7 +38,7 @@
         }
 
         // Turn to JSON & output
-        echo json_encode($tag_arr);
+           json_encode($tag_arr);
 
   } else {
         // No tagegories
