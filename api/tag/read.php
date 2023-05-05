@@ -42,5 +42,4 @@ if ($num > 0) {
 } else {
     // No tags found
     echo json_encode(array('message' => 'No tag found'));
-}}
-
+}

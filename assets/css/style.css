@@ -31,7 +31,6 @@ html body{
    .save-button {
     background-color: #e27625;
     border: none;
-    border-radius: 2px;
     color: #fff;
     cursor: pointer;
     font-family: Open Sans,sans-serif;
@@ -46,7 +45,6 @@ html body{
 }
 .preview-button {
     background-color: #fff;
-    border-radius: 2px ;
     height: 40px; 
     font-size: 13px;
     padding: 4px 15px; 
@@ -67,12 +65,12 @@ html body{
   
   background-color: rgb(255, 255, 255);
   width: 10px;
-  border-radius: 2px ;
   height: 40px; 
   font-size: 13px;
   padding: 4px 15px; 
   background: rgb(16, 116, 237);
-  font-weight: 500; color: white; border: none;
+  font-weight: 500; color: white;
+  border: none;
   cursor: pointer;
   border-radius: 2px;
   text-transform: uppercase;
@@ -114,18 +112,19 @@ margin-right: 0px;
   background:radial-gradient(#7a8eb7,#484a72 );
   width: 15%;
   float: right;
-  background-color: #2d2561;
   min-height: 400px;
   margin-top: 30px;
   text-align: center;
   border-radius:5px;
- display: none;
+}
+
+#element_properties{
+  display: none;
 }
 /* ------------- TOOLBAR ------------- */
 #toolbar {
   text-align: center;
   width: 15%;
-  background-color: #2d2561;
   min-height: fit-content;
   float: left;
   margin-top: 30px;
@@ -158,13 +157,16 @@ margin-right: 0px;
   border-style: double;
   display: inline-block;
   margin-right: 2%;
+ cursor: pointer;
+} 
  } 
+} 
 
 .tags {
   /* background-image: linear-gradient(to bottom right,#7a8eb7,thistle ) ; */
   /* padding: 10px; */
   margin-bottom: 10px;
-  cursor: pointer;}
+  }
 
 /* --------------------------CANVAS------------------------------- */
   #canvas {
@@ -174,7 +176,6 @@ margin-right: 0px;
     background-color: #444;
     border-radius: 10px;
     padding: 0;
-    overflow: hidden;
     /* min-width: 500px; */
 
   }
@@ -184,6 +185,7 @@ margin-right: 0px;
     padding: 0px 0px 0px 11px;
     text-align: center;
     border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     width : 100%;
   }
  .left {
@@ -201,3 +203,44 @@ margin-right: 0px;
     color: #fff;
     /* margin-left: 320PX; */
 }
+.selected{
+ background-color: #dfe225;
+ border: #7a8eb7;
+ border-style: dotted;
+}
+.nelement{
+  cursor: pointer;
+}
+
+#canvasbody {
+  width: 600px;
+  height: 400px;
+}
+
+#codeCanvas{
+  display: none;
+  min-height: 530px;
+  background-color: #444;
+  border-radius: 10px;
+  padding: 0;
+}
+/* ------------------------GRID----------------------------- */
+.grid-container {
+  
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 10px;
+  align-content: stretch;
+  justify-content: normal;
+  align-items: stretch;
+  justify-items: normal;
+
+}
+.grid-item {
+  text-align: center;
+  cursor: move;
+}
+
+/* .draggable {
+  
+} */

@@ -47,11 +47,11 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
 
         </div>
         <div  class="save-and-preview-buttons">
-            <button class="save-button " >SAVE</button>
+            <button class="save-button " ><span>Save as html</span></button>
             <button class="preview-button" >Preview  <span style="display: none;">yyy</span> </button>
             <button class="empty-button" >  
                 <i class="fa-regular fa-trash-can" style="color: #ffffff; "></i>
-                <span class="hedden-content" >Empty Page</span>
+                <span class="hedden-content" ><span>Empty Page</span>
             </button>
         </div>
          
@@ -77,6 +77,20 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
     </div> 
    ";}}?>
 </div>
+<div id="demo" style="background-color:#F4A62A ; height: 20px;">
+<?php
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve the "dropped tag id" value from the AJAX request
+    $droppedTagId = $_POST['id_value'];
+
+    // Do something with the dropped tag ID value
+    echo "The dropped tag ID is: ".$droppedTagId;
+}
+
+
+?>
+</div>
 </div>
     
 
@@ -85,9 +99,9 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
         
 <div class="canvas-head "  >
     <div class="three-circle">
-  <span class="left red" style="background-color: #E74C3C;"></span>
-  <span class="left yellow" style="background-color: #F4A62A;"></span>
-  <span class="left green" style="background-color: #16A085;"></span>
+  <span class="left " style="background-color: #E74C3C;"></span>
+  <span class="left " style="background-color: #F4A62A;"></span>
+  <span class="left " style="background-color: #16A085;"></span>
 </div>                    
 <div class="title">
   <span id="pageTitle">index</span>
@@ -96,11 +110,24 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
   
    <div id="canvasBody"></div>
 </div>
-
+<div id="codeCanvas" class="col-xs-8">
+<div class="canvas-head "  >
+    <div class="three-circle">
+  <span class="left " style="background-color: #E74C3C;"></span>
+  <span class="left " style="background-color: #F4A62A;"></span>
+  <span class="left " style="background-color: #16A085;"></span>
+</div>                    
+<div class="title">
+  <span id="pageTitle">index</span>
+</div> 
+</div>
+code
+</div>
 <div id="properties" class="col-xs-3">
         <span style="color:#Fff ;">PROPERTIES</span>
-        <form >
-    <div class="form-group">
+        
+        <form id="element_properties" style="display:none ;">
+    <div  class="form-group " id="properties_info">
     <?php
   $conn = mysqli_connect('localhost','root','','html_tag') or die('connection failed');
 
@@ -112,7 +139,8 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
     <label for='$str[attribute_value]' class='attribute $row[attribute_name]' >
     $row[attribute_name]
     </label>
-    <input type=' ' class='form-control' placeholder='Enter $row[attribute_name]'>";}?>
+    <input type='text' class='form-control' placeholder='Enter.$row[attribute_name]'> ";
+    }?>
   
     </div>
   </form>
@@ -120,6 +148,55 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
 </div>
 
 
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js">
+  // Get a reference to the element you want to move
+var element = document.getElementById('nelement');
+
+// Initialize interact.js
+interact(element)
+  .draggable({
+    // enable inertial throwing
+    inertia: true,
+    // keep the element within the area of its parent
+    restrict: {
+      restriction: "parent",
+      endOnly: true,
+      elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+    },
+    // enable autoScroll
+    autoScroll: true,
+
+    // call this function on every dragmove event
+    onmove: function (event) {
+      var target = event.target,
+          // keep the dragged position in the data-x/data-y attributes
+          x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+          y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+      // snap to a grid
+      x = Math.round(x / grid) * grid;
+      y = Math.round(y / grid) * grid;
+
+      // translate the element
+      target.style.webkitTransform =
+      target.style.transform =
+        'translate(' + x + 'px, ' + y + 'px)';
+
+      // update the element's attributes
+      target.setAttribute('data-x', x);
+      target.setAttribute('data-y', y);
+    }
+  })
+  .on('move', function (event) {
+    var interaction = event.interaction;
+    if (interaction.pointerIsDown && !interaction.interacting()) {
+      interaction.start({ name: 'drag' }, event.interactable, event.currentTarget);
+    }
+  });
+
+</script> -->
+<script src="assets/js/jquery-3.6.4.min.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
