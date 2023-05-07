@@ -32,6 +32,12 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css">
     <link rel="stylesheet" type="text/css" href="/ddr-icon/css/ddr-icon.css"> -->
  
+       <!-- jquery -->
+       <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <!--  -->
+
 </head>
 
 <body>
@@ -123,28 +129,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 code
 </div>
-<div id="properties" class="col-xs-3">
+
+<div  id="properties" class="col-xs-3">
         <span style="color:#Fff ;">PROPERTIES</span>
+        <!-- form to enter element id to Retrieve its properties -->
+        <form method="post" action="properties_info.php">
+  <label for="element_id">Element ID:</label>
+  <input type="text" id="element_id" name="element_id">
+  <button type="submit">Get Properties</button>
+</form>
+
+<iframe src="properties_info.php" title="properties_info" class="col-xs-12" name="my-iframe"></iframe>
         
-        <form id="element_properties" style="display:none ;">
-    <div  class="form-group " id="properties_info">
-    <?php
-  $conn = mysqli_connect('localhost','root','','html_tag') or die('connection failed');
-
-  $attribute_name= mysqli_query($conn ,"SELECT * FROM attribute	 ");  
-  $attribute_value= mysqli_query($conn ,"SELECT * FROM element	 ");  
-
-  while(($row= mysqli_fetch_array($attribute_name) )&&( $str=mysqli_fetch_array($attribute_value)) ){ 
-    echo"
-    <label for='$str[attribute_value]' class='attribute $row[attribute_name]' >
-    $row[attribute_name]
-    </label>
-    <input type='text' class='form-control' placeholder='Enter.$row[attribute_name]'> ";
-    }?>
-  
-    </div>
-  </form>
-
 </div>
 
 
@@ -196,6 +192,8 @@ interact(element)
   });
 
 </script> -->
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>  
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
 <script src="assets/js/jquery-3.6.4.min.js"></script>
 <script src="assets/js/main.js"></script>
 </body>

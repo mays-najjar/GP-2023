@@ -70,13 +70,17 @@ canvas.addEventListener('drop', (event) => {
     newElement.className = 'nelement' ;                 //the DIV class IS (nelement),
     newElement.id =elementText.trim()+'_'+counter;
     id_value=elementText.trim();
-    newElement.textContent = elementText;              //the DIV textContent property is set to the elementText value. 
+    newElement.textContent = newElement.id;              //the DIV textContent property is set to the elementText value. 
     newElement.style.left = event.clientX.canvas + 'px';   //IN GENERAL >>  event.clientX property returns the horizontal coordinate (in pixels)  >>>>>     event.clientX.canvas expression sets the LEFT style of the new element    
     newElement.style.top = event.clientY.canvas + 'px';    //IN GENERAL >> event.clientY property returns the vertical coordinate (in pixels)     >>>>>     event.clientY.canvas sets the TOP style
     newElement.addEventListener('mousedown', startDrag);
-    newElement.classList.add('selected');
     canvas.appendChild(newElement);
 
+    
+    newElement.classList.add('selected');
+    newElement.onclick(selected());
+    $(".nelement").attr('draggable' , 'true' );
+    newElement.ondrag(draged());
     //selected_tag.textContent = elementText.trim(); 
   
     // updateProperties(newElement.id);
@@ -88,7 +92,24 @@ canvas.addEventListener('drop', (event) => {
    console.log("Temporary element ID:", tempElementID);
    id_value=newElement.id ;
 
-   
+   // post ajax
+   $.ajax({
+    url: 'http://localhost/GP-2023/api/element/create.php',
+    method: 'POST',
+    data: {
+      element_id: newElement.id,
+      tag_id: 1,
+      parent_id : canvas,
+      // x: elementX,
+      // y: elementY,
+      children_order: 2
+      },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.error(errorThrown);
+  }
+});
+
+  //get ajax
   //  var xhttp = new XMLHttpRequest();
   //  var myTags =[];// array to store data
   //  xhttp.open("GET","http://localhost/GP-2023/api/tag/read.php");  // فتح اتصال مع السيرفر
@@ -102,12 +123,14 @@ canvas.addEventListener('drop', (event) => {
   //      else console.log(this.readyState);
   //    });
 
+
+// post ajax
      var xhttp = new XMLHttpRequest();
      // Define the PHP page URL and set the HTTP method to POST
-var url = "../index.php";
+var url = "../properties_info.php";
 xhttp.open("POST", url, true);
-//xhttp.open("Content-type","http://localhost/GP-2023/api/tag/read.php");  // فتح اتصال مع السيرفر
-xhttp.open("Content-type","http://localhost/GP-2023/api/ElementAttribute/read_single.php");  // فتح اتصال مع السيرفر
+xhttp.open("Content-type","http://localhost/GP-2023/api/tag/read.php");  // فتح اتصال مع السيرفر
+//xhttp.open("Content-type","http://localhost/GP-2023/api/ElementAttribute/read_single.php");  // فتح اتصال مع السيرفر
 
 xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -118,11 +141,11 @@ xhttp.onreadystatechange = function() {
   
   };
     xhttp.send('dropped tag id is '+id_value);
- //
+ 
 
  
  
-// ajax end 
+// // ajax end 
 
 //    // jum Create a new XMLHttpRequest object
 // const xhr = new XMLHttpRequest();
@@ -189,25 +212,41 @@ var demo =document.getElementById("demo");
    }
 }
 
-//selected
+//selected function for nelement
 
-
-  // Get all the elements to be selectable
-  const elements = document.querySelectorAll('.nelement');
-
-  // Add click event listener to each element
-  elements.forEach(nelement => {
-    nelement.addEventListener('click', () => {
+  function selected(){
+  $(document).ready(function() {
+    // Add click event listener to each element
+    $(".nelement").on('click', function() {
       // Deselect all the elements
-      elements.forEach(element => {
-        element.classList.remove('.selected');
-      });
-
+      $(".nelement").removeClass('selected');
+  
       // Select the clicked element
-      nelement.classList.add('.selected');
+      $(this).addClass('selected');
     });
   });
-  
+  }
+
+// // draged function for nelement
+// nelement.set({
+ 
+//   lockMovementX: false, // enable horizontal movement
+//   lockMovementY: false // enable vertical movement
+// });
+// function draged(){
+//   $(".nelement").setAttribute("draggable", "true");
+// $(function() {
+//   $(".nelement").draggable({
+//     axis: "y",
+//     grid: [0, 50],
+//     stop: function() {
+//       // Function to reposition elements after drag stops
+//       // This function will be called after the dragging stops
+//     }
+//   });
+// });
+
+// }
 
   // ---------------------- dispaly modes--------------------
   $("#designMode").click( function(){
@@ -221,3 +260,45 @@ var demo =document.getElementById("demo");
   //  $("#codeMode").click( function(){
   //   alert("nnn");
   //  });
+
+  // // in jquery
+  // $( function() {
+  //   $( "#canvasBody" ).sortable();
+  // } );
+
+
+  ////
+  // Make the elements draggable
+$('.nelement').draggable({
+  containment: '#canvas'
+});
+
+// // Make the canvas droppable
+// $('#canvas').droppable({
+//   drop: function(event, ui) {
+//     // Get the dropped element
+//     var droppedElement = ui.draggable;
+
+//     // Set its position in the canvas
+//     droppedElement.css({
+//       top: ui.offset.top,
+//       left: ui.offset.left
+//     });
+//   }
+// });
+
+// // Make the elements sortable
+// $('#canvas').sortable({
+//   axis: 'y', // Only allow vertical sorting
+//   tolerance: 'pointer', // Sort when the mouse is over an element
+//   containment: '#canvas', // Sort only inside the canvas
+//   handle: '.nelement', // Use the .nelement class as the handle for sorting
+//   start: function(event, ui) {
+//     // Add a class to the element being sorted
+//     ui.item.addClass('sorting');
+//   },
+//   stop: function(event, ui) {
+//     // Remove the sorting class
+//     ui.item.removeClass('sorting');
+//   }
+// });
