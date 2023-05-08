@@ -84,7 +84,7 @@ class Element
         }
 
         return false;
-    }}
+    }
     public function update()
     {
         $query = 'UPDATE ' . $this->table . '
@@ -203,3 +203,4 @@ class Element
         return $html;
     }
 }
+?>

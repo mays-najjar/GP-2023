@@ -72,32 +72,49 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
 <div id="toolbar" class="col-xs-3">
     <span style="color:#Fff ;">TOOLBAR</span>
     <br>
-<!-- -->
-<div class='tags'>
-<?php
-   while($row= mysqli_fetch_array($result)){
-    if (trim($row['tag_name']) != 'head' && trim($row['tag_name']) != 'body' && trim($row['tag_name']) != 'title'){
-    echo"
-    <div class='element'  draggable='true' style=' margin-left:5px; '>
-    $row[tag_name]
-    </div> 
-   ";}}?>
-</div>
-<div id="demo" style="background-color:#F4A62A ; height: 20px;">
-<?php
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve the "dropped tag id" value from the AJAX request
-    $droppedTagId = $_POST['id_value'];
+    <div class='tags'>
+      <?php
+      include_once 'config/Database.php';
+      include_once 'models/Tag.php';
 
-    // Do something with the dropped tag ID value
-    echo "The dropped tag ID is: ".$droppedTagId;
-}
+      // Instantiate DB & connect
+      $database = new Database();
+      $db = $database->connect();
 
+      // Instantiate tag object
+      $tag = new Tag($db);
 
-?>
-</div>
-</div>
+      // tag read query
+      $result = $tag->read();
+
+      // Get row count
+      $num = $result->rowCount();
+      if ($num > 0) {
+        // tag array
+        $tag_arr = array();
+        echo '<div class="tags">';
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+          extract($row);
+          $tag_item = array(
+            'tag_id' => $tag_id,
+            'tag_name' => $tag_name
+          );
+          array_push($tag_arr, $tag_item);
+          if ($tag_name != 'head' && $tag_name != 'body' && $tag_name != 'title')
+            echo ' <div class="element"  draggable="true" style="margin-left:5px">' . $tag_name . '</div>';
+
+          // Push to array
+
+        }
+        echo '</div>';
+      }
+      // Encode the array without the "data" key
+
+      ?>
+    </div>
+
+  </div>
     
 
     <!-- --------------------CANVAS----------------------- -->

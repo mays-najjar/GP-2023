@@ -5,7 +5,7 @@ const toolbar = document.getElementById('toolbar');
 let tempElementID = "";
 let counter = 0;
 var myTags =[];// array to store data
-
+let tempElementName = "";
 // Define the value to send to the session
 let id_value = "";
 // Get the hidden input field from the form
@@ -52,7 +52,19 @@ canvas.addEventListener('dragover', (event) => {
     event.dataTransfer.dropEffect = 'copy';
 
 });
+//get ajax
+var xhttp = new XMLHttpRequest();
+var myTags =[];// array to store data
+xhttp.open("GET","http://localhost/GP-2023/api/tag/read.php");  // فتح اتصال مع السيرفر
+xhttp.send();
+xhttp.addEventListener('readystatechange', function() {
+    if (this.readyState == 4 && this.status == 200) {
+      myTags=JSON.parse(xhttp.response); //json.parse  convert string to array of objects
+      console.log(myTags);
+    }
 
+    else console.log(this.readyState);
+  });
 canvas.addEventListener('drop', (event) => {
     event.preventDefault();
     
@@ -75,74 +87,135 @@ canvas.addEventListener('drop', (event) => {
     newElement.style.top = event.clientY.canvas + 'px';    //IN GENERAL >> event.clientY property returns the vertical coordinate (in pixels)     >>>>>     event.clientY.canvas sets the TOP style
     newElement.addEventListener('mousedown', startDrag);
     canvas.appendChild(newElement);
-
+    
+    //nelement properties
+    //
     
     newElement.classList.add('selected');
-    newElement.onclick(selected());
-    $(".nelement").attr('draggable' , 'true' );
-    newElement.ondrag(draged());
+    newElement.onclick=selected();
+    newElement.setAttribute('draggable' , 'true' );
+    //newElement.ondrag(draged());
     //selected_tag.textContent = elementText.trim(); 
   
     // updateProperties(newElement.id);
       // show the properties block and set its values based on the dropped element
   const propertiesBlock = document.getElementById('element_properties');
-  propertiesBlock.style.display = 'block';
+  //propertiesBlock.style.display = 'block';
   
-   tempElementID =elementText.trim();
-   console.log("Temporary element ID:", tempElementID);
-   id_value=newElement.id ;
+  //  tempElementID =elementText.trim();
+  //  console.log("Temporary element ID:", tempElementID);
+  //  id_value=newElement.id ;
 
    // post ajax
-   $.ajax({
-    url: 'http://localhost/GP-2023/api/element/create.php',
-    method: 'POST',
-    data: {
-      element_id: newElement.id,
-      tag_id: 1,
-      parent_id : canvas,
-      // x: elementX,
-      // y: elementY,
-      children_order: 2
-      },
-    error: function(jqXHR, textStatus, errorThrown) {
-      console.error(errorThrown);
-  }
-});
+   
+  // Send an AJAX request to create the element on the server
 
-  //get ajax
-  //  var xhttp = new XMLHttpRequest();
-  //  var myTags =[];// array to store data
-  //  xhttp.open("GET","http://localhost/GP-2023/api/tag/read.php");  // فتح اتصال مع السيرفر
-  //  xhttp.send();
-  //  xhttp.addEventListener('readystatechange', function() {
-  //      if (this.readyState == 4 && this.status == 200) {
-  //        myTags=JSON.parse(xhttp.response); //json.parse  convert string to array of objects
-  //        console.log(myTags);
-  //      }
+  const xhr = new XMLHttpRequest();
+  const url = 'http://localhost/GP-2023/api/element/create.php';
+  const data = {
+    "tag_id" : id_value,
+    "content" : newElement.textContent,
+    "parent_id" : "11",
+    "children_order" : "1"
+ };
+  xhr.open('POST', url, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      const response = JSON.parse(xhr.responseText);
+      console.log(response.message);
+    }
+  };
+  xhr.send(JSON.stringify(data));
+  
+//    $.ajax({
+//     url: 'http://localhost/GP-2023/api/element/create.php',
+//     method: 'POST',
+//     data: {
+//       element_id: newElement.id,
+//       tag_id: 1,
+//       parent_id : canvas,
+//       // x: elementX,
+//       // y: elementY,
+//       children_order: 2
+//       },
+//     error: function(jqXHR, textStatus, errorThrown) {
+//       console.error(errorThrown);
+//   }
+// });
 
-  //      else console.log(this.readyState);
-  //    });
+  
 
 
 // post ajax
-     var xhttp = new XMLHttpRequest();
-     // Define the PHP page URL and set the HTTP method to POST
-var url = "../properties_info.php";
-xhttp.open("POST", url, true);
-xhttp.open("Content-type","http://localhost/GP-2023/api/tag/read.php");  // فتح اتصال مع السيرفر
-//xhttp.open("Content-type","http://localhost/GP-2023/api/ElementAttribute/read_single.php");  // فتح اتصال مع السيرفر
-
-xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-          // Do something with the response text (if any)
-          console.log(xhttp.responseText);
-          console.log('uuu');
-    }
+//      var xhttp = new XMLHttpRequest();
+//      // Define the PHP page URL and set the HTTP method to POST
+//   var url = "createElement.php";
+//   xhttp.open("POST", url, true);
+//  // xhttp.open("Content-type","http://localhost/GP-2023/api/tag/read.php");  // فتح اتصال مع السيرفر
+// xhttp.open("Content-type","http://localhost/GP-2023/api/ElementAttribute/read_single.php");  // فتح اتصال مع السيرفر
+//   xhttp.send(id_value);
   
-  };
-    xhttp.send('dropped tag id is '+id_value);
- 
+// xhttp.onreadystatechange = function() {
+//     if (this.readyState == 4 && this.status == 200) {
+//           // Do something with the response text (if any)
+//           console.log(xhttp.responseText);
+//           console.log('uuu');
+//     }
+  
+//   };
+   
+ createElement();
+//  // yazeed ajax
+//  tag_namee =elementText.trim();
+//  const xhr = new XMLHttpRequest();
 
+//  xhr.onreadystatechange = function() {
+//     if (xhr.readyState == 4 && xhr.status == 200) {
+//       console.log(xhr.responseText);
+//       console.log('tir');
+//      //document.getElementById("demo").innerHTML = xhr.responseText;
+//     }
+//   };
+  
+// xhr.open("POST", "createElement.php", true);
+// xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+// // convert the object to a JSON string
+// var json = JSON.stringify(data);
+
+// xhr.send(json);;
+
+// //send ajax to create element   true true
+// var tag_name =elementText.trim();
+// var data = {  tag_id:3, parent_id:$("canvas"),children_order:0};
+// $.ajax({
+//   url: 'http://localhost/GP-2023/api/element/create.php',
+//   type: 'POST',
+//   data: data,
+//   success: function(response) {
+//     console.log(response);
+//     console.log("hi from create element api consol");
+//   },
+//   error: function(xhr, status, error) {
+//     console.log(error);
+//   }
+// });
+
+
+// // check if create element api returns array
+// var xhttp1 = new XMLHttpRequest();
+// var myTags1 =[];// array to store data
+// xhttp1.open("GET","http://localhost/GP-2023/api/element/create.php");  // فتح اتصال مع السيرفر
+// xhttp1.send();
+// xhttp1.addEventListener('readystatechange', function() {
+//     if (this.readyState == 4 && this.status == 200) {
+//       myTags1=JSON.parse(xhttp1.response); //json.parse  convert string to array of objects
+//       console.log(myTags1);
+//       consol.log("done");
+//     }
+
+//     else console.log(this.readyState);
+//   });
  
  
 // // ajax end 
@@ -167,6 +240,7 @@ xhttp.onreadystatechange = function() {
 // document.getElementById("temp").submit();
 
 });
+// end drop event
 
 // function drop(event) {   alert(`You dropped a ${tagName} element onto the canvas.`);}
 
@@ -269,9 +343,9 @@ var demo =document.getElementById("demo");
 
   ////
   // Make the elements draggable
-$('.nelement').draggable({
-  containment: '#canvas'
-});
+// $('.nelement').draggable({
+//   containment: '#canvas'
+// });
 
 // // Make the canvas droppable
 // $('#canvas').droppable({
@@ -302,3 +376,21 @@ $('.nelement').draggable({
 //     ui.item.removeClass('sorting');
 //   }
 // });
+
+
+// var data = {
+//   tag_name: tagName,
+//   tag_id: tagId,
+//   attribute_name: attributeName,
+//   attribute_id: attributeId,
+//   attribute_value: attributeValue,
+//   element_content: elementContent,
+//   parent_id: parentId,
+//   child_id: childId
+// };
+
+ // yazeed ajax
+function createElement(){
+
+ 
+}
