@@ -7,11 +7,10 @@ class Element
     private $table = 'element';
     public $tag_id;
     public $element_id;
-    public $attribute_id;
     public $children_order;
     public $parent_id;
     public $content;
-    public $attribute_value;
+
 
     public function __construct($db)
     {
@@ -36,11 +35,9 @@ class Element
         $query = 'SELECT 
               element_id,
               tag_id,
-              attribute_id,
               children_order,
               parent_id,
-              content,
-              attribute_value
+              content
               FROM ' . $this->table . '
               WHERE element_id = ?
               LIMIT 0,1';
@@ -54,47 +51,40 @@ class Element
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->element_id = $row['element_id'];
         $this->tag_id = $row['tag_id'];
-        $this->attribute_id = $row['attribute_id'];
         $this->children_order = $row['children_order'];
         $this->parent_id = $row['parent_id'];
         $this->content = $row['content'];
-        $this->attribute_value = $row['attribute_value'];
     }
-    public function create()
+   public function create()
     {
         $query = 'INSERT INTO ' . $this->table . '
               SET 
               tag_id = :tag_id,
-              attribute_id = :attribute_id,
               children_order = :children_order,
               parent_id = :parent_id,
-              content = :content,
-              attribute_value = : attribute_value';
+              content = :content';
 
         $stmt = $this->conn->prepare($query);
 
         $this->tag_id = htmlspecialchars(strip_tags($this->tag_id));
-        $this->attribute_id = htmlspecialchars(strip_tags($this->attribute_id));
         $this->children_order = htmlspecialchars(strip_tags($this->children_order));
         $this->parent_id = htmlspecialchars(strip_tags($this->parent_id));
         $this->content = htmlspecialchars(strip_tags($this->content));
-        $this->attribute_value = htmlspecialchars(strip_tags($this->attribute_value));
 
 
 
         $stmt->bindParam(':tag_id', $this->tag_id);
-        $stmt->bindParam(':attribute_id', $this->attribute_id);
         $stmt->bindParam(':children_order', $this->children_order);
         $stmt->bindParam(':parent_id', $this->parent_id);
         $stmt->bindParam(':content', $this->content);
-        $stmt->bindParam(':attribute_value', $this->attribute_value);
+   
 
         if ($stmt->execute()) {
             return true;
         }
 
         return false;
-    }
+    }}
     public function update()
     {
         $query = 'UPDATE ' . $this->table . '
