@@ -14,7 +14,7 @@
 
   $element = new Element($db);
   $data = json_decode(file_get_contents("php://input"));
-  $element->element_id = $data->element_id;
+  $element->content = $data->content;
   $element->tag_id = $data->tag_id;
   $element->parent_id =$data->parent_id;
   $element->children_order = $data->children_order;
@@ -27,3 +27,4 @@
       array('message' => 'Element Not Created')
     );
   }
+?>
