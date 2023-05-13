@@ -1,253 +1,289 @@
-    <!-- <script>  <link rel="icon" type="image/gif" href="animated_favicon1.gif" /> </script>
-    
-    <link rel="shortcut icon" href="favicon.ico" /> -->
+<!-- <style type="text/css">
+	body{
+		font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
+		margin:0px;
+		padding:0px;
+		background-image:url('http://www.dhtmlgoodies.com/images/heading3.gif');
+		background-repeat:no-repeat;
+		padding-top:85px;					
+		overflow:hidden;
+		padding-left:10px;
+		-moz-user-select:no;
+	}
+	
+	/* Don't change these options */
+	#movableNode{
+		position:absolute;
+	}
+	
+	#arrDestInditcator{
+		position:absolute;
+		display:none;
+		width:100px;
+	}
+	/* End options that shouldn't be changed */
 
-<!-- db= html_tag -->
-<?php
-include('config/Database.php');
-$conn = mysqli_connect('localhost','root','','html_tag') or die('connection failed');
+	
+	#arrangableNodes,#movableNode ul{
+		padding-left:0px;
+		margin-left:0px;
+		margin-top:0px;
+		padding-top:0px;
+	}
+	
+	#arrangableNodes li,#movableNode li{
+		list-style-type:none;
+		cursor:default;
+	}
 
-$result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل البيانات  result 
-// يحط البيانات في اريه 
+	</style>
+	
+	<script type="text/javascript">
+	/************************************************************************************************************
+	(C) www.dhtmlgoodies.com, October 2005
+	
+	This is a script from www.dhtmlgoodies.com. You will find this and a lot of other scripts at our website.	
+	
+	Terms of use:
+	You are free to use this script as long as the copyright message is kept intact. However, you may not
+	redistribute, sell or repost it without our permission.
+	
+	Thank you!
+	
+	www.dhtmlgoodies.com
+	Alf Magne Kalleland
+	
+	************************************************************************************************************/	
+	
+	var offsetYInsertDiv = -3; // Y offset for the little arrow indicating where the node should be inserted.
+	if(!document.all)offsetYInsertDiv = offsetYInsertDiv - 7; 	// No IE
 
+	
+	var arrParent = false;
+	var arrMoveCont = false;
+	var arrMoveCounter = -1;
+	var arrTarget = false;
+	var arrNextSibling = false;
+	var leftPosArrangableNodes = false;
+	var widthArrangableNodes = false;
+	var nodePositionsY = new Array();
+	var nodeHeights = new Array();
+	var arrInsertDiv = false;
+	var insertAsFirstNode = false;
+	var arrNodesDestination = false;
+	function cancelEvent()
+	{
+		return false;
+	}
+	function getTopPos(inputObj)
+	{
+		
+	  var returnValue = inputObj.offsetTop;
+	  while((inputObj = inputObj.offsetParent) != null){
+	  	returnValue += inputObj.offsetTop;
+	  }
+	  return returnValue;
+	}
+	
+	function getLeftPos(inputObj)
+	{
+	  var returnValue = inputObj.offsetLeft;
+	  while((inputObj = inputObj.offsetParent) != null)returnValue += inputObj.offsetLeft;
+	  return returnValue;
+	}
+		
+	function clearMovableDiv()
+	{
+		if(arrMoveCont.getElementsByTagName('LI').length>0){
+			if(arrNextSibling)arrParent.insertBefore(arrTarget,arrNextSibling); else arrParent.appendChild(arrTarget);			
+		}
+		
+	}
+	
+	function initMoveNode(e)
+	{
+		clearMovableDiv();
+		if(document.all)e = event;
+		arrMoveCounter = 0;
+		arrTarget = this;
+		if(this.nextSibling)arrNextSibling = this.nextSibling; else arrNextSibling = false;
+		timerMoveNode();
+		arrMoveCont.parentNode.style.left = e.clientX + 'px';
+		arrMoveCont.parentNode.style.top = e.clientY + 'px';
+		return false;
+		
+	}
+	function timerMoveNode()
+	{
+		if(arrMoveCounter>=0 && arrMoveCounter<10){
+			arrMoveCounter = arrMoveCounter +1;
+			setTimeout('timerMoveNode()',20);
+		}
+		if(arrMoveCounter>=10){
+			arrMoveCont.appendChild(arrTarget);
+		}
+	}
+		
+	function arrangeNodeMove(e)
+	{
+		if(document.all)e = event;
+		if(arrMoveCounter<10)return;
+		if(document.all && arrMoveCounter>=10 && e.button!=1 && navigator.userAgent.indexOf('Opera')==-1){
+			arrangeNodeStopMove();
+		}
+		
+		arrMoveCont.parentNode.style.left = e.clientX + 'px';
+		arrMoveCont.parentNode.style.top = e.clientY + 'px';	
+		
+		var tmpY = e.clientY;
+		arrInsertDiv.style.display='none';
+		arrNodesDestination = false;
+		
 
-?>
+		if(e.clientX<leftPosArrangableNodes || e.clientX>leftPosArrangableNodes + widthArrangableNodes)return; 
+			
+		var subs = arrParent.getElementsByTagName('LI');
+		for(var no=0;no<subs.length;no++){
+			var topPos =getTopPos(subs[no]);
+			var tmpHeight = subs[no].offsetHeight;
+			
+			if(no==0){
+				if(tmpY<=topPos && tmpY>=topPos-5){
+					arrInsertDiv.style.top = (topPos + offsetYInsertDiv) + 'px';
+					arrInsertDiv.style.display = 'block';				
+					arrNodesDestination = subs[no];	
+					insertAsFirstNode = true;
+					return;
+				}				
+			}
+			
+			if(tmpY>=topPos && tmpY<=(topPos+tmpHeight)){
+				arrInsertDiv.style.top = (topPos+tmpHeight + offsetYInsertDiv) + 'px';
+				arrInsertDiv.style.display = 'block';				
+				arrNodesDestination = subs[no];
+				insertAsFirstNode = false;
+				return;
+			}				
+		}
+	}
+	
+	function arrangeNodeStopMove()
+	{
+		arrMoveCounter = -1; 
+		arrInsertDiv.style.display='none';
+		
+		if(arrNodesDestination){
+			var subs = arrParent.getElementsByTagName('LI');
+			if(arrNodesDestination==subs[0] && insertAsFirstNode){
+				arrParent.insertBefore(arrTarget,arrNodesDestination);		
+			}else{
+				if(arrNodesDestination.nextSibling){
+					arrParent.insertBefore(arrTarget,arrNodesDestination.nextSibling);
+				}else{
+					arrParent.appendChild(arrTarget);
+				}
+			}
+		}		
+		arrNodesDestination = false;
+		clearMovableDiv();
+	}		
+	
+	function saveArrangableNodes()
+	{
+		var nodes = arrParent.getElementsByTagName('LI');
+		var string = "";
+		for(var no=0;no<nodes.length;no++){
+			if(string.length>0)string = string + ',';
+			string = string + nodes[no].id;		
+		}
+		
+		document.forms[0].hiddenNodeIds.value = string;
+		
+		// Just for testing
+		document.getElementById('arrDebug').innerHTML = 'Ready to save these nodes:<br>' + string.replace(/,/g,',<BR>');	
+		
+		// document.forms[0].submit(); // Remove the comment in front of this line when you have set an action to the form.
+		
+	}
+	
+	function initArrangableNodes()
+	{
+		arrParent = document.getElementById('arrangableNodes');
+		arrMoveCont = document.getElementById('movableNode').getElementsByTagName('UL')[0];
+		arrInsertDiv = document.getElementById('arrDestInditcator');
+		
+		leftPosArrangableNodes = getLeftPos(arrParent);
+		arrInsertDiv.style.left = leftPosArrangableNodes - 5 + 'px';
+		widthArrangableNodes = arrParent.offsetWidth;
+		
+		var subs = arrParent.getElementsByTagName('LI');
+		for(var no=0;no<subs.length;no++){
+			subs[no].onmousedown = initMoveNode;
+			subs[no].onselectstart = cancelEvent;	
+		}
+	
+		document.documentElement.onmouseup = arrangeNodeStopMove;
+		document.documentElement.onmousemove = arrangeNodeMove;
+		document.documentElement.onselectstart = cancelEvent;
+		
+	}	
+	
+	window.onload = initArrangableNodes;
+	
+	</script>
+<H1>Arrange the nodes below</H1>
+<ul id="arrangableNodes">
+	<li id="node1">Node no. 1</li>
+	<li id="node2">Node no. 2</li>
+	<li id="node3">Node no. 3</li>
+	<li id="node4">Node no. 4</li>
+	<li id="node5">Node no. 5</li>
+	<li id="node6">Node no. 6</li>
+	<li id="node7">Node no. 7</li>
+	<li id="node8">Node no. 8</li>	
+	<li id="node9">Node no. 9</li>	
+	<li id="node10">Node no. 10</li>	
+	<li id="node11">Node no. 11</li>	
+	<li id="node12">Node no. 12</li>	
+	<li id="node13">Node no. 13</li>	
+	<li id="node14">Node no. 14</li>	
+	<li id="node15">Node no. 15</li>	
+</ul>	
+<p>
+	<a href="#" onclick="saveArrangableNodes();return false">Save</a>
+</p>
+<div id="movableNode"><ul></ul></div>	
+<div id="arrDestInditcator"><img src="images/insert.gif"></div>
+<div id="arrDebug"></div>
+<form method="post" action="????">
+	<input type="hidden" name="hiddenNodeIds">
+</form> -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Interactive Editor Example</title>
+	<!-- Include the required CSS and JS files for GrapesJS -->
+	<link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
+	<script src="https://unpkg.com/grapesjs"></script>
+</head>
+<body>
 
+	<div id="gjs"></div>
 
-<!-- <html>
+	<script type="text/javascript">
+		// Create a new instance of GrapesJS and pass in the ID of the container element
+		var editor = grapesjs.init({
+			container: '#gjs',
+			height: '100%',
+			width: 'auto',
+			fromElement: true,
+			components: '<div>Hello, World!</div>',
+			style: '.hello { color: red }',
+			storageManager: false,
+			plugins: ['gjs-blocks-basic']
+		});
+	</script>
 
-<style> 
-      .test{
-        width: 163px;
-        height: fit-content;
-      }
-     .toolbar {
-            justify-content: center;
-            align-items: center;
-            height: 80px;
-            background-color: #f2f2f2;
-            padding-left: 50px;
-            border-color: black;
-            display: inline-block;
-            margin: 10px;
-            box-sizing:border-box;
-        }
-
-        .test .element {
-            margin: 0 10px;
-            padding: 10px;
-            cursor: pointer;
-            width: 50px;
-            height: 50px;
-            background-color: #aaa;
-            cursor: pointer;
-            border: violet;
-            border-width: 5;
-            border-style: inset;
-            /* display: inline-block; */
-        }
-
-        /* Styles for canvas */
-        .canvas {
-            width: 500px;
-            height: 300px;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-        }
-
-        /* Styles for draggable elements */
-       .element {
-            /* position: absolute; */
-            width: 50px;
-            height: 50px;
-            background-color: #aaa;
-            cursor: pointer;
-            border: violet;
-            border-width: 5;
-            border-style: inset;
-           
-        }
-
-        .nelement{
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: #aaa;
-            cursor: pointer;
-        }
-  </style>
-  <body>
-  <div class="test">
-       <?php
-       while($row= mysqli_fetch_array($result)){
-        echo"
-        <div class='element' draggable='true' style=' margin-left:10px; '>
-        $row[tag_name]
-       </div>
-       ";}?>
-  
-    </div>
-    <div class="canvas" id="canvas"></div>
-
-    <script>
-        // Get the canvas element
-        const canvas = document.getElementById('canvas');
-
-        // Add event listener for dragging elements from toolbar
-        document.querySelectorAll('.element').forEach(element => {           
-            element.addEventListener('dragstart', (event) => {                                                   //يعني نفّذ أمر معيّن لما تتغير قيمة readyState
-                // Set the data being dragged
-                event.dataTransfer.setData('text/plain', event.target.textContent);                                //the event object is used to access information about the drag event. 
-            });                                                                                                      // The event.target property refers to the element that triggered the event, which is the element being dragged in this case.   
-        });                                                                                                              // The textContent property of the dragged element is used as the data being dragged.  ,,,The event.dataTransfer object is used to set the data being dragged. In this case, the setData method is called with two arguments: the first argument is the data type, which is set to 'text/plain', and the second argument is the data itself, which is set to the textContent of the dragged element.
-
-        // Add event listener for dropping elements onto canvas
-        canvas.addEventListener('dragover', (event) => {
-            event.preventDefault();
-        });
-
-        canvas.addEventListener('drop', (event) => {
-            event.preventDefault();
-            const elementText = event.dataTransfer.getData('text/plain');
-            const newElement = document.createElement('div');
-            newElement.className = 'nelement';
-            newElement.textContent = elementText;
-            newElement.style.left = event.clientX.canvas + 'px';
-            newElement.style.top = event.clientY.canvas + 'px';
-            newElement.addEventListener('mousedown', startDrag);
-            canvas.appendChild(newElement);
-        });
-
-        // Function to handle dragging of elements on canvas
-        function startDrag(event) {
-            const element = event.target;
-            const offsetX = event.clientX.canvas - element.getBoundingClientRect().left;
-            const offsetY = event.clientY.canvas - element.getBoundingClientRect().top;
-
-            document.addEventListener('mousemove', moveElement);
-            document.addEventListener('mouseup', stopDrag);
-
-            function moveElement(event) {
-                const x = event.clientX.canvas - offsetX;
-                const y = event.clientY.canvas - offsetY;
-                element.style.left = x + 'px';
-                element.style.top = y + 'px';
-            }
-
-            function stopDrag() {
-                document.removeEventListener('mousemove', moveElement);
-                document.removeEventListener('mouseup', stopDrag);
-            }
-        }
-    </script>
 </body>
-
-</html> -->
-1111111111111111
-
- <!-- <div id="toolbar">
-   <div class="element" draggable="true" data-properties="width,height,color">
-      Rectangle
-   </div>
-   <div class="element" draggable="true" data-properties="radius,color">
-      Circle
-   </div>
-</div>
-
-<div id="canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
-   Drop elements here
-</div>
-
-<script>
-   function allowDrop(event) {
-      event.preventDefault();
-   }
-   
-   function drop(event) {
-      event.preventDefault();
-      var element = event.dataTransfer.getData("text");
-      var properties = event.target.getAttribute("data-properties");
-      var message = "Set properties for " + element + ": " + properties;
-      alert(message);
-      // create and insert element into the canvas
-   }
-   
-   var elements = document.querySelectorAll(".element");
-   for (var i = 0; i < elements.length; i++) {
-      elements[i].addEventListener("dragstart", function(event) {
-         event.dataTransfer.setData("text", event.target.textContent);
-      });
-   }
-</script> -->
-222
-<!-- Toolbar with draggable elements
-<div id="toolbar">
-   <div class="element" draggable="true">Element 1</div>
-   <div class="element" draggable="true">Element 2</div>
-   <div class="element" draggable="true">Element 3</div>
-</div>
-
-// Canvas where the elements will be dropped 
-<div id="canvas" style="height: 100px;"></div>
-
-// Block that will appear when an element is dropped 
-<div id="block" style="display: none;">
-   <h3>Please set the element's properties:</h3>
-   <label for="property1">Property 1:</label>
-   <input type="text" id="property1"><br>
-   <label for="property2">Property 2:</label>
-   <input type="text" id="property2"><br>
-   <button id="save">Save</button>
-   <button id="cancel">Cancel</button>
-</div>
-
-<script>
-    // Get the toolbar and canvas elements
-const toolbar = document.getElementById("toolbar");
-const canvas = document.getElementById("canvas");
-
-// Add an event listener to each element in the toolbar
-const elements = toolbar.querySelectorAll(".element");
-elements.forEach(element => {
-   element.addEventListener("dragstart", () => {
-      // Hide the block when dragging starts
-      const block = document.getElementById("block");
-      block.style.display = "none";
-   });
-});
-
-// Add an event listener to the canvas to show the block when an element is dropped
-canvas.addEventListener("drop", (event) => {
-   // Prevent the default behavior of dropping
-   event.preventDefault();
-   
-   // Get the element that was dropped
-   const element = document.getElementById(event.dataTransfer.getData("text"));
-   
-   // Show the block and position it relative to the dropped element
-   const block = document.getElementById("block");
-   block.style.display = "block";
-   block.style.left = `${event.clientX}px`;
-   block.style.top = `${event.clientY}px`;
-   
-   // Add event listeners to the save and cancel buttons
-   const saveButton = document.getElementById("save");
-   const cancelButton = document.getElementById("cancel");
-   saveButton.addEventListener("click", () => {
-      // TODO: Save the element's properties and add it to the canvas
-      block.style.display = "none";
-   });
-   cancelButton.addEventListener("click", () => {
-      // TODO: Remove the element from the canvas
-      block.style.display = "none";
-   });
-});
-
-// Add an event listener to the canvas to prevent the default behavior of dragging over it
-canvas.addEventListener("dragover", (event) => {
-   event.preventDefault();
-});
-
-</script> -->
-
-333
+</html>

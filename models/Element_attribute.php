@@ -24,11 +24,10 @@ class ElementAttribute
 
     public function read_single()
     {
-        $query = ('SELECT * FROM ' . $this->table . ' WHERE attribute_id = ? AND element_id = ? 
+        $query = ('SELECT * FROM ' . $this->table . ' WHERE element_id = ? 
         LIMIT 0,1');
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->attribute_id);
-        $stmt->bindParam(2, $this->element_id);
+        $stmt->bindParam(1, $this->element_id);
 
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);

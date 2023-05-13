@@ -11,8 +11,6 @@ $db->connect();
 $element_attribute  = new ElementAttribute($db);
 $element_attribute->element_id = isset($_GET['element_id']) ? $_GET['element_id'] : die();
 
-$element_attribute->attribute_id = isset($_GET['attribute_id']) ? $_GET['attribute_id'] : die();
-
 $element_attribute->read_single();
 
 $element_attribute_arr = array(

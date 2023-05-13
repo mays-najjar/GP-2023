@@ -36,7 +36,9 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-  <!--  -->
+  <!-- sortable  -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 
 </head>
 
@@ -53,11 +55,16 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
 
         </div>
         <div  class="save-and-preview-buttons">
-            <button class="save-button " ><span>Save as html</span></button>
-            <button class="preview-button" >Preview  <span style="display: none;">yyy</span> </button>
-            <button class="empty-button" >  
+            <button class="save-button three_btns " > 
+            <i class="fa-solid fa-download" style="color: #ffffff; "></i>
+            <span class="hedden-content">Save as html</span></button>
+            
+            <button class="preview-button three_btns" >
+            <i class="fa-regular fa-eye" style="color: #ffffff; "></i>
+              <span class="hedden-content">Preview</span> </button>
+            <button class="empty-button three_btns" >  
                 <i class="fa-regular fa-trash-can" style="color: #ffffff; "></i>
-                <span class="hedden-content" ><span>Empty Page</span>
+                <span class="hedden-content" >Empty Page
             </button>
         </div>
          
@@ -98,11 +105,12 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
           extract($row);
           $tag_item = array(
             'tag_id' => $tag_id,
-            'tag_name' => $tag_name
+            'tag_name' => $tag_name,
+            //'tag_level' => $tag_level
           );
           array_push($tag_arr, $tag_item);
-          if ($tag_name != 'head' && $tag_name != 'body' && $tag_name != 'title')
-            echo ' <div class="element"  draggable="true" style="margin-left:5px">' . $tag_name . '</div>';
+          if ($tag_name != 'head' && $tag_name != 'body' && $tag_name != 'title'&& $tag_name != 'html')
+            echo ' <div class="element"  draggable="true" style="margin-left:5px" tag_name="' . $tag_name . '" tag_ID="' . $tag_id . '" tag_level="4">' . $tag_name . '</div>';
 
           // Push to array
 
@@ -118,9 +126,7 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
     
 
     <!-- --------------------CANVAS----------------------- -->
-    <div id="canvas" class="col-xs-8" >
-        
-<div class="canvas-head "  >
+    <div><div class="canvas-head col-xs-8" >
     <div class="three-circle">
   <span class="left " style="background-color: #E74C3C;"></span>
   <span class="left " style="background-color: #F4A62A;"></span>
@@ -131,36 +137,40 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
 </div> 
 </div>
   
-   <div id="canvasBody"></div>
+    <div id="canvas" class="col-xs-8 sortable">
+        
+
+   <div id="canvasBody">
+   
+   </div>
+</div>
 </div>
 <div id="codeCanvas" class="col-xs-8">
-<div class="canvas-head "  >
-    <div class="three-circle">
-  <span class="left " style="background-color: #E74C3C;"></span>
-  <span class="left " style="background-color: #F4A62A;"></span>
-  <span class="left " style="background-color: #16A085;"></span>
-</div>                    
-<div class="title">
-  <span id="pageTitle">index</span>
-</div> 
-</div>
+
+<div id="codeBody"></div>
 code
 </div>
 
 <div  id="properties" class="col-xs-3">
         <span style="color:#Fff ;">PROPERTIES</span>
         <!-- form to enter element id to Retrieve its properties -->
-        <form method="post" action="properties_info.php">
+        <!-- <form method="post" action="properties_info.php">
   <label for="element_id">Element ID:</label>
   <input type="text" id="element_id" name="element_id">
   <button type="submit">Get Properties</button>
-</form>
+</form> -->
 
-<iframe src="properties_info.php" title="properties_info" class="col-xs-12" name="my-iframe"></iframe>
-        
-</div>
+ <div id="element_properties">
 
 
+
+         </div>
+            <!-- <iframe src="properties_info.php" title="properties_info" class="col-xs-12" name="my-iframe">
+
+</iframe> -->
+         <div id="demo" style="background-color:#E74C3C ; height: 6px;">
+
+    </div>
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js">
   // Get a reference to the element you want to move
