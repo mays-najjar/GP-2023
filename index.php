@@ -75,8 +75,16 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
     <!-- <iframe class="col-xs-12 platform" src="platform.php"  >     
 
 </iframe> -->
-   
-<div id="toolbar" class="col-xs-3">
+<div class=" col-xs-2">
+<form class="pageTitle " action="/action_page.php">
+    <div class=" form-group">
+       <label for="title">Page title:</label>
+      <input type="text" class="form-control" id="title" placeholder="Enter page title" name="title">
+    </div>
+    <button type="submit" name="title" class="btn" style=" width: 25%; padding: 0;">Save</button>
+  </form>
+
+<div id="toolbar" >
     <span style="color:#Fff ;">TOOLBAR</span>
     <br>
 
@@ -123,34 +131,50 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
     </div>
 
   </div>
-    
+   
+   </div> 
 
     <!-- --------------------CANVAS----------------------- -->
-    <div><div class="canvas-head col-xs-8" >
+    
+    <div id="displayDesign" class="col-xs-8">
+      <div><div class="canvas-head " >
     <div class="three-circle">
   <span class="left " style="background-color: #E74C3C;"></span>
   <span class="left " style="background-color: #F4A62A;"></span>
   <span class="left " style="background-color: #16A085;"></span>
-</div>                    
-<div class="title">
-  <span id="pageTitle">index</span>
-</div> 
 </div>
   
-    <div id="canvas" class="col-xs-8 sortable">
+</div>
+    <div id="canvas" class=" sortable">
         
 
    <div id="canvasBody">
    
    </div>
 </div>
+<div id="preview" ></div>
+</div>   
 </div>
-<div id="codeCanvas" class="col-xs-8">
+<div id="displayCode" class="col-xs-8">
+<div>
+  <div class="canvas-head " >
+    <div class="three-circle">
+  <span class="left " style="background-color: #E74C3C;"></span>
+  <span class="left " style="background-color: #F4A62A;"></span>
+  <span class="left " style="background-color: #16A085;"></span>
+</div>
+                
+<div class="title">
+  <span id="pageTitle" style="padding-right: 12%;">index</span>
+</div>
+  </div>  
+<div id="codeCanvas" >
 
 <div id="codeBody"></div>
 code
 </div>
-
+</div>
+</div></div>
 <div  id="properties" class="col-xs-3">
         <span style="color:#Fff ;">PROPERTIES</span>
         <!-- form to enter element id to Retrieve its properties -->

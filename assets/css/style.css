@@ -143,10 +143,37 @@ margin-right: 0px;
 #element_properties{
   /* display: none; */
 }
+/* ----------------pageTitle----------------- */
+.pageTitle{
+  /* text-align: center; */
+  /* width: 15%; */
+  min-height: fit-content;
+  float: left;
+  padding: 5px;
+  margin-top: 30px;
+  margin-left:2px;
+  margin-right:2px;
+  background:radial-gradient(#484a72,#7a8eb7 );
+  border-radius:20px;
+  border-style:groove ;
+  border-color: #484a72;
+}
+.btn{
+  display: inline-block;
+  background:#484a72 ;
+  color:#fff;
+  border-radius: 30px;
+  transition: background .5s;  /*  *******************************8 */
+  width: 25%;
+  padding: 0;
+}
+.btn:hover{
+  background: #7a8eb7;
+}
 /* ------------- TOOLBAR ------------- */
 #toolbar {
   text-align: center;
-  width: 15%;
+  /* width: 15%; */
   min-height: fit-content;
   float: left;
   margin-top: 30px;
@@ -192,11 +219,15 @@ margin-right: 0px;
   #canvas {
     overflow: hidden;
     /* height: 100px;    */
+    width: 50%;
     min-height: 500px;
-    background-color: #444;
+    display: inline-block;
+    background-color: rgb(248, 243, 243);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     padding: 0;
+    border-style:groove ;
+  border-color: #484a72;
     /* min-width: 500px; */
 
   }
@@ -208,6 +239,19 @@ margin-right: 0px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     width : 100%;
+  }
+  #preview{
+    overflow: hidden;
+    min-height: 500px;
+    width: 49.9%;
+    float: right;
+    display: inline-block;
+    background-color: rgb(248, 243, 243);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 0;
+    border-style:groove ;
+  border-color: #484a72;
   }
  .left {
   display: block;
@@ -238,9 +282,12 @@ margin-right: 0px;
   width: 600px;
   height: 400px;
 }
-
+#displayCode{
+  display: none; 
+  text-align: left; 
+}
 #codeCanvas{
-  display: none;
+ 
   min-height: 500px;
   background-color: #444;
   border-bottom-left-radius: 10px;

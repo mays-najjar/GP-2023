@@ -415,12 +415,12 @@ function selected() {
 
 // ---------------------- dispaly modes--------------------
 $("#designMode").click(function () {
-  $("#canvas").css("display", "inline-block")
-  $("#codeCanvas").css("display", "none")
+  $("#displayDesign").css("display", "inline-block")
+  $("#displayCode").css("display", "none")
 });
 $("#codeMode").click(function () {
-  $("#codeCanvas").css("display", "inline-block")
-  $("#canvas").css("display", "none")
+  $("#displayCode").css("display", "inline-block")
+  $("#displayDesign").css("display", "none")
 });
 //  $("#codeMode").click( function(){
 //   alert("nnn");

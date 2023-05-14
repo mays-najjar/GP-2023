@@ -6,11 +6,12 @@
   $conn = mysqli_connect('localhost','root','','html_tag') or die('connection failed');
  // Retrieve the element's attributes and their values
  $tag_id =$_POST['tag_ID'];
+ 
  echo "<br>Tag Id:".$tag_id;
 $query = "SELECT a.attribute_name, ea.attribute_value
           FROM element_attribute ea
           JOIN attribute a ON ea.attribute_id = a.attribute_id
-          WHERE ea.element_id = $element_id";
+          WHERE ea.element_id = $tag_id";
 $result = mysqli_query($conn, $query);
 
 ?>
