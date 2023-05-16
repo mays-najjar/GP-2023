@@ -6,6 +6,7 @@ let tempElementID = "";
 let counter = 0;
 let initialPosition = null;
 var myTags = [];// array to store data
+var nelementsArray =[];
 let tempElementName = "";
 // Define the value to send to the session
 let id_value = "";
@@ -84,8 +85,8 @@ function getIDofTag(arrayOFTags, Name) {
     return desc.tag_id;
   }
 }
-//function canvasDrop(){
-canvas.addEventListener('drop', (event) => {
+function canvasDrop(event){
+// canvas.addEventListener('drop', (event) => {
   event.preventDefault();
   // const id = event.dataTransfer.getData('id');
   const tagLevel = event.dataTransfer.getData('tagLevel');
@@ -111,7 +112,9 @@ canvas.addEventListener('drop', (event) => {
   const elementText = tagName;  // retrieves the text data of the dragged element and assigns it to the elementText variable.
   console.log("tagName nn" + tagName);
   console.log(tagName);
-
+  
+//if (nelementsArray[this].length) is checking if the element in nelementsArray at the index specified by this has a length property that is not zero. If the length is not zero, the code within the if block will be executed.
+  //  else{
   const newElement = document.createElement(tagName);
   //   داخل جواب الشرط مما يعني أنه لا يمكن الوصول إليه إلا داخلها بالتالي يسبب مشكلة عند استدعائها لاحقاً newElement لانه اذا عرفنا ال
   // if (tagName == 'footer') {
@@ -133,12 +136,17 @@ canvas.addEventListener('drop', (event) => {
   newElement.setAttribute('tag_name', tagName);
   newElement.setAttribute('tag_iD', tagID);
   newElement.setAttribute('tag_level', tagLevel);
+  // draggable nelements ondrop=
+  newElement.setAttribute('ondrop','drop(event)');
+  newElement.setAttribute('ondragover','allowDrop(event)');
+  newElement.setAttribute('ondragstart','drag(event)');
+
   //newElement.ondrag(draged());
   //selected_tag.textContent = tagName; 
 
   canvas.appendChild(newElement);
-
-
+  nelementsArray.push(newElement);
+console.log(nelementsArray);
   
   // Get the dropped element's HTML content
   const html = event.dataTransfer.getData("text/html");
@@ -193,7 +201,7 @@ canvas.addEventListener('drop', (event) => {
   const xhr = new XMLHttpRequest();
   const url = 'http://localhost/GP-2023/api/element/create.php';
   const data = {
-    "tag_id": id_value,
+    "tag_id": tagID,
     "content": newElement.textContent,
     "parent_id": "11",
     "children_order": "1"
@@ -286,11 +294,11 @@ xxhr.send(datta);
   // // ajax end 
 
 
+//} // end if condition
 
+// });// end drop event
 
-});
-// end drop event
-//}  //end canvasDrop function
+}  //end canvasDrop function
 
 //Initialize SortableJS on the canvas element:
 Sortable.create(document.querySelector('.sortable'), {
@@ -550,8 +558,101 @@ nelements.forEach(nelement => {
 });
 
 
+//
+function allowDrop(event) {
+  event.preventDefault();
+}
+
+function drag(event) {
+  event.dataTransfer.setData("text", event.target.id);
+}
+
+function drop(event) {
+  event.preventDefault();
+  var data = event.dataTransfer.getData("text");
+  event.target.appendChild(document.getElementById(data));
+}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////// drop function on canvas ( js code) , if dropped element have a class ="nelement"  (its already appenden to canvas & added to  nelements array ) then will change its order on array ; 
+// else will create new nelement and append to canvas & added it to nelements array 
+ 
+//Here's an example of how you can modify the drop function to achieve the desired behavior:
+
+// function drop(event) {
+//   event.preventDefault();
+//   // get the data transferred in the drag event
+//   var data = event.dataTransfer.getData("text/plain");
+//   var element = document.getElementById(data);
+//   var canvas = document.getElementById("canvas");
+
+//   // check if the dropped element is a "nelement"
+//   if (element.classList.contains("nelement")) {
+//     // get the index of the dropped element in the "nelements" array
+//     var index = nelements.indexOf(element);
+
+//     // check if the element is being dropped onto another "nelement" with a lower level
+//     var targetElement = event.target;
+//     while (targetElement != canvas && !targetElement.classList.contains("nelement")) {
+//       targetElement = targetElement.parentNode;
+//     }
+//     if (targetElement != canvas && targetElement.getAttribute("level") >= element.getAttribute("level")) {
+//       // do nothing if the element is being dropped onto another "nelement" with a higher or equal level
+//       return;
+//     }
+
+//     // remove the element from its current position in the "nelements" array
+//     nelements.splice(index, 1);
+
+//     // add the element to its new position in the "nelements" array
+//     if (targetElement == canvas) {
+//       // if the element is being dropped onto the canvas, append it to the end of the "nelements" array
+//       nelements.push(element);
+//     } else {
+//       // otherwise, insert it before the target element in the "nelements" array
+//       var targetIndex = nelements.indexOf(targetElement);
+//       nelements.splice(targetIndex, 0, element);
+//     }
+
+//     // redraw all the "nelements" on the canvas
+//     redraw();
+//   } else {
+//     // create a new "nelement" element
+//     var newElement = document.createElement("div");
+//     newElement.setAttribute("class", "nelement");
+//     newElement.setAttribute("draggable", "true");
+//     newElement.setAttribute("id", "nelement" + nelementCount++);
+//     newElement.setAttribute("level", "1");
+//     newElement.style.left = (event.clientX - canvas.offsetLeft) + "px";
+//     newElement.style.top = (event.clientY - canvas.offsetTop) + "px";
+//     newElement.textContent = "New Element";
+//     canvas.appendChild(newElement);
+
+//     // add the new element to the "nelements" array
+//     nelements.push(newElement);
+
+//     // redraw all the "nelements" on the canvas
+//     redraw();
+//   }
+// }
 
 
 

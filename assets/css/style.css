@@ -276,6 +276,8 @@ margin-right: 0px;
 .nelement{
   cursor: pointer;
   user-select: none;
+  border: #444;
+  border: 2px;
 }
 
 #canvasbody {

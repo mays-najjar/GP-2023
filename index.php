@@ -145,7 +145,7 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
 </div>
   
 </div>
-    <div id="canvas" class=" sortable">
+    <div id="canvas" class=" sortable" ondrop="canvasDrop(event)">
         
 
    <div id="canvasBody">
