@@ -100,20 +100,16 @@ class Element
 
         $stmt = $this->conn->prepare($query);
         $this->tag_id = htmlspecialchars(strip_tags($this->tag_id));
-        $this->attribute_id = htmlspecialchars(strip_tags($this->attribute_id));
         $this->children_order = htmlspecialchars(strip_tags($this->children_order));
         $this->parent_id = htmlspecialchars(strip_tags($this->parent_id));
         $this->content = htmlspecialchars(strip_tags($this->content));
-        $this->attribute_value = htmlspecialchars(strip_tags($this->attribute_value));
         $this->element_id = htmlspecialchars(strip_tags($this->element_id));
 
 
         $stmt->bindParam(':tag_id', $this->tag_id);
-        $stmt->bindParam(':attribute_id', $this->attribute_id);
         $stmt->bindParam(':children_order', $this->children_order);
         $stmt->bindParam(':parent_id', $this->parent_id);
         $stmt->bindParam(':content', $this->content);
-        $stmt->bindParam(':attribute_value', $this->attribute_value);
         $stmt->bindParam(':element_id', $this->element_id);
 
 
@@ -139,8 +135,12 @@ class Element
 
         return false;
     }
-
-
+   
+    public function codeMode()
+{
+    echo $code_mode = $this->generate_html_from_database1();
+}
+    
     public function get_tag_name($tag_id)
     {
         $stmt = $this->conn->prepare("SELECT tag_name FROM tag WHERE tag_id = :tag_id");
@@ -161,6 +161,59 @@ class Element
         }
         return $attributes;
     }
+
+    public function generate_html_from_database1()
+    {
+        // Retrieve the top-level element with parent_id = NULL (should be only one)
+        $stmt = $this->conn->prepare("SELECT * FROM element WHERE parent_id IS NULL");
+        $stmt->execute();
+        $top_element = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Recursively build the HTML tree starting from the top-level element
+        $html = $this->build_html_tree1($top_element);
+        $html = htmlspecialchars($html);
+   
+        return $html;
+      
+    }
+
+    public function build_html_tree1($element, $indent_level = 0)
+{
+    $tag_name = $this->get_tag_name($element['tag_id']);
+    $attributes = $this->get_attributes($element['element_id']);
+    $content = $element['content'];
+    $self_closing_tags = ['img', 'br', 'a'];
+
+    $indent = str_repeat(' ', $indent_level * 4);
+    $html = "$indent<$tag_name";
+    foreach ($attributes as $attr_name => $attr_value) {
+        $html .= " $attr_name=\"$attr_value\"";
+    }
+    $html .= ">";
+
+    // Recursively build child elements
+    $stmt = $this->conn->prepare("SELECT * FROM element WHERE parent_id = :parent_id ORDER BY children_order");
+    $stmt->bindParam(":parent_id", $element['element_id'], PDO::PARAM_INT);
+    $stmt->execute();
+    $child_elements = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if (!empty($child_elements)) {
+        $html .= "\n";
+        foreach ($child_elements as $child_element) {
+            $html .= $this->build_html_tree1($child_element, $indent_level + 1);
+        }
+        $html .= "$indent";
+    }
+
+    if (in_array($tag_name, $self_closing_tags)) {
+        $html .= " />";
+    } else {
+        $html .= "$content</$tag_name>";
+    }
+
+    $html .= "\n";
+
+    return $html;
+}
 
     function generate_html_from_database()
     {

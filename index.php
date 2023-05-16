@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<?php
-include('config/Database.php');
-$conn = mysqli_connect('localhost','root','','html_tag') or die('connection failed');
-
-$result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل البيانات  result 
-// يحط البيانات في اريه 
-
-
-?>
-  
+<!DOCTYPE html>  
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -55,9 +45,9 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
 
         </div>
         <div  class="save-and-preview-buttons">
-            <button class="save-button three_btns " > 
+            <button class="save-button three_btns "  onclick="downloadHtml()"> 
             <i class="fa-solid fa-download" style="color: #ffffff; "></i>
-            <span class="hedden-content">Save as html</span></button>
+            <span class="hedden-content" >Save as html</span></button>
             
             <button class="preview-button three_btns" >
             <i class="fa-regular fa-eye" style="color: #ffffff; "></i>
@@ -68,7 +58,72 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
             </button>
         </div>
          
-       
+        <?php
+    // Import the Element class from the model folder
+    include_once 'models/Element.php';
+    include_once 'config/Database.php';
+
+    // Instantiate a new Element object
+    $database = new Database();
+    $db = $database->connect();
+
+    $element = new Element($db);
+    ini_set('display_errors', true);
+    error_reporting(E_ALL);
+
+    // Build the DOM tree for the given root node ID
+    $html = $element->generate_html_from_database();
+    ?>
+    <script>
+      function downloadHtml() {
+        // create a new Blob object with the HTML content
+        // let htmlVariable = '<html id="2"><head id="1"><title id="1">"My Web Page"</title></head><body id="1"><p id="1">para one </p><p id="2">para two</p><img width="400" height="400"alt="K"> /<div><p>para in div</p>     Div1</div></body></html>';
+
+        // create a new Blob object with the HTML content
+        const blob = new Blob([<?php echo json_encode($html); ?>], {
+          type: 'text/html'
+        });
+
+
+        // create a new URL object for the Blob
+        const url = URL.createObjectURL(blob);
+
+        // create a new anchor element to trigger the download
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'my_html_file.html';
+
+        // append the anchor element to the document
+        document.body.appendChild(a);
+
+        // trigger the download
+        a.click();
+
+        // clean up the anchor element
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      function executeSQL() {
+        // create an XMLHttpRequest object
+        const xhr = new XMLHttpRequest();
+
+        // set up the request parameters
+        xhr.open('DELETE', 'http://localhost/GP-2023-4/api/element/deleteAll.php'); // replace 'execute_sql.php' with the URL of the server-side script that executes the SQL query
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        // set up the callback function
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            // handle the response
+            console.log(xhr.responseText);
+          }
+        };
+
+        // send the request
+        xhr.send(); // replace 'YOUR_SQL_QUERY' with your actual SQL query
+      }
+    </script>
 
         
     </nav>
@@ -76,13 +131,17 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
 
 </iframe> -->
 <div class=" col-xs-2">
-<form class="pageTitle " action="/action_page.php">
+<form class="pageTitle " action="index.php">
     <div class=" form-group">
        <label for="title">Page title:</label>
+       
       <input type="text" class="form-control" id="title" placeholder="Enter page title" name="title">
     </div>
     <button type="submit" name="title" class="btn" style=" width: 25%; padding: 0;">Save</button>
+   
   </form>
+
+
 
 <div id="toolbar" >
     <span style="color:#Fff ;">TOOLBAR</span>
@@ -152,7 +211,24 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
    
    </div>
 </div>
-<div id="preview" ></div>
+<div id="preview" >
+<?php
+    // Import the Element class from the model folder
+    include_once 'models/Element.php';
+    include_once 'config/Database.php';
+
+    // Instantiate a new Element object
+    $database = new Database();
+    $db = $database->connect();
+
+    $element = new Element($db);
+    ini_set('display_errors', true);
+    error_reporting(E_ALL);
+
+    // Build the DOM tree for the given root node ID
+   echo  $html = $element->generate_html_from_database();
+    ?>
+</div>
 </div>   
 </div>
 <div id="displayCode" class="col-xs-8">
@@ -171,18 +247,31 @@ $result= mysqli_query($conn ,"SELECT * FROM tag ");  // رح يجبلي كل ا�
 <div id="codeCanvas" >
 
 <div id="codeBody"></div>
-code
+<pre>
+    <?php
+
+    // Import the Element class from the model folder
+    include_once 'models/Element.php';
+    include_once 'config/Database.php';
+
+    // Instantiate a new Element object
+    $database = new Database();
+    $db = $database->connect();
+
+    $element = new Element($db);
+    ini_set('display_errors', true);
+    error_reporting(E_ALL);
+
+    // Build the DOM tree for the given root node ID and store the generated HTML in a variable
+   $element->codeMode();
+
+    ?>
 </div>
 </div>
 </div></div>
 <div  id="properties" class="col-xs-3">
         <span style="color:#Fff ;">PROPERTIES</span>
-        <!-- form to enter element id to Retrieve its properties -->
-        <!-- <form method="post" action="properties_info.php">
-  <label for="element_id">Element ID:</label>
-  <input type="text" id="element_id" name="element_id">
-  <button type="submit">Get Properties</button>
-</form> -->
+  
 
  <div id="element_properties">
 
