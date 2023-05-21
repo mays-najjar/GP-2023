@@ -139,9 +139,124 @@ margin-right: 0px;
   text-align: center;
   border-radius:5px;
 }
-
+#indicator{
+  width: 65px;
+  border: none;
+  background: #688bf5;
+  height: 3px;
+  margin-top: 8px;
+  transform: translateX(50px);
+  transition: transform 1s;
+}
+.form-btn label{
+  border-style:groove ;
+  border-color: #7275b8;
+   padding: 1px 3px;
+   border-radius: 5px;
+}
 #element_properties{
   /* display: none; */
+}
+/* ------------------login--------------------- */
+#login{
+  text-align: center;
+
+}
+#login a{
+   color: #582423;/* 440303 */
+  border-style:groove ;
+  border-color: #7275b8;
+  border-radius: 5px;
+   padding: 1px 3px; 
+   background:radial-gradient(#9b9cb0,#7a8eb7 );
+}
+.account-page{
+  padding: 50px 0;
+  background:radial-gradient(#484a72,#7a8eb7) ;
+  /* background:radial-gradient(#7a8eb7,#484a72 );  */
+}
+/* .container{
+  max-width: 1300px;
+  margin:auto;
+  padding-left: 25px;
+  padding-right: 25px;
+} */
+.row{
+  display: flex;  
+  align-items: center;
+  flex-wrap: wrap;     
+  justify-content: space-around;   
+}
+/* .col_2{
+  flex-basis: 50%;  
+  min-width: 300px;
+} */
+.form-container{
+  background: #fff;
+  width: 300px;
+  height: 400px;
+  position: relative;
+  text-align: center;
+  padding: 20px 0;
+  margin: auto;
+  box-shadow: 0 0 20px 0 rgba(0.1, 0.1, 0.1, .1);
+  overflow: hidden;            /*--------------------------------*/
+}
+.form-container span{
+  font-weight: bold;
+  padding: 0 10px;
+  color:#555;
+  cursor: pointer;
+  width: 100px;
+  display: inline-block;
+}
+ #indicator2{
+  width: 100px;
+  border: none;
+  background: #688bf5;
+  height: 3px;
+  margin-top: 8px;
+  transform: translateX(60px);
+  transition: transform 1s;
+}
+.form-container form{
+  max-width: 300px;
+  padding: 0 20px;
+  position: absolute;
+  top: 130px;
+  transition: transform 1s ;
+}
+form input, form select {
+  width:100%;
+  height: 30px;
+  margin: 10px 0;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+}
+form .btn{
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  margin: 10px 0;
+}
+form .btn:focus{
+  outline: none; 
+}
+#loginform{
+  left: -300px;    
+} 
+#regform{
+  left: 0;
+}
+form a{
+  font-size: 12px;
+}
+.app-logo{
+  margin-top: 20px;
+}
+.app-logo img{
+  width:40px;
+  height: 40px;
 }
 /* ----------------pageTitle----------------- */
 .pageTitle{
@@ -196,7 +311,7 @@ margin-right: 0px;
  /* Styles for draggable elements */
  .element {
   /* position: absolute; */
-  width: 40%;
+  width: 20%;
   height: 30px;
   margin-top: 5px;
   background-color: #aaa;
@@ -270,16 +385,55 @@ margin-right: 0px;
 }
 #canvas .selected{
  background-color: #dfe225;
- border: #7a8eb7;
- border-style: dotted;
+ /* border: #7a8eb7;
+ border-style: dotted; */
 }
 .nelement{
   cursor: pointer;
   user-select: none;
   border: #444;
   border: 2px;
+  border-style: dotted;
+}
+/* ---------------content modal---------------- */
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+/*  */
 #canvasbody {
   width: 600px;
   height: 400px;
@@ -295,6 +449,19 @@ margin-right: 0px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   padding: 0;
+}
+pre {
+  /* display: none; */
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  color: #333;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #060505;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 /* ------------------------GRID----------------------------- */
 .grid-container {

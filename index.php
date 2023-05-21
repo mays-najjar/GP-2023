@@ -7,7 +7,7 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
     <link rel="icon" href="assets/img/GP.gif" sizes="16x16" >
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -26,10 +26,14 @@
        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+
   <!-- sortable  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
-
+<!-- bootstrab js -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -59,7 +63,7 @@
         </div>
          
         <?php
-    // Import the Element class from the model folder
+     /*Import the Element class from the model folder
     include_once 'models/Element.php';
     include_once 'config/Database.php';
 
@@ -72,7 +76,7 @@
     error_reporting(E_ALL);
 
     // Build the DOM tree for the given root node ID
-    $html = $element->generate_html_from_database();
+    $html = $element->generate_html_from_database();*/
     ?>
     <script>
       function downloadHtml() {
@@ -131,6 +135,8 @@
 
 </iframe> -->
 <div class=" col-xs-2">
+  <div id="login"><a href="login.php">Log in / Sign Up</a></div>
+
 <form class="pageTitle " action="index.php">
     <div class=" form-group">
        <label for="title">Page title:</label>
@@ -167,23 +173,36 @@
       if ($num > 0) {
         // tag array
         $tag_arr = array();
+        $m=1;
+
         echo '<div class="tags">';
-        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-          extract($row);
-          $tag_item = array(
-            'tag_id' => $tag_id,
-            'tag_name' => $tag_name,
-            //'tag_level' => $tag_level
-          );
-          array_push($tag_arr, $tag_item);
-          if ($tag_name != 'head' && $tag_name != 'body' && $tag_name != 'title'&& $tag_name != 'html')
-            echo ' <div class="element"  draggable="true" style="margin-left:5px" tag_name="' . $tag_name . '" tag_ID="' . $tag_id . '" tag_level="4">' . $tag_name . '</div>';
 
-          // Push to array
-
-        }
-        echo '</div>';
-      }
+        echo 'Basic <br>';
+             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+               extract($row);
+               $tag_item = array(
+                 'tag_id' => $tag_id,
+                 'tag_name' => $tag_name,
+                 //'tag_level' => $tag_level
+               );
+               array_push($tag_arr, $tag_item);
+               
+               if ($tag_name != 'head' && $tag_name != 'body' && $tag_name != 'title'&& $tag_name != 'html' && $tag_name != 'header' && $tag_name != 'footer'){
+                 echo ' <div class="element"  draggable="true" style="margin-left:5px" tag_name="' . $tag_name . '" tag_ID="' . $tag_id . '" tag_level="4">' . $tag_name . '</div>';
+                    } elseif ($tag_name == 'header' || $tag_name == 'footer' ){
+                      if($m == 1){
+                     echo '<br> 
+                     Extra <br>';
+                     $m--;}
+                     echo ' <div class="element"  draggable="true" style="margin-left:5px" tag_name="' . $tag_name . '" tag_ID="' . $tag_id . '" tag_level="4">' . $tag_name . '</div>';
+                    }
+            
+             }}
+               
+     
+            
+            
+             echo '</div>';
       // Encode the array without the "data" key
 
       ?>
@@ -211,9 +230,22 @@
    
    </div>
 </div>
+<!-- <button id="myBtn">Open Modal</button> -->
+
+<!-- The Modal -->
+<div id="myModal" class="modal" style="height:100px ; background-color: red;">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+  <span id="close">&times;</span>
+    <input>
+  </div>
+
+</div>
+
 <div id="preview" >
 <?php
-    // Import the Element class from the model folder
+  /*  // Import the Element class from the model folder
     include_once 'models/Element.php';
     include_once 'config/Database.php';
 
@@ -226,7 +258,7 @@
     error_reporting(E_ALL);
 
     // Build the DOM tree for the given root node ID
-   echo  $html = $element->generate_html_from_database();
+   echo  $html = $element->generate_html_from_database(); */
     ?>
 </div>
 </div>   
@@ -249,7 +281,7 @@
 <div id="codeBody"></div>
 <pre>
     <?php
-
+/*
     // Import the Element class from the model folder
     include_once 'models/Element.php';
     include_once 'config/Database.php';
@@ -263,27 +295,50 @@
     error_reporting(E_ALL);
 
     // Build the DOM tree for the given root node ID and store the generated HTML in a variable
-   $element->codeMode();
+   $element->codeMode();*/
 
     ?>
 </div>
 </div>
 </div></div>
 <div  id="properties" class="col-xs-3">
-        <span style="color:#Fff ;">PROPERTIES</span>
+
+                    <div class="form-btn">
+                        <label style="color:#Fff ;" onclick="properties()">Properties</label>
+                        <label style="color:#Fff ;" onclick="show_style()">Style</label>
+                        <hr id="indicator">
+                    </div>
+                    
+                  
+               
+          <script> 
+            //   var properties=document.getElementById("element_properties");
+            // var style=document.getElementById("style");
+            var indicator=document.getElementById("indicator");
+            function properties(){
+                  $("#element_properties").css("display", "inline-block");
+                 $("#style").css("display", "none") ;
+                indicator.style.transform="translatex(-18px)";
+            }
+            function show_style(){
+              $("#element_properties").css("display", "none");
+                 $("#style").css("display", "inline-block");
+                indicator.style.transform="translatex(47px)";
+
+            }
+            </script>   
   
 
- <div id="element_properties">
-
-
-
-         </div>
+ <div id="element_properties" style="display: none;">   pro      </div>
+ <div id="style"> style</div>
             <!-- <iframe src="properties_info.php" title="properties_info" class="col-xs-12" name="my-iframe">
 
 </iframe> -->
          <div id="demo" style="background-color:#E74C3C ; height: 6px;">
-
+         
+  
     </div>
+</div>
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js">
   // Get a reference to the element you want to move

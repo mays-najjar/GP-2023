@@ -230,6 +230,8 @@ class Element
 
     public function build_html_tree($element)
     {
+        print_r($this);
+
         $tag_name = $this->get_tag_name($element['tag_id']);
         $attributes = $this->get_attributes($element['element_id']);
         $content = $element['content'];
