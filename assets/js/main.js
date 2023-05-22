@@ -143,7 +143,6 @@ function canvasDrop(event){
   newElement.style.top = event.clientY.canvas + 'px';    //IN GENERAL >> event.clientY property returns the vertical coordinate (in pixels)     >>>>>     event.clientY.canvas sets the TOP style
   newElement.classList.add('selected');
   newElement.onclick = selected(newElement);
-  newElement.ondblclick = handleDoubleClick;
   newElement.setAttribute('data-content', newElement.textContent)
   newElement.setAttribute('draggable', 'true');
   newElement.setAttribute('tag_name', tagName);
@@ -220,11 +219,11 @@ const targetElement = event.target;
   // Send an AJAX request to create the element on the server
 
   const xhr = new XMLHttpRequest();
-  const url = 'http://localhost/GP-2023/api/element/create.php';
+  const url = 'http://localhost/GP-2023-10/api/element/create.php';
   const data = {
     "tag_id": tagID,
     "content": newElement.textContent,
-    "parent_id": "11",
+    "parent_id": "5",
     "children_order": "1"
   };
   xhr.open('POST', url, true);
@@ -246,6 +245,7 @@ element_properties(tagID);
   // call functions
 
   createElement();
+  console.log
  
 //} // end if condition
 
@@ -410,25 +410,7 @@ function drop(event) {
   // event.appendChild(nodElement); 
  }
 }
-// for edit content
-
-var modal = document.getElementById("myModal");
-var close = document.getElementById("close");
-function handleDoubleClick (){
-  let person = prompt("Please enter new element content", "new");
-  modal.display = "block";
-}
-close.onclick = function() {
-  modal.style.display = "none";
-}
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-$(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip();   
-});
+;
 
 
 

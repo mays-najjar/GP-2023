@@ -17,12 +17,7 @@
     <!-- <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.3/css/all.css" integrity="xxxx" crossorigin="anonymous">   -->
 
       <script src="https://kit.fontawesome.com/5076f4faae.js" crossorigin="anonymous"></script>
-      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="/ddr-icon/css/ddr-icon.css"> -->
- 
-       <!-- jquery -->
+    
        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -56,14 +51,14 @@
             <button class="preview-button three_btns" >
             <i class="fa-regular fa-eye" style="color: #ffffff; "></i>
               <span class="hedden-content">Preview</span> </button>
-            <button class="empty-button three_btns" >  
+            <button class="empty-button three_btns"  onclick="executeSQL()" >  
                 <i class="fa-regular fa-trash-can" style="color: #ffffff; "></i>
                 <span class="hedden-content" >Empty Page
             </button>
         </div>
          
         <?php
-     /*Import the Element class from the model folder
+     //Import the Element class from the model folder
     include_once 'models/Element.php';
     include_once 'config/Database.php';
 
@@ -76,7 +71,7 @@
     error_reporting(E_ALL);
 
     // Build the DOM tree for the given root node ID
-    $html = $element->generate_html_from_database();*/
+    $html = $element->generate_html_from_database3();
     ?>
     <script>
       function downloadHtml() {
@@ -113,7 +108,7 @@
         const xhr = new XMLHttpRequest();
 
         // set up the request parameters
-        xhr.open('DELETE', 'http://localhost/GP-2023-4/api/element/deleteAll.php'); // replace 'execute_sql.php' with the URL of the server-side script that executes the SQL query
+        xhr.open('DELETE', 'http://localhost/GP-2023-10/api/element/deleteAll.php'); 
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
         // set up the callback function
@@ -135,17 +130,48 @@
 
 </iframe> -->
 <div class=" col-xs-2">
-  <div id="login"><a href="login.php">Log in / Sign Up</a></div>
+    <form class="pageTitle" action="index.php">
+      <div class="form-group">
+        <label for="title">Page title:</label>
+        <input type="text" class="form-control" id="title" placeholder="Enter page title" name="title">
+      </div>
+      <button type="button" class="btn" style="width: 25%; padding: 0;" onclick="updateElement()">Save</button>
+    </form>
 
-<form class="pageTitle " action="index.php">
-    <div class=" form-group">
-       <label for="title">Page title:</label>
-       
-      <input type="text" class="form-control" id="title" placeholder="Enter page title" name="title">
-    </div>
-    <button type="submit" name="title" class="btn" style=" width: 25%; padding: 0;">Save</button>
-   
-  </form>
+    <script>
+      function updateElement() {
+        // Get the input value
+        var content = document.getElementById('title').value;
+        var element_id = 4;
+        var tag_id = 12;
+        var parent_id = 3;
+        var children_order = 1;
+        // Create the data object
+        var data = {
+          element_id: element_id,
+          tag_id: tag_id,
+          content: content,
+          parent_id: parent_id,
+          children_order: children_order
+        };
+
+        // Send the AJAX request
+        var xhr = new XMLHttpRequest();
+        xhr.open('PUT', 'http://localhost/GP-2023-10/api/element/update.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              var response = JSON.parse(xhr.responseText);
+              alert(response.message);
+            } else {
+              alert('Error updating element');
+            }
+          }
+        };
+        xhr.send(JSON.stringify(data));
+      }
+    </script>
 
 
 
@@ -223,7 +249,7 @@
 </div>
   
 </div>
-    <div id="canvas" class=" sortable" ondrop="canvasDrop(event)">
+    <div id="canvas" class=" sortable" ondrop="canvasDrop(event)" contenteditable="true">
         
 
    <div id="canvasBody">
@@ -236,16 +262,17 @@
 <div id="myModal" class="modal" style="height:100px ; background-color: red;">
 
   <!-- Modal content -->
-  <div class="modal-content">
+  <div class="modal-content"> 
   <span id="close">&times;</span>
     <input>
   </div>
 
 </div>
+<iframe src="http://localhost/GP-2023-10/api/BuildGenerate/generate_code.php" id="preview"></iframe>
 
-<div id="preview" >
+<!-- <div id="preview" >
 <?php
-  /*  // Import the Element class from the model folder
+  /* // Import the Element class from the model folder
     include_once 'models/Element.php';
     include_once 'config/Database.php';
 
@@ -258,9 +285,9 @@
     error_reporting(E_ALL);
 
     // Build the DOM tree for the given root node ID
-   echo  $html = $element->generate_html_from_database(); */
+   echo  $html = $element->generate_html_from_database3(); */
     ?>
-</div>
+</div> -->
 </div>   
 </div>
 <div id="displayCode" class="col-xs-8">
@@ -281,7 +308,7 @@
 <div id="codeBody"></div>
 <pre>
     <?php
-/*
+
     // Import the Element class from the model folder
     include_once 'models/Element.php';
     include_once 'config/Database.php';
@@ -295,7 +322,7 @@
     error_reporting(E_ALL);
 
     // Build the DOM tree for the given root node ID and store the generated HTML in a variable
-   $element->codeMode();*/
+   $element->codeMode();
 
     ?>
 </div>
@@ -340,55 +367,6 @@
     </div>
 </div>
 
-<!-- <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js">
-  // Get a reference to the element you want to move
-var element = document.getElementById('nelement');
-
-// Initialize interact.js
-interact(element)
-  .draggable({
-    // enable inertial throwing
-    inertia: true,
-    // keep the element within the area of its parent
-    restrict: {
-      restriction: "parent",
-      endOnly: true,
-      elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-    },
-    // enable autoScroll
-    autoScroll: true,
-
-    // call this function on every dragmove event
-    onmove: function (event) {
-      var target = event.target,
-          // keep the dragged position in the data-x/data-y attributes
-          x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-          y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
-      // snap to a grid
-      x = Math.round(x / grid) * grid;
-      y = Math.round(y / grid) * grid;
-
-      // translate the element
-      target.style.webkitTransform =
-      target.style.transform =
-        'translate(' + x + 'px, ' + y + 'px)';
-
-      // update the element's attributes
-      target.setAttribute('data-x', x);
-      target.setAttribute('data-y', y);
-    }
-  })
-  .on('move', function (event) {
-    var interaction = event.interaction;
-    if (interaction.pointerIsDown && !interaction.interacting()) {
-      interaction.start({ name: 'drag' }, event.interactable, event.currentTarget);
-    }
-  });
-
-</script> -->
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>  
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
 <script src="assets/js/jquery-3.6.4.min.js"></script>
 <script src="assets/js/main.js"></script>
 </body>

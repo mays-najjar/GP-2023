@@ -16,7 +16,7 @@ ini_set('display_errors', true);
 error_reporting(E_ALL);
 
 // Build the DOM tree for the given root node ID
-$dom_tree = $element->generate_html_from_database();
+$dom_tree = $element->generate_html_from_database3();
 print $dom_tree;
 
 

@@ -388,12 +388,13 @@ form a{
  /* border: #7a8eb7;
  border-style: dotted; */
 }
-.nelement{
+.nelement {
   cursor: pointer;
   user-select: none;
   border: #444;
   border: 2px;
   border-style: dotted;
+  
 }
 /* ---------------content modal---------------- */
 /* The Modal (background) */
