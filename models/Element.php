@@ -193,7 +193,9 @@ class Element
 {
     $tag_name = $this->get_tag_name($element['tag_id']);
     $attributes = $this->get_attributes($element['element_id']);
+    
     $style = $this->get_style_attributes($element['element_id']);
+  
     $content = $element['content'];
     $self_closing_tags = ['img', 'br'];
 
@@ -202,9 +204,12 @@ class Element
     foreach ($attributes as $attr_name => $attr_value) {
         $html .= " $attr_name=\"$attr_value\"";
     }
-    $html .= ' style="' . $style . '">';
-   // $html .= ">";
-
+    if (!empty($style)) {
+        $html .= ' style="' . $style . '"';
+    }
+    if (!in_array($tag_name, $self_closing_tags)) { 
+    $html .= ">";
+    }
     // Recursively build child elements
     $stmt = $this->conn->prepare("SELECT * FROM element WHERE parent_id = :parent_id ORDER BY children_order");
     $stmt->bindParam(":parent_id", $element['element_id'], PDO::PARAM_INT);
@@ -229,7 +234,7 @@ class Element
     return $html;
 }
 
-    function generate_html_from_database()
+  /*  function generate_html_from_database()
     {
         // Retrieve the top-level element with parent_id = NULL (should be only one)
         $stmt = $this->conn->prepare("SELECT * FROM element WHERE parent_id IS NULL");
@@ -242,7 +247,7 @@ class Element
         return $html;
     }
 
-    public function build_html_tree($element)
+     public function build_html_tree($element)
     {
         $tag_name = $this->get_tag_name($element['tag_id']);
         $attributes = $this->get_attributes($element['element_id']);
@@ -270,7 +275,7 @@ class Element
         return $html;
     }
 
-   
+   */
 
 public function get_attribute_name($attribute_id)
 {
@@ -290,7 +295,6 @@ public function get_style_attributes($element_id)
     $stmt->bindParam(":element_id", $element_id, PDO::PARAM_INT);
     $stmt->execute();
     $style_attributes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
     if (empty($style_attributes)) {
         return ""; // No style attributes found
     }
@@ -321,7 +325,7 @@ public function build_html_tree3($element)
 {
     $tag_name = $this->get_tag_name($element['tag_id']);
     $attributes = $this->get_attributes($element['element_id']);
-    $style = $this->get_style_attributes($element['element_id']); // Retrieve style attributes
+    $style = $this->get_style_attributes($element['element_id']);   // $this->get_style_attributes($element['element_id']); // Retrieve style attributes
     $content = $element['content'];
     $self_closing_tags = ['img', 'br'];
 
@@ -332,19 +336,31 @@ public function build_html_tree3($element)
     foreach ($attributes as $attr_name => $attr_value) {
         $html .= " $attr_name=\"$attr_value\"";
     }
-    $html .= ' style="' . $style . '">';
+    if (!empty($style)) {
+        $html .= ' style="' . $style . '"';
+    }
+    
+    if (!in_array($tag_name, $self_closing_tags)) { 
+        $html .= ">";
+        }
     // Recursively build child elements
     $stmt = $this->conn->prepare("SELECT * FROM element WHERE parent_id = :parent_id ORDER BY children_order");
     $stmt->bindParam(":parent_id", $element['element_id'], PDO::PARAM_INT);
     $stmt->execute();
     $child_elements = $stmt->fetchAll(PDO::FETCH_ASSOC);
     foreach ($child_elements as $child_element) {
+        $html .= "\n";
         $html .= $this->build_html_tree3($child_element);
     }
 
-    if (!in_array($tag_name, $self_closing_tags)) {
+    if (in_array($tag_name, $self_closing_tags)) {
+        $html .= " />";
+    } else {
         $html .= "$content</$tag_name>";
     }
+
+    $html .= "\n";
+
     return $html;
 }
 

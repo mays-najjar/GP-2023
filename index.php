@@ -108,7 +108,7 @@
         const xhr = new XMLHttpRequest();
 
         // set up the request parameters
-        xhr.open('DELETE', 'http://localhost/GP-2023-10/api/element/deleteAll.php'); 
+        xhr.open('DELETE', 'http://localhost/GP-2023/api/element/deleteAll.php'); 
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
         // set up the callback function
@@ -157,7 +157,7 @@
 
         // Send the AJAX request
         var xhr = new XMLHttpRequest();
-        xhr.open('PUT', 'http://localhost/GP-2023-10/api/element/update.php', true);
+        xhr.open('PUT', 'http://localhost/GP-2023/api/element/update.php', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
           if (xhr.readyState === 4) {
@@ -268,11 +268,11 @@
   </div>
 
 </div>
-<iframe src="http://localhost/GP-2023-10/api/BuildGenerate/generate_code.php" id="preview"></iframe>
+<iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview"></iframe>
 
 <!-- <div id="preview" >
 <?php
-  /* // Import the Element class from the model folder
+   // Import the Element class from the model folder
     include_once 'models/Element.php';
     include_once 'config/Database.php';
 
@@ -285,7 +285,7 @@
     error_reporting(E_ALL);
 
     // Build the DOM tree for the given root node ID
-   echo  $html = $element->generate_html_from_database3(); */
+   echo  $html = $element->generate_html_from_database3(); 
     ?>
 </div> -->
 </div>   
