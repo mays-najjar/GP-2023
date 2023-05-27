@@ -150,7 +150,7 @@ function canvasDrop(event){
   newElement.setAttribute('tag_iD', tagID);
   newElement.setAttribute('tag_level', tagLevel);
   // draggable nelements ondrop=
-  newElement.setAttribute('ondrop','drop(event)');
+  newElement.setAttribute('ondrop','canvasdrop(event)');
   newElement.setAttribute('ondragover','allowDrop(event)');
   newElement.setAttribute('ondragstart','drag(event)');
 
@@ -260,9 +260,50 @@ element_properties(tagID);
 //   animation: 1
 // });
 
+ var sortableInstance = null;
+ var sort =true;
+
+// function toggleSortable() {
+//   if (sortableInstance && sortableInstance.option("disabled")) {
+//     sortableInstance.option("disabled", false);
+//   } else {
+//     if (sortableInstance) {
+//       sortableInstance.option("disabled", true); 
+//     } else {
+//       sortableInstance = Sortable.create(document.querySelector('.sortable'), {
+//         animation: 1
+//       });
+//     }
+//   }
+// }
+
+function toggleSortable() {
+  if (sortableInstance ) { 
+    if (sort==true) {sortableInstance.option("disabled", true);
+    sort =false;
+    document.getElementById('sortButton').textContent = "Enable sorting";
+    console.log("sorting disable");
+  } else {
+    sortableInstance = Sortable.create(document.querySelector('.sortable'), {
+      animation: 1
+    });   
+    console.log("sorting enable");
+    sort=true;
+    document.getElementById('sortButton').textContent = "Disable sorting";
+  }
+  } else {
+    sortableInstance = Sortable.create(document.querySelector('.sortable'), {
+      animation: 1
+    });   console.log("sorting enable"); sort=true;
+    document.getElementById('sortButton').textContent = "Disable sorting";
+  }
+}
+
+
 
 var demo = document.getElementById("demo");
 // 
+
 function element_properties(tagID) {
 const xxhr = new XMLHttpRequest();
 var tag_ID = tagID;
@@ -317,9 +358,45 @@ $("#codeMode").click(function () {
 
 
 function createElement() {
+  // const elements = document.getElementsByClassName('nelement');
+  // for (let i = 0; i < elements.length; i++) {
+  //   const element = elements[i];
+  //   const arrowUp = document.createElement('div');
+  //   arrowUp.className = 'arrow-up';
+  //   arrowUp.onclick = () => {
+  //     changeElementOrder(i, i - 1);
+  //   };
+  //   element.appendChild(arrowUp);
 
-
+  //   const arrowDown = document.createElement('div');
+  //   arrowDown.className = 'arrow-down';
+  //   arrowDown.onclick = () => {
+  //     changeElementOrder(i, i + 1);
+  //   };
+  //   element.appendChild(arrowDown);
+  // }
 }
+
+function changeElementOrder(fromIndex, toIndex) {
+  if (toIndex < 0 || toIndex >= nelementsArray.length) {
+    return;
+  }
+  
+  const [element] = nelementsArray.splice(fromIndex, 1);
+  nelementsArray.splice(toIndex, 0, element);
+
+  // Update the index attribute of elements in nelementsArray
+  nelementsArray.forEach((el, index) => {
+    el.setAttribute('index', index);
+  });
+
+  // Rearrange elements on the canvas
+  canvas.innerHTML = '';
+  nelementsArray.forEach((el) => {
+    canvas.appendChild(el);
+  });
+}
+
 
 // -------------------------------nelement dragging-----------------------------//
 function drag(event) {
