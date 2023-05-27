@@ -226,7 +226,7 @@
   <span class="left " style="background-color: #F4A62A;"></span>
   <span class="left " style="background-color: #16A085;"></span>
 </div>
-  
+  <button id="reload" onclick="refreshIframe()"><i class="fa-solid fa-rotate-right" style="color: #ffffff;"></i></button>
 </div>
     <div id="canvas" class=" sortable" ondrop="canvasDrop(event)">
 
@@ -244,7 +244,13 @@
   </div>
 
 </div>
-<iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview"><button id="sortButton" onclick="toggleSortable()">Enable Sorting</button></iframe>
+  <button id="sortButton" onclick="toggleSortable()">Enable Sorting</button>
+  <?php
+  // echo '<button id="save-button">Save Canvas</button>'
+  ?>
+  <iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview">
+
+  </iframe>
 
 
 
