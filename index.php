@@ -244,27 +244,27 @@
   </div>
 
 </div>
-<iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview"></iframe>
+<iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview"><button id="sortButton" onclick="toggleSortable()">Enable Sorting</button></iframe>
 
-<div id="preview" >
-<button id="sortButton" onclick="toggleSortable()">Enable Sorting</button>
-<?php
-   // Import the Element class from the model folder
-    include_once 'models/Element.php';
-    include_once 'config/Database.php';
 
-    // Instantiate a new Element object
-    $database = new Database();
-    $db = $database->connect();
 
-    $element = new Element($db);
-    ini_set('display_errors', true);
-    error_reporting(E_ALL);
+// <?php
+//    // Import the Element class from the model folder
+//     include_once 'models/Element.php';
+//     include_once 'config/Database.php';
 
-    // Build the DOM tree for the given root node ID
-   echo  $html = $element->generate_html_from_database3(); 
-    ?>
-</div> -->
+//     // Instantiate a new Element object
+//     $database = new Database();
+//     $db = $database->connect();
+
+//     $element = new Element($db);
+//     ini_set('display_errors', true);
+//     error_reporting(E_ALL);
+
+//     // Build the DOM tree for the given root node ID
+//    echo  $html = $element->generate_html_from_database3(); 
+//     ?>
+
 </div>   
 </div>
 <div id="displayCode" class="col-xs-8">
