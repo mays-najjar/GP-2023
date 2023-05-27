@@ -19,12 +19,7 @@
     <!-- <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.3/css/all.css" integrity="xxxx" crossorigin="anonymous">   -->
 
       <script src="https://kit.fontawesome.com/5076f4faae.js" crossorigin="anonymous"></script>
-      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="/ddr-icon/css/ddr-icon.css"> -->
- 
-       <!-- jquery -->
+    
        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -64,14 +59,14 @@
             <button class="preview-button three_btns" >
             <i class="fa-regular fa-eye" style="color: #ffffff; "></i>
               <span class="hedden-content">Preview</span> </button>
-            <button class="empty-button three_btns" >  
+            <button class="empty-button three_btns"  onclick="executeSQL()" >  
                 <i class="fa-regular fa-trash-can" style="color: #ffffff; "></i>
                 <span class="hedden-content" >Empty Page
             </button>
         </div>
          
         <?php
-     /*Import the Element class from the model folder
+     //Import the Element class from the model folder
     include_once 'models/Element.php';
     include_once 'config/Database.php';
 
@@ -84,7 +79,7 @@
     error_reporting(E_ALL);
 
     // Build the DOM tree for the given root node ID
-    $html = $element->generate_html_from_database();*/
+    $html = $element->generate_html_from_database3();
     ?>
     <script>
       function downloadHtml() {
@@ -121,7 +116,7 @@
         const xhr = new XMLHttpRequest();
 
         // set up the request parameters
-        xhr.open('DELETE', 'http://localhost/GP-2023-4/api/element/deleteAll.php'); // replace 'execute_sql.php' with the URL of the server-side script that executes the SQL query
+        xhr.open('DELETE', 'http://localhost/GP-2023/api/element/deleteAll.php'); 
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
         // set up the callback function
@@ -243,17 +238,18 @@
 <div id="myModal" class="modal" style="height:100px ; background-color: red;">
 
   <!-- Modal content -->
-  <div class="modal-content">
+  <div class="modal-content"> 
   <span id="close">&times;</span>
     <input>
   </div>
 
 </div>
+<iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview"></iframe>
 
 <div id="preview" >
 <button id="sortButton" onclick="toggleSortable()">Enable Sorting</button>
 <?php
-  /*  // Import the Element class from the model folder
+   // Import the Element class from the model folder
     include_once 'models/Element.php';
     include_once 'config/Database.php';
 
@@ -266,9 +262,9 @@
     error_reporting(E_ALL);
 
     // Build the DOM tree for the given root node ID
-   echo  $html = $element->generate_html_from_database(); */
+   echo  $html = $element->generate_html_from_database3(); 
     ?>
-</div>
+</div> -->
 </div>   
 </div>
 <div id="displayCode" class="col-xs-8">
@@ -289,7 +285,7 @@
 <div id="codeBody"></div>
 <pre>
     <?php
-/*
+
     // Import the Element class from the model folder
     include_once 'models/Element.php';
     include_once 'config/Database.php';
@@ -303,7 +299,7 @@
     error_reporting(E_ALL);
 
     // Build the DOM tree for the given root node ID and store the generated HTML in a variable
-   $element->codeMode();*/
+   $element->codeMode();
 
     ?>
 </div>

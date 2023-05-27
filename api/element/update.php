@@ -22,6 +22,7 @@
   $element->element_id = $data->element_id;
 
   $element->tag_id = $data->tag_id;
+  $element->content = $data->content;
   $element->parent_id = $data->parent_id;
   $element->children_order = $data->children_order;
 
@@ -29,7 +30,7 @@
   // Update Element
   if($element->update()) {
     echo json_encode(
-      array('message' => 'Element Updated')
+      array('message' => 'Title Updated')
     );
   } else {
     echo json_encode(
