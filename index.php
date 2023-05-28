@@ -220,19 +220,18 @@
 
   </div>
 
-  <!-- --------------------CANVAS----------------------- -->
-
-  <div id="displayDesign" class="col-xs-8">
-    <div>
-      <div class="canvas-head ">
-        <div class="three-circle">
-          <span class="left " style="background-color: #E74C3C;"></span>
-          <span class="left " style="background-color: #F4A62A;"></span>
-          <span class="left " style="background-color: #16A085;"></span>
-        </div>
-
-      </div>
-      <div id="canvas" class=" sortable" ondrop="canvasDrop(event)">
+    <!-- --------------------CANVAS----------------------- -->
+    
+    <div id="displayDesign" class="col-xs-8">
+      <div><div class="canvas-head " >
+    <div class="three-circle">
+  <span class="left " style="background-color: #E74C3C;"></span>
+  <span class="left " style="background-color: #F4A62A;"></span>
+  <span class="left " style="background-color: #16A085;"></span>
+</div>
+  
+</div>
+    <div id="canvas" class=" sortable" ondrop="canvasDrop(event)">
 
       </div>
 
@@ -247,8 +246,8 @@
           <input>
         </div>
 
-      </div>
-      <iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview"><button id="sortButton" onclick="toggleSortable()">Enable Sorting</button></iframe>
+</div>
+<iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview"><button id="sortButton" onclick="toggleSortable()">Enable Sorting</button></iframe>
 
 
 
@@ -436,7 +435,7 @@ function saveData() {
 
   // Send the AJAX request
   var xhr = new XMLHttpRequest();
-  var url = "http://localhost/GP-2023-1/api/StyleElement/update.php";
+  var url = "http://localhost/GP-2023/api/StyleElement/update.php";
   xhr.open("PUT", url, true);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onreadystatechange = function () {

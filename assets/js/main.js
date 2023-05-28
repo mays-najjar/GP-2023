@@ -487,7 +487,19 @@ function drop(event) {
   // event.appendChild(nodElement); 
  }
 }
-;
+// ;
+
+// refresh iframe
+function refreshIframe() {
+  var iframe = document.getElementById("preview");
+     // Reload the iframe content
+     iframe.contentWindow.location.reload();
+}
+
+// // Refresh the iframe every 5 seconds (adjust the interval as needed)
+// setInterval(refreshIframe, 5000);
+
+
 
 
 
