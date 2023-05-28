@@ -10,9 +10,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="assets/css/style.css" />
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="assets/css/style.css" />
         <title >GP-2023 </title>
     
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
@@ -454,7 +454,20 @@
   
     </div>
 </div>
-
+<div id="imgModal" class="imgModal">
+  <span onclick="document.getElementById('imgModal').style.display='none'" class="close" title="Close Modal">×</span>
+  <form class="modal-content" action="/action_page.php">
+    <div class="container">
+      <h1>Delete Account</h1>
+      <p>Are you sure you want to delete your account?</p>
+    
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('imgModal').style.display='none'" class="cancelbtn">Cancel</button>
+        <button type="button" onclick="document.getElementById('imgModal').style.display='none'" class="deletebtn">Delete</button>
+      </div>
+      </div> </form> 
+         </div>
+         
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>  
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
 <script src="assets/js/jquery-3.6.4.min.js"></script>
