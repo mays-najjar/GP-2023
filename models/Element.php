@@ -59,6 +59,7 @@ class Element
     {
         $query = 'INSERT INTO ' . $this->table . '
               SET 
+              element_id = :element_id,
               tag_id = :tag_id,
               children_order = :children_order,
               parent_id = :parent_id,
@@ -66,13 +67,14 @@ class Element
 
         $stmt = $this->conn->prepare($query);
 
+        $this->element_id = htmlspecialchars(strip_tags($this->element_id));
+
         $this->tag_id = htmlspecialchars(strip_tags($this->tag_id));
         $this->children_order = htmlspecialchars(strip_tags($this->children_order));
         $this->parent_id = htmlspecialchars(strip_tags($this->parent_id));
         $this->content = htmlspecialchars(strip_tags($this->content));
-
-
-
+        
+        $stmt->bindParam(':element_id', $this->element_id);
         $stmt->bindParam(':tag_id', $this->tag_id);
         $stmt->bindParam(':children_order', $this->children_order);
         $stmt->bindParam(':parent_id', $this->parent_id);
