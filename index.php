@@ -83,9 +83,7 @@
     ?>
     <script>
       function downloadHtml() {
-        // create a new Blob object with the HTML content
-        // let htmlVariable = '<html id="2"><head id="1"><title id="1">"My Web Page"</title></head><body id="1"><p id="1">para one </p><p id="2">para two</p><img width="400" height="400"alt="K"> /<div><p>para in div</p>     Div1</div></body></html>';
-
+      
         // create a new Blob object with the HTML content
         const blob = new Blob([<?php echo json_encode($html); ?>], {
           type: 'text/html'
@@ -339,17 +337,17 @@
             </script>   
   
 
- <div id="element_properties" style="display: none;">   pro      </div>
+  <div id="element_properties" style="display: none;">   pro      </div>
  <div id="style">
  <div class="input-group mb-3" >
   <div class="input-group-prepend"style="display: inline-block; margin-right:10px;">
     <label class="input-group-text" for="inputGroupSelect01" >Display</label>
   </div>
   <select class="custom-select " id="inputGroupSelect01" style="display: inline-block;">
-    <option value="1" selected>block</option>
-    <option value="2">inline</option>
-    <option value="3">inline-block</option>
-    <option value="4">none</option>
+    <option value="block" selected>block</option>
+    <option value="inline">inline</option>
+    <option value="inline-block">inline-block</option>
+    <option value="none">none</option>
   </select>
 </div>
 
@@ -365,11 +363,11 @@
   <div class="input-group-prepend"style="display: inline-block; margin-right:10px;">
     <label class="input-group-text" for="inputGroupSelect01" >Text-aligen</label>
   </div>
-  <select class="custom-select " id="inputGroupSelect01" style="display: inline-block;">
-    <option value="1" selected>center</option>
-    <option value="2">end</option>
-    <option value="3">left</option>
-    <option value="4">right</option>
+  <select class="custom-select " id="inputGroupSelect03" style="display: inline-block;">
+    <option value="center" selected>center</option>
+    <option value="end">end</option>
+    <option value="left">left</option>
+    <option value="right">right</option>
   </select>
 </div>
 
@@ -410,41 +408,14 @@
 
   <input type="color" class="form-control " id="inputGroupSelect07" style="display: inline-block;">
 </div>
+<!-- Add an onclick event to the "Save" button -->
+<button type="button" class="btn btn-primary" id="saveButton" onclick="saveData()">Save</button>
 
 <script>
 
-  // var inputField = document.getElementById('inputGroupSelect04');
-  // inputField.addEventListener('keydown', function(event) {
-  //   // this script for px , rem , %  units
-  //   if (event.keyCode === 38) { // Up arrow key
-  //     event.preventDefault();
-  //     inputField.stepUp();
-  //   } else if (event.keyCode === 40) { // Down arrow key
-  //     event.preventDefault();
-  //     inputField.stepDown();
-  //   }
-  // });
-
-  // inputField.addEventListener('input', function() {
-  //   updateValueWithUnit();
-  // });
-
-  // var unitSelect = document.getElementById('unitSelect');
-  // unitSelect.addEventListener('change', function() {
-  //   updateValueWithUnit();
-  // });
-
-  // function updateValueWithUnit() {
-  //   var value = inputField.value;
-  //   var unit = unitSelect.value;
-  //   var updatedValue = value + unit;
-  //   inputField.value = updatedValue;
-  // }
-</script>
-
-<button type="button" class="btn btn-primary" id="saveButton">Save</button>
 
 
+</script> 
 </div>
             <!-- <iframe src="properties_info.php" title="properties_info" class="col-xs-12" name="my-iframe">
 

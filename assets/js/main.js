@@ -541,7 +541,7 @@ function refreshIframe() {
      // Reload the iframe content
      iframe.contentWindow.location.reload();
      // call the Function to update the order 
-     updateOrder(canvas);
+     //updateOrder(canvas);
 }
 // Function to update the order of nelements recursively and send to API
 function updateOrder(parentElement) {
@@ -587,6 +587,41 @@ function updateOrder(parentElement) {
 
     updateOrder(child);
   });
+}
+
+function saveData() {
+  // Get the selected values from the input elements
+  var select1Value = document.getElementById("inputGroupSelect01").value;
+  var select2Value = document.getElementById("inputGroupSelect02").value;
+  var select3Value = document.getElementById("inputGroupSelect03").value;
+  var select4Value = document.getElementById("inputGroupSelect04").value;
+  var select5Value = document.getElementById("inputGroupSelect05").value;
+  var select6Value = document.getElementById("inputGroupSelect06").value;
+  var select7Value = document.getElementById("inputGroupSelect07").value;
+
+  // Create the data object
+  var data = {
+    element_id: 77,
+    styleValues: select1Value + ", " + select2Value + ", " + select3Value + ", " + select4Value + ", " + select5Value + ", " + select6Value + ", " + select7Value
+  };
+
+
+  // Send the AJAX request
+  var xhr = new XMLHttpRequest();
+  var url = "http://localhost/GP-2023/api/StyleElement/update.php";
+  xhr.open("PUT", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        // Handle the response here
+      } else {
+        // Handle the error here
+      }
+    }
+  };
+  xhr.send(JSON.stringify(data));
 }
 
 // // Function to update the order of nelements recursively
