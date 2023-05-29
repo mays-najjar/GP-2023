@@ -3,7 +3,7 @@ const canvas = document.getElementById('canvas');
 const toolbar = document.getElementById('toolbar');
 // var selected_tag =document.getElementById('selected_tag');
 let tempElementID = "";
-let counter = 0;
+let counter = 7;
 let initialPosition = null;
 var myTags = [];// array to store data
 var nelementsArray =[];
@@ -21,7 +21,8 @@ var hasNelementClass = 0 ;
 document.querySelectorAll('.element').forEach(element => {
 
   element.addEventListener('dragstart', (event) => {
-    console.log("start");    
+    console.log("start");   
+    draggedElement = event.target; 
     const droppedElement= event.target;   
     console.log("droppedElement"); 
     console.log(droppedElement);
@@ -142,7 +143,7 @@ function canvasDrop(event){
   
 
   newElement.className = 'nelement';                 //the DIV class IS (nelement),
-  newElement.id = tagName + '_' + counter;
+  newElement.id =counter;
   id_value = tagName; //???????
   newElement.textContent = tagName;              //the DIV textContent property is set to the elementText value. 
   newElement.style.left = event.clientX.canvas + 'px';   //IN GENERAL >>  event.clientX property returns the horizontal coordinate (in pixels)  >>>>>     event.clientX.canvas expression sets the LEFT style of the new element    
@@ -206,10 +207,6 @@ var order =index+1;
   // }
 
 
-  // // If dropping is not allowed or no element was dragged, return the dragged element to its original position
-  // if (!droppingAllowed || !draggedElement) {
-  //   canvas.appendChild(draggedElement);
-  // }
 
   //--------------------------------
   // post ajax
@@ -423,8 +420,9 @@ function drag(event) {
    draggedIndex=parseInt(nelementsArray.indexOf(draggedElement)); //true
   console.log("dragged Index IS");
   console.log(parseInt(draggedIndex));
-
-  event.dataTransfer.setData("text", event.target.id);
+  console.log("dragged id IS");
+  console.log(event.target.id);
+  event.dataTransfer.setData("id", event.target.id);
   event.dataTransfer.setData('tagLevel', event.target.getAttribute('tag_level'));
     event.dataTransfer.setData('tagName', event.target.getAttribute('tag_name'));
     event.dataTransfer.setData('tagID', event.target.getAttribute('tag_ID'));
@@ -474,16 +472,38 @@ function drop(event) {
   // event.preventDefault();
   console.log("hi nelement on canvas");
   const targetElement = event.target;
+  console.log("targetElement:",targetElement);
+  console.log("targetElement id:",targetElement.id);
   console.log("dragged Index IS");
   console.log (draggedIndex);
 
+  var draggedElementId = draggedElement.id;
+  var oldParentID = $('#' + draggedElementId).parent().attr('id');
+  console.log("old parent ID of dragged element");
+  console.log(oldParentID);
+
+  var droppedElementId = targetElement.id;
+  var newParentID = targetElement.id;
+  console.log("new parent Element ID");
+  console.log(newParentID);
+  
+  updateChildElementOrders(newParentID);
   // if (targetElement === draggedElement) {
   //   return;
   // }
-  if (targetElement=== canvas) {
-    console.log("you in canvas");  
+  if (oldParentID==newParentID) {
+    console.log("you already in in this parent "); 
+    console.log("order must changed"); 
+
   const targetIndex = nelementsArray.indexOf(targetElement);
   console.log ("targetIndex"); console.log (targetIndex);
+  //   // var parentElement = event.target.parentNode;
+  // var droppedElementId = event.dataTransfer.getData("id");
+  // var parentElementID = $('#' + droppedElementId).parent().id;
+  // console.log("parent Element ID");
+  // console.log(parentElementID);
+
+  
     // const removedElement=nelementsArray.splice(draggedIndex, 1);
     // canvasElements.splice(targetIndex, 0, removedElement);
     // const draggedIndex = parseInt(draggedElement.getAttribute('data-index'));
@@ -493,10 +513,11 @@ function drop(event) {
   } else {
     console.log("you not in canvas");
     targetElement.appendChild(draggedElement);
-    console.log("parent is");
-    console.log(targetElement.parent());
-
-  var data = event.dataTransfer.getData("text");
+ 
+  //   var droppedElementId = event.dataTransfer.getData("id");
+  // var parentElementID = targetElement.id;
+  // console.log("Parent Element ID:", parentElementID);
+  
   // event.target.appendChild(document.getElementById(data));
   const tagLevel = event.dataTransfer.getData('tagLevel');
   console.log("tagLevel IS");
@@ -509,6 +530,7 @@ function drop(event) {
   console.log(tagID);
  
   const nodElement = document.createElement(tagName);
+  nodElement.id== event.dataTransfer.getData("id");
   nodElement.style.left = event.clientX.canvas + 'px';   //IN GENERAL >>  event.clientX property returns the horizontal coordinate (in pixels)  >>>>>     event.clientX.canvas expression sets the LEFT style of the new element    
   nodElement.style.top = event.clientY.canvas + 'px';    //IN GENERAL >> event.clientY property returns the vertical coordinate (in pixels)     >>>>>     event.clientY.canvas sets the TOP style
 
@@ -541,9 +563,8 @@ function refreshIframe() {
      // Reload the iframe content
      iframe.contentWindow.location.reload();
      // call the Function to update the order 
-     updateOrder(canvas);
+    //  updateOrder(canvas);
 }
-// Function to update the order of nelements recursively and send to API
 function updateOrder(parentElement) {
   const childElements = parentElement.querySelectorAll('.nelement');
   const sortedChildElements = Array.from(childElements).sort((a, b) => {
@@ -555,11 +576,16 @@ function updateOrder(parentElement) {
   sortedChildElements.forEach((child, index) => {
     child.style.order = 6;
     const elementId = child.getAttribute('element_id'); // Assuming element_id is an attribute of the child element
+    const previousContent = child.getAttribute('content'); // Assuming content is an attribute of the child element
+    const parentElementId = child.getAttribute('parent_id'); // Assuming parent_id is an attribute of the child element
 
     // Send updated order value to the API
     const requestData = {
       element_id: elementId,
-      new_order: index + 1
+      tag_id: child.getAttribute('tag_id'), // Assuming tag_id is an attribute of the child element
+      content: previousContent,
+      parent_id: parentElementId,
+      children_order: index + 1
     };
 
     // Use the appropriate URL for your API endpoint
@@ -567,12 +593,13 @@ function updateOrder(parentElement) {
 
     // Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', apiUrl);
+    xhr.open('PUT', apiUrl);
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        console.log(requestData);
+        const response = JSON.parse(xhr.responseText);
+        console.log(response.message);
       } else {
         // Handle errors if any
       }
@@ -584,25 +611,59 @@ function updateOrder(parentElement) {
 
     xhr.send(JSON.stringify(requestData));
 
-
     updateOrder(child);
   });
 }
 
-// // Function to update the order of nelements recursively
-// function updateOrder(parentElement) {
-//   const childElements = parentElement.querySelectorAll('.nelement');
-//   const sortedChildElements = Array.from(childElements).sort((a, b) => {
-//     const aRect = a.getBoundingClientRect();
-//     const bRect = b.getBoundingClientRect();
-//     return aRect.top - bRect.top;
-//   });
 
-//   sortedChildElements.forEach((child, index) => {
-//     child.style.order = index + 1;
-//     updateOrder(child);
-//   });
-// }
+
+
+function updateChildElementOrders(parentElementId) {
+  // Get the parent element
+  var parentElement = document.getElementById(parentElementId);
+  
+  // Get the direct children elements
+  var childrenElements = parentElement.children;
+
+  // Sort the children elements based on their vertical position
+  var sortedElements = Array.from(childrenElements).sort(function(a, b) {
+    var aTop = a.getBoundingClientRect().top;
+    var bTop = b.getBoundingClientRect().top;
+    return aTop - bTop;
+  });
+  
+  // Prepare the data to be sent
+  var requestData = {
+    element_id: parentElementId,
+    children_order: []
+  };
+  
+  // Generate the updated order of children
+  sortedElements.forEach(function(child, index) {
+    requestData.children_order.push({
+      child_id: child.id,
+      order: index + 1
+    });
+  });
+
+  // Make the AJAX call to update the orders
+  $.ajax({
+    url: 'http://localhost/GP-2023/api/element/update.php',
+    type: 'PUT',
+    dataType: 'json',
+    data: JSON.stringify(requestData),
+    success: function(response) {
+      console.log(response.message);
+      // Perform any additional actions upon successful update
+    },
+    error: function(xhr, status, error) {
+      console.error('Failed to update element order:', error);
+    }
+  });
+}
+
+
+
 
 // // Refresh the iframe every 5 seconds (adjust the interval as needed)
 // setInterval(refreshIframe, 5000);
