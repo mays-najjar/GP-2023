@@ -185,7 +185,7 @@ const targetElement = event.target;
   const targetIndex = parseInt(targetElement.getAttribute('index'));
   console.log(targetIndex);
   newElement.setAttribute('index',index);
-
+var order =index+1;
   // $(".nelement").removeClass('selected');
 
 
@@ -225,7 +225,7 @@ const targetElement = event.target;
 
   createElement();
 
-  addToDatabase(counter,tagID,newElement.textContent,5,counter);
+  addToDatabase(counter,tagID,newElement.textContent,5,order);
  // element_properties ajax
   element_properties(tagID,counter);  //counter is set for auto-increment element_id
 //} // end if condition
