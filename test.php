@@ -3,7 +3,9 @@ $conn = mysqli_connect('localhost', 'root', '', 'html_tag') or die('connection f
 // Retrieve the element's attributes and their values
 $tag_id = $_POST['tag_ID'];
 
+$element_id = $_POST['element_ID'];
 echo "<br>Tag Id:" . $tag_id;
+echo "<br>Element Id:" . $element_id;
 
 $query = "SELECT a.attribute_id, a.attribute_name
     FROM attribute a
