@@ -3,7 +3,7 @@ const canvas = document.getElementById('canvas');
 const toolbar = document.getElementById('toolbar');
 // var selected_tag =document.getElementById('selected_tag');
 let tempElementID = "";
-let counter = 0;
+let counter = 7;
 let initialPosition = null;
 var myTags = [];// array to store data
 var nelementsArray =[];
@@ -217,25 +217,7 @@ const targetElement = event.target;
   // post ajax
 
   // Send an AJAX request to create the element on the server
-
-  const xhr = new XMLHttpRequest();
-  const url = 'http://localhost/GP-2023-10/api/element/create.php';
-  const data = {
-    "tag_id": tagID,
-    "content": newElement.textContent,
-    "parent_id": "5",
-    "children_order": "1"
-  };
-  xhr.open('POST', url, true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      const response = JSON.parse(xhr.responseText);
-      console.log(response.message);
-    }
-  };
-  xhr.send(JSON.stringify(data));
-
+  addToDatabase(counter,tagID,newElement.textContent,5,counter);
 // element_properties ajax
 element_properties(tagID);
 
@@ -348,6 +330,31 @@ function drag(event) {
 
     
 }
+
+
+function addToDatabase(element_id,tag_id,content,parent_id,children_order){
+  // Send an AJAX request to create the element on the server
+ 
+  const xhr = new XMLHttpRequest();
+ const url = 'http://localhost/GP-2023/api/element/create.php';
+ let data = {
+   "element_id": element_id,
+   "tag_id": tag_id,
+   "content": content,
+   "parent_id": parent_id,
+   "children_order": children_order
+ };
+ xhr.open('POST', url, true);
+ xhr.setRequestHeader('Content-Type', 'application/json');
+ xhr.onreadystatechange = function () {
+   if (xhr.readyState === 4 && xhr.status === 200) {
+     const response = JSON.parse(xhr.responseText);
+     console.log(response.message);
+   }
+ };
+ xhr.send(JSON.stringify(data));
+ 
+ }
 // ------------------------------drag over nelement-----------------------------
 function allowDrop(event) {
   event.preventDefault();

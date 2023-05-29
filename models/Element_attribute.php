@@ -8,6 +8,7 @@ class ElementAttribute
     public $element_id;
     public $attribute_id;
     public $attribute_value;
+    public $attributesArray = array();
 
     public function __construct($db)
     {
@@ -81,4 +82,27 @@ class ElementAttribute
         return false;
 
 
-}}
+}
+
+
+// Function to update all attributes of an element based on its tag ID
+
+// Function to retrieve attribute IDs based on tag ID
+public function getAttributeIdsByTagId($tagId) {
+    $attributeIds = array();
+
+    // Prepare and execute the query to retrieve the attribute IDs from the tag_attribute table
+    $stmt = $this->conn->prepare("SELECT attribute_id FROM tag_attribute WHERE tag_id = ?");
+    $stmt->bindValue(1, $tagId, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Fetch the attribute IDs and store them in the attributeIds array
+    foreach ($result as $row) {
+        // Access the columns of each row using associative array syntax
+        $attributeIds[] = $row['attribute_id'];
+    }
+    return $attributeIds;
+}
+
+}
