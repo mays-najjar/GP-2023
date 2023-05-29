@@ -34,7 +34,7 @@
 <!-- bootstrab js -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- interact js -->
-<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js">
+<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.17"></script>
 
 </head>
