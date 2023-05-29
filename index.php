@@ -9,8 +9,10 @@
     <link rel="icon" href="assets/img/GP.gif" sizes="16x16" >
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> -->
+     <link rel="stylesheet" href="assets/css/style.css" />   
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
         <title >GP-2023 </title>
     
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
@@ -27,8 +29,14 @@
   <!-- sortable  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.13.0/Sortable.min.js"></script>
+
 <!-- bootstrab js -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- interact js -->
+<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js">
+   <script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.17"></script>
+
 </head>
 
 <body>
@@ -129,49 +137,20 @@
     <!-- <iframe class="col-xs-12 platform" src="platform.php"  >     
 
 </iframe> -->
-<div class=" col-xs-2">
-    <form class="pageTitle" action="index.php">
-      <div class="form-group">
-        <label for="title">Page title:</label>
-        <input type="text" class="form-control" id="title" placeholder="Enter page title" name="title">
-      </div>
-      <button type="button" class="btn" style="width: 25%; padding: 0;" onclick="updateElement()">Save</button>
-    </form>
+<div class="col-xs-2">
 
-    <script>
-      function updateElement() {
-        // Get the input value
-        var content = document.getElementById('title').value;
-        var element_id = 4;
-        var tag_id = 12;
-        var parent_id = 3;
-        var children_order = 1;
-        // Create the data object
-        var data = {
-          element_id: element_id,
-          tag_id: tag_id,
-          content: content,
-          parent_id: parent_id,
-          children_order: children_order
-        };
 
-        // Send the AJAX request
-        var xhr = new XMLHttpRequest();
-        xhr.open('PUT', 'http://localhost/GP-2023/api/element/update.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function() {
-          if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-              var response = JSON.parse(xhr.responseText);
-              alert(response.message);
-            } else {
-              alert('Error updating element');
-            }
-          }
-        };
-        xhr.send(JSON.stringify(data));
-      }
-    </script>
+  <div id="login"><a href="login.php">Log in / Sign Up</a></div>
+
+<form class="pageTitle " action="index.php">
+    <div class=" form-group">
+       <label for="title">Page title:</label>
+       
+      <input type="text" class="form-control" id="title" placeholder="Enter page title" name="title">
+    </div>
+    <button type="submit" name="title" class="btn" style=" width: 25%; padding: 0; margin-top:0px;">Save</button>
+   
+  </form>
 
 
 
@@ -247,15 +226,12 @@
   <span class="left " style="background-color: #F4A62A;"></span>
   <span class="left " style="background-color: #16A085;"></span>
 </div>
-  
+  <button id="reload" onclick="refreshIframe()"><i class="fa-solid fa-rotate-right" style="color: #ffffff;"></i></button>
 </div>
-    <div id="canvas" class=" sortable" ondrop="canvasDrop(event)" contenteditable="true">
-        
+    <div id="canvas" class=" sortable" ondrop="canvasDrop(event)">
 
-   <div id="canvasBody">
-   
-   </div>
 </div>
+
 <!-- <button id="myBtn">Open Modal</button> -->
 
 <!-- The Modal -->
@@ -268,26 +244,33 @@
   </div>
 
 </div>
-<iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview"></iframe>
+  <button id="sortButton" onclick="toggleSortable()">Enable Sorting</button>
+  <?php
+  // echo '<button id="save-button">Save Canvas</button>'
+  ?>
+  <iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview">
 
-<!-- <div id="preview" >
-<?php
-   // Import the Element class from the model folder
-    include_once 'models/Element.php';
-    include_once 'config/Database.php';
+  </iframe>
 
-    // Instantiate a new Element object
-    $database = new Database();
-    $db = $database->connect();
 
-    $element = new Element($db);
-    ini_set('display_errors', true);
-    error_reporting(E_ALL);
 
-    // Build the DOM tree for the given root node ID
-   echo  $html = $element->generate_html_from_database3(); 
-    ?>
-</div> -->
+// <?php
+//    // Import the Element class from the model folder
+//     include_once 'models/Element.php';
+//     include_once 'config/Database.php';
+
+//     // Instantiate a new Element object
+//     $database = new Database();
+//     $db = $database->connect();
+
+//     $element = new Element($db);
+//     ini_set('display_errors', true);
+//     error_reporting(E_ALL);
+
+//     // Build the DOM tree for the given root node ID
+//    echo  $html = $element->generate_html_from_database3(); 
+//     ?>
+
 </div>   
 </div>
 <div id="displayCode" class="col-xs-8">
@@ -357,16 +340,136 @@
   
 
  <div id="element_properties" style="display: none;">   pro      </div>
- <div id="style"> style</div>
+ <div id="style">
+ <div class="input-group mb-3" >
+  <div class="input-group-prepend"style="display: inline-block; margin-right:10px;">
+    <label class="input-group-text" for="inputGroupSelect01" >Display</label>
+  </div>
+  <select class="custom-select " id="inputGroupSelect01" style="display: inline-block;">
+    <option value="1" selected>block</option>
+    <option value="2">inline</option>
+    <option value="3">inline-block</option>
+    <option value="4">none</option>
+  </select>
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend" style="display: inline-block; margin-right: 10px;">
+    <label class="input-group-text" for="inputGroupSelect02">Border Color</label>
+  </div>
+
+  <input type="color" class="form-control " id="inputGroupSelect02" style="display: inline-block;">
+</div>
+
+<div class="input-group mb-3" >
+  <div class="input-group-prepend"style="display: inline-block; margin-right:10px;">
+    <label class="input-group-text" for="inputGroupSelect01" >Text-aligen</label>
+  </div>
+  <select class="custom-select " id="inputGroupSelect01" style="display: inline-block;">
+    <option value="1" selected>center</option>
+    <option value="2">end</option>
+    <option value="3">left</option>
+    <option value="4">right</option>
+  </select>
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
+    <label class="input-group-text" for="inputGroupSelect04">Padding</label>
+  </div>
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect04" style="display: inline-block; width: 50px; ">
+  <select id="unitSelect" class="custom-select" style="display: inline-block; margin-left:5px; ">
+    <option value="px" selected>px</option>
+    <option value="%">%</option>
+    <option value="rem">rem</option>
+  </select>
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
+    <label class="input-group-text" for="inputGroupSelect05">Margin</label>
+  </div>
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect05" style="display: inline-block; width: 50px; ">
+  <select id="unitSelect" class="custom-select" style="display: inline-block; margin-left:5px; ">
+    <option value="px" selected>px</option>
+    <option value="%">%</option>
+    <option value="rem">rem</option>
+  </select>
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend" style="display: inline-block; margin-right: 10px;">
+    <label class="input-group-text" for="inputGroupSelect06">Background Color</label>
+  </div>
+
+  <input type="color" class="form-control " id="inputGroupSelect06" style="display: inline-block;">
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend" style="display: inline-block; margin-right: 10px;">
+    <label class="input-group-text" for="inputGroupSelect07">Text Color</label>
+  </div>
+
+  <input type="color" class="form-control " id="inputGroupSelect07" style="display: inline-block;">
+</div>
+
+<script>
+
+  // var inputField = document.getElementById('inputGroupSelect04');
+  // inputField.addEventListener('keydown', function(event) {
+  //   // this script for px , rem , %  units
+  //   if (event.keyCode === 38) { // Up arrow key
+  //     event.preventDefault();
+  //     inputField.stepUp();
+  //   } else if (event.keyCode === 40) { // Down arrow key
+  //     event.preventDefault();
+  //     inputField.stepDown();
+  //   }
+  // });
+
+  // inputField.addEventListener('input', function() {
+  //   updateValueWithUnit();
+  // });
+
+  // var unitSelect = document.getElementById('unitSelect');
+  // unitSelect.addEventListener('change', function() {
+  //   updateValueWithUnit();
+  // });
+
+  // function updateValueWithUnit() {
+  //   var value = inputField.value;
+  //   var unit = unitSelect.value;
+  //   var updatedValue = value + unit;
+  //   inputField.value = updatedValue;
+  // }
+</script>
+
+<button type="button" class="btn btn-primary" id="saveButton">Save</button>
+
+
+</div>
             <!-- <iframe src="properties_info.php" title="properties_info" class="col-xs-12" name="my-iframe">
 
 </iframe> -->
-         <div id="demo" style="background-color:#E74C3C ; height: 6px;">
+  
          
   
     </div>
 </div>
-
+<div id="imgModal" class="imgModal">
+  <span onclick="document.getElementById('imgModal').style.display='none'" class="close" title="Close Modal">×</span>
+  <form class="modal-content" action="/action_page.php">
+    <div class="container">
+      <h1>Delete Account</h1>
+      <p>Are you sure you want to delete your account?</p>
+    
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('imgModal').style.display='none'" class="cancelbtn">Cancel</button>
+        <button type="button" onclick="document.getElementById('imgModal').style.display='none'" class="deletebtn">Delete</button>
+      </div>
+      </div> </form> 
+         </div>
+         
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>  
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
 <script src="assets/js/jquery-3.6.4.min.js"></script>
 <script src="assets/js/main.js"></script>
 </body>

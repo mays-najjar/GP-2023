@@ -3,7 +3,7 @@ const canvas = document.getElementById('canvas');
 const toolbar = document.getElementById('toolbar');
 // var selected_tag =document.getElementById('selected_tag');
 let tempElementID = "";
-let counter = 7;
+let counter = 0;
 let initialPosition = null;
 var myTags = [];// array to store data
 var nelementsArray =[];
@@ -133,7 +133,13 @@ function canvasDrop(event){
   
 //if (nelementsArray[this].length) is checking if the element in nelementsArray at the index specified by this has a length property that is not zero. If the length is not zero, the code within the if block will be executed.
   //  else{
-  const newElement = document.createElement(tagName);
+    let newElement;
+    if(tagName=="img"){
+ newElement = document.createElement('img');
+ document.getElementById('imgModal').style.display='block';
+}
+  else{   newElement = document.createElement(tagName);}
+  
 
   newElement.className = 'nelement';                 //the DIV class IS (nelement),
   newElement.id = tagName + '_' + counter;
@@ -147,10 +153,14 @@ function canvasDrop(event){
   newElement.setAttribute('draggable', 'true');
   newElement.setAttribute('tag_name', tagName);
   newElement.setAttribute('tag_iD', tagID);
+  newElement.setAttribute('element_iD', counter);
   newElement.setAttribute('tag_level', tagLevel);
   // draggable nelements ondrop=
-  newElement.setAttribute('ondrop','drop(event)');
+  if(tagName!="img"){
+    // console.log("you can drop on it , not image");
+    newElement.setAttribute('ondrop','canvasdrop(event)');
   newElement.setAttribute('ondragover','allowDrop(event)');
+  }
   newElement.setAttribute('ondragstart','drag(event)');
 
   newElement.setAttribute("data-toggle", "tooltip");
@@ -175,21 +185,10 @@ const targetElement = event.target;
   const targetIndex = parseInt(targetElement.getAttribute('index'));
   console.log(targetIndex);
   newElement.setAttribute('index',index);
-
+var order =index+1;
   // $(".nelement").removeClass('selected');
 
 
-  const xhhr = new XMLHttpRequest();
-
-  xhhr.onreadystatechange = function () {
-    if (xhhr.readyState == 4 && xhhr.status == 200) {
-      document.getElementById("element_properties").innerHTML = xhhr.responseText;
-    }
-  };
-
-  xhhr.open("POST", "test.php", true);
-  xhhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhhr.send("tagID=1&itemID=2");
   // updateProperties(newElement.id);
   // show the properties block and set its values based on the dropped element
   const propertiesBlock = document.getElementById('element_properties');
@@ -202,11 +201,10 @@ const targetElement = event.target;
   //------------------------------------
 
   // Remove the dragged element from its original position
-  if (draggedElement) {
-    draggedElement.remove();
-  }
+  // if (draggedElement) {
+  //   draggedElement.remove();
+  // }
 
-  // Rest of your existing code for dropping the element
 
   // // If dropping is not allowed or no element was dragged, return the dragged element to its original position
   // if (!droppingAllowed || !draggedElement) {
@@ -217,18 +215,38 @@ const targetElement = event.target;
   // post ajax
 
   // Send an AJAX request to create the element on the server
-  addToDatabase(counter,tagID,newElement.textContent,5,counter);
+
+  const xhr = new XMLHttpRequest();
+  const url = 'http://localhost/GP-2023-10/api/element/create.php';
+  const data = {
+    "tag_id": tagID,
+    "content": newElement.textContent,
+    "parent_id": "5",
+    "children_order": "1"
+  };
+  xhr.open('POST', url, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      const response = JSON.parse(xhr.responseText);
+      console.log(response.message);
+    }
+  };
+  xhr.send(JSON.stringify(data));
+
 // element_properties ajax
 element_properties(tagID);
 
 
 
 
-  // call functions
+  // call functions on canvasDrop function
 
   createElement();
-  console.log
- 
+
+  addToDatabase(counter,tagID,newElement.textContent,5,order);
+ // element_properties ajax
+  element_properties(tagID,counter);  //counter is set for auto-increment element_id
 //} // end if condition
 
 // });// end drop event
@@ -242,14 +260,44 @@ element_properties(tagID);
 //   animation: 1
 // });
 
+ var sortableInstance = null;
+ var sort =true;
+
+
+function toggleSortable() {
+  if (sortableInstance ) { 
+    if (sort==true) {sortableInstance.option("disabled", true);
+    sort =false;
+    document.getElementById('sortButton').textContent = "Enable sorting";
+    console.log("sorting disable");
+  } else {
+    sortableInstance = Sortable.create(document.querySelector('.sortable'), {
+      animation: 1
+    });   
+    console.log("sorting enable");
+    sort=true;
+    document.getElementById('sortButton').textContent = "Disable sorting";
+  }
+  } else {
+    sortableInstance = Sortable.create(document.querySelector('.sortable'), {
+      animation: 1
+    });   console.log("sorting enable"); sort=true;
+    document.getElementById('sortButton').textContent = "Disable sorting";
+  }
+}
+
+
 
 var demo = document.getElementById("demo");
 // 
-function element_properties(tagID) {
+
+function element_properties(tagID,elementID) {
 const xxhr = new XMLHttpRequest();
 var tag_ID = tagID;
+var element_ID = elementID;
 xxhr.onreadystatechange = function() {
    if (xxhr.readyState == 4 && xxhr.status == 200) {
+    console.log(" tag_ID & element_ID");
     console.log(xxhr.responseText);
     document.getElementById("element_properties").innerHTML = xxhr.responseText;
    }
@@ -257,7 +305,7 @@ xxhr.onreadystatechange = function() {
  
 xxhr.open("POST", "test.php", true);
 xxhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-const datta = "tag_ID=" + encodeURIComponent(tag_ID);
+const datta = "tag_ID=" + encodeURIComponent(tag_ID) + "&element_ID=" + encodeURIComponent(element_ID);
 xxhr.send(datta);
 }
 //selected function for nelement
@@ -270,6 +318,10 @@ function selected(tag) {
       $(".nelement").removeClass('selected');
       // Select the clicked element
       $(this).addClass('selected');
+      console.log("parentID is:");
+      console.log($(this).parent());
+      console.log("parent tagName is:");
+      console.log($(this).parent().prop('tagName'));
         //  console.log(tagID);
    var tag_ID = tag.getAttribute("tag_id");
    console.log(tag_ID);
@@ -296,12 +348,70 @@ $("#codeMode").click(function () {
 });
 
 
+function addToDatabase(element_id,tag_id,content,parent_id,children_order){
+ // Send an AJAX request to create the element on the server
 
-
-function createElement() {
-
+ const xhr = new XMLHttpRequest();
+const url = 'http://localhost/GP-2023/api/element/create.php';
+let data = {
+  "element_id": element_id,
+  "tag_id": tag_id,
+  "content": content,
+  "parent_id": parent_id,
+  "children_order": children_order
+};
+xhr.open('POST', url, true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    const response = JSON.parse(xhr.responseText);
+    console.log(response.message);
+  }
+};
+xhr.send(JSON.stringify(data));
 
 }
+
+function createElement() {
+  // const elements = document.getElementsByClassName('nelement');
+  // for (let i = 0; i < elements.length; i++) {
+  //   const element = elements[i];
+  //   const arrowUp = document.createElement('div');
+  //   arrowUp.className = 'arrow-up';
+  //   arrowUp.onclick = () => {
+  //     changeElementOrder(i, i - 1);
+  //   };
+  //   element.appendChild(arrowUp);
+
+  //   const arrowDown = document.createElement('div');
+  //   arrowDown.className = 'arrow-down';
+  //   arrowDown.onclick = () => {
+  //     changeElementOrder(i, i + 1);
+  //   };
+  //   element.appendChild(arrowDown);
+  // }
+}
+
+function changeElementOrder(fromIndex, toIndex) {
+  if (toIndex < 0 || toIndex >= nelementsArray.length) {
+    return;
+  }
+  
+  const [element] = nelementsArray.splice(fromIndex, 1);
+  nelementsArray.splice(toIndex, 0, element);
+
+  // Update the index attribute of elements in nelementsArray
+  nelementsArray.forEach((el, index) => {
+    el.setAttribute('index', index);
+  });
+
+  // Rearrange elements on the canvas
+  canvas.innerHTML = '';
+  nelementsArray.forEach((el) => {
+    canvas.appendChild(el);
+  });
+}
+
 
 // -------------------------------nelement dragging-----------------------------//
 function drag(event) {
@@ -383,7 +493,8 @@ function drop(event) {
   } else {
     console.log("you not in canvas");
     targetElement.appendChild(draggedElement);
-
+    console.log("parent is");
+    console.log(targetElement.parent());
 
   var data = event.dataTransfer.getData("text");
   // event.target.appendChild(document.getElementById(data));
@@ -407,18 +518,139 @@ function drop(event) {
   nodElement.setAttribute('tag_iD', tagID);
   nodElement.setAttribute('tag_level', tagLevel);
   // draggable nelements ondrop=
+  if(tagName!="img"){
+    // console.log("you can drop on it , not image");
   nodElement.setAttribute('ondrop','drop(event)');
   nodElement.setAttribute('ondragover','allowDrop(event)');
+  }
+
   nodElement.setAttribute('ondragstart','drag(event)');
 
   //newElement.ondrag(draged());
   //selected_tag.textContent = tagName; 
 
-  // event.appendChild(nodElement); 
+  // targetElement.appendChild(nodElement); 
+  // addToDatabase(targetElement);
  }
 }
-;
+// ;
+
+// refresh iframe
+function refreshIframe() {
+  var iframe = document.getElementById("preview");
+     // Reload the iframe content
+     iframe.contentWindow.location.reload();
+     // call the Function to update the order 
+     updateOrder(canvas);
+}
+// Function to update the order of nelements recursively and send to API
+function updateOrder(parentElement) {
+  const childElements = parentElement.querySelectorAll('.nelement');
+  const sortedChildElements = Array.from(childElements).sort((a, b) => {
+    const aRect = a.getBoundingClientRect();
+    const bRect = b.getBoundingClientRect();
+    return aRect.top - bRect.top;
+  });
+
+  sortedChildElements.forEach((child, index) => {
+    child.style.order = 6;
+    const elementId = child.getAttribute('element_id'); // Assuming element_id is an attribute of the child element
+
+    // Send updated order value to the API
+    const requestData = {
+      element_id: elementId,
+      new_order: index + 1
+    };
+
+    // Use the appropriate URL for your API endpoint
+    const apiUrl = 'http://localhost/GP-2023/api/element/update.php';
+
+    // Create an XMLHttpRequest object
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', apiUrl);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        console.log(requestData);
+      } else {
+        // Handle errors if any
+      }
+    };
+
+    xhr.onerror = function() {
+      // Handle errors if any
+    };
+
+    xhr.send(JSON.stringify(requestData));
+
+
+    updateOrder(child);
+  });
+}
+
+// // Function to update the order of nelements recursively
+// function updateOrder(parentElement) {
+//   const childElements = parentElement.querySelectorAll('.nelement');
+//   const sortedChildElements = Array.from(childElements).sort((a, b) => {
+//     const aRect = a.getBoundingClientRect();
+//     const bRect = b.getBoundingClientRect();
+//     return aRect.top - bRect.top;
+//   });
+
+//   sortedChildElements.forEach((child, index) => {
+//     child.style.order = index + 1;
+//     updateOrder(child);
+//   });
+// }
+
+// // Refresh the iframe every 5 seconds (adjust the interval as needed)
+// setInterval(refreshIframe, 5000);
 
 
 
+// ///////////////////////
+// const updateElementOrder = (parentElement) => {
+//   const childElements = Array.from(parentElement.children).filter(element => element.classList.contains('nelement'));
+//   childElements.forEach((element, index) => {
+//     element.style.order = index + 1;
+//   });
+// };
 
+// updateElementOrder(canvas);
+// // Function to update the order of each nelement
+// function updateElementOrder(parentElement) {
+//   const childElements = Array.from(parentElement.children).filter(element => element.classList.contains('nelement'));
+//   childElements.forEach((element, index) => {
+//     element.style.order = index + 1;
+//   });
+// }
+
+// // on drop fun
+// updateElementOrder(canvas);
+
+// // Add event listener for selecting an element
+// newElement.addEventListener('click', function (event) {
+//   event.stopPropagation();
+//   const selectedElements = document.querySelectorAll(".selected");
+//   selectedElements.forEach(function (element) {
+//     element.classList.remove("selected");
+//   });
+//   newElement.classList.add('selected');
+// });
+
+// const deleteButton = document.createElement('button');
+// deleteButton.className = 'delete-button';
+// deleteButton.textContent = 'Delete';
+// deleteButton.addEventListener('click', function (event) {
+//   event.stopPropagation();
+//   canvas.removeChild(newElement);
+//   const index = nelementsArray.indexOf(newElement);
+//   if (index > -1) {
+//     nelementsArray.splice(index, 1);
+//   }
+//   updateElementOrder(canvas);
+// });
+
+// newElement.appendChild(deleteButton);
+// }
