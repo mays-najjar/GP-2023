@@ -12,13 +12,16 @@ $database->connect();
 $style_element = new StyleElement($database);
 
 $data = json_decode(file_get_contents("php://input"));
+
 // Set the element ID in the style element object
 $style_element->element_id = $data->element_id;
 
-if ($style_element->create()) {
-    echo json_encode(array('message' => 'Element style created'));
-} else {
-    echo json_encode(array('message' => 'Element style not created'));
+for ($i = 1; $i <= 9; $i++) {
+    // Check if attribute value exists for the given index
+        $style_element->style_id = $i;
+        $style_element->style_value = null;
+        $style_element->create();
+    
 }
 
 

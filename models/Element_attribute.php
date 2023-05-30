@@ -38,20 +38,22 @@ class ElementAttribute
     }
     public function create()
     {
-        $query = ('INSERT INTO ' . $this->table . ' (element_id, attribute_id, attribute_value) ');
+        $query = 'INSERT INTO ' . $this->table . '
+        SET 
+        element_id = :element_id,
+        attribute_id = :attribute_id,
+        attribute_value = NULL';
+
         $stmt = $this->conn->prepare($query);
         $this->element_id = htmlspecialchars(strip_tags($this->element_id));
         $this->attribute_id = htmlspecialchars(strip_tags($this->attribute_id));
-        $this->attribute_value = htmlspecialchars(strip_tags($this->attribute_value));
+        $stmt->bindValue(':element_id', $this->element_id);
+        $stmt->bindValue(':attribute_id', $this->attribute_id);
+        $stmt->execute();
 
-        $stmt->bindParam(1, $this->element_id);
-        $stmt->bindParam(2, $this->attribute_id);
-        $stmt->bindParam(3, $this->attribute_value);
-        if ($stmt->execute()) {
-            return true;
-        }
-        return false;
+
     }
+
 
     public function update()
     {

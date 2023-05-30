@@ -17,21 +17,21 @@ $elementAttribute = new ElementAttribute($db);
 // Get data from the request body
 $data = json_decode(file_get_contents("php://input"));
 
-// Extract the required data from the received data
 $elementAttribute->element_id = $data->element_id;
 $tagId = $data->tag_id;
 $attributeValues = explode(', ', $data->attributesValue);
 $attributeIds = $elementAttribute->getAttributeIdsByTagId($tagId);
 
+// Get the minimum count between attributeIds and attributeValues
+$count = min(count($attributeIds), count($attributeValues));
+
 // Iterate over the attributes and update each one
-foreach ($attributeIds as $index => $attributeId) {
-    // Check if attribute value exists for the given index
-    if (isset($attributeValues[$index])) {
-        $elementAttribute->attribute_id = $attributeId;
-        $elementAttribute->attribute_value = $attributeValues[$index];
-        $elementAttribute->update();
-    }
+for ($i = 0; $i < $count; $i++) {
+    $elementAttribute->attribute_id = $attributeIds[$i];
+    $elementAttribute->attribute_value = $attributeValues[$i];
+    $elementAttribute->update();
 }
+
 
 echo json_encode(array('message' => 'Attributes Updated'));
 ?>

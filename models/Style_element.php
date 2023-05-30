@@ -38,7 +38,7 @@ class StyleElement
     }
     public function create()
     {
-        $query = ('INSERT INTO ' . $this->table . ' (element_id, style_id, style_value) ');
+        $query = 'INSERT INTO ' . $this->table . ' (element_id, style_id, style_value) VALUES (?, ?, ?)';
         $stmt = $this->conn->prepare($query);
         $this->element_id = htmlspecialchars(strip_tags($this->element_id));
         $this->style_id = htmlspecialchars(strip_tags($this->style_id));

@@ -361,7 +361,7 @@
 
 <div class="input-group mb-3" >
   <div class="input-group-prepend"style="display: inline-block; margin-right:10px;">
-    <label class="input-group-text" for="inputGroupSelect01" >Text-aligen</label>
+    <label class="input-group-text" for="inputGroupSelect03" >Text-aligen</label>
   </div>
   <select class="custom-select " id="inputGroupSelect03" style="display: inline-block;">
     <option value="center" selected>center</option>

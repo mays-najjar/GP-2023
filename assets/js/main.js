@@ -3,7 +3,7 @@ const canvas = document.getElementById('canvas');
 const toolbar = document.getElementById('toolbar');
 // var selected_tag =document.getElementById('selected_tag');
 let tempElementID = "";
-let counter = 0;
+let counter = 7;
 let initialPosition = null;
 var myTags = [];// array to store data
 var nelementsArray =[];
@@ -217,7 +217,7 @@ var order =index+1;
   // Send an AJAX request to create the element on the server
 
   const xhr = new XMLHttpRequest();
-  const url = 'http://localhost/GP-2023-10/api/element/create.php';
+  const url = 'http://localhost/GP-2023/api/element/create.php';
   const data = {
     "tag_id": tagID,
     "content": newElement.textContent,
@@ -235,7 +235,7 @@ var order =index+1;
   xhr.send(JSON.stringify(data));
 
 // element_properties ajax
-element_properties(tagID);
+//element_properties(tagID);
 
 
 
@@ -246,7 +246,11 @@ element_properties(tagID);
 
   addToDatabase(counter,tagID,newElement.textContent,5,order);
  // element_properties ajax
-  element_properties(tagID,counter);  //counter is set for auto-increment element_id
+  element_properties(tagID,counter); 
+  createElementAttribute(counter, tagID);
+  createStyleElement(counter);
+  
+  //counter is set for auto-increment element_id
 //} // end if condition
 
 // });// end drop event
@@ -390,6 +394,58 @@ function createElement() {
   //   };
   //   element.appendChild(arrowDown);
   // }
+}
+function createElementAttribute(element_id, tag_id) {
+  // Construct the URL for create.php
+  const xhr = new XMLHttpRequest();
+const url = 'http://localhost/GP-2023/api/ElementAttribute/create.php';
+const data = {
+  "element_id": element_id,
+  "tag_id": tag_id
+};
+
+xhr.open('POST', url, true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4) {
+    if (xhr.status === 200) {
+      const response = JSON.parse(xhr.responseText);
+      console.log(response.message);
+    } else {
+      console.log('Error:', xhr.status);
+    }
+  }
+};
+
+xhr.send(JSON.stringify(data));
+
+  
+}
+
+function createStyleElement(element_id) {
+  // Construct the URL for create.php
+  const xhr = new XMLHttpRequest();
+const url = 'http://localhost/GP-2023/api/StyleElement/create.php';
+const data = {
+  "element_id": element_id,
+};
+
+xhr.open('POST', url, true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4) {
+    if (xhr.status === 200) {
+      const response = JSON.parse(xhr.responseText);
+      console.log(response.message);
+    } else {
+      console.log('Error:', xhr.status);
+    }
+  }
+};
+
+xhr.send(JSON.stringify(data));
+
+  
 }
 
 function changeElementOrder(fromIndex, toIndex) {
@@ -590,7 +646,6 @@ function updateOrder(parentElement) {
 }
 
 function saveData() {
-  // Get the selected values from the input elements
   var select1Value = document.getElementById("inputGroupSelect01").value;
   var select2Value = document.getElementById("inputGroupSelect02").value;
   var select3Value = document.getElementById("inputGroupSelect03").value;
@@ -599,14 +654,11 @@ function saveData() {
   var select6Value = document.getElementById("inputGroupSelect06").value;
   var select7Value = document.getElementById("inputGroupSelect07").value;
 
-  // Create the data object
   var data = {
-    element_id: 77,
+    element_id: counter,
     styleValues: select1Value + ", " + select2Value + ", " + select3Value + ", " + select4Value + ", " + select5Value + ", " + select6Value + ", " + select7Value
   };
-
-
-  // Send the AJAX request
+console.log('Hellooooooooooooo');
   var xhr = new XMLHttpRequest();
   var url = "http://localhost/GP-2023/api/StyleElement/update.php";
   xhr.open("PUT", url, true);
@@ -617,7 +669,8 @@ function saveData() {
         var response = JSON.parse(xhr.responseText);
         // Handle the response here
       } else {
-        // Handle the error here
+        var error = JSON.parse(xhr.responseText);
+        console.log("Error:", error);
       }
     }
   };
