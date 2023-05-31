@@ -409,6 +409,10 @@ form a{
  /* border: #7a8eb7;
  border-style: dotted; */
 }
+#canvas .selected > * {
+  background-color: white;
+}
+
 #sortButton{
   /* margin-left: -8%; */
   margin-left: -102px;
