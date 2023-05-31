@@ -24,16 +24,16 @@ class Database {
 
         }
       }
-        return $this->conn;
-     
-     
-      }
+      return $this->conn;
 
-      
-    public function prepare($query) {
-      return $this->conn->prepare($query);
-  }
+
     }
+
+
+  public function prepare($query) {
+    return $this->conn->prepare($query);
+}
+  }
 
 
 

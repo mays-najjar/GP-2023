@@ -137,7 +137,7 @@ function canvasDrop(event){
     let newElement;
     if(tagName=="img"){
  newElement = document.createElement('img');
- document.getElementById('imgModal').style.display='block';
+ createImageModal(newElement);
 }
   else{   newElement = document.createElement(tagName);}
   
@@ -211,28 +211,10 @@ var order =index+1;
   //--------------------------------
   // post ajax
 
-  // Send an AJAX request to create the element on the server
+ 
 
-  const xhr = new XMLHttpRequest();
-  const url = 'http://localhost/GP-2023/api/element/create.php';
-  const data = {
-    "tag_id": tagID,
-    "content": newElement.textContent,
-    "parent_id": "5",
-    "children_order": "1"
-  };
-  xhr.open('POST', url, true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      const response = JSON.parse(xhr.responseText);
-      console.log(response.message);
-    }
-  };
-  xhr.send(JSON.stringify(data));
-
-// element_properties ajax
-element_properties(tagID);
+// // element_properties ajax
+// element_properties(tagID);
 
 
 
@@ -248,6 +230,7 @@ element_properties(tagID);
   createStyleElement(counter);
   
   //counter is set for auto-increment element_id
+  refreshIframe();  //
 //} // end if condition
 
 // });// end drop event
@@ -672,6 +655,30 @@ function updateOrder(parentElement) {
 }
 
 
+function createElementAttribute(element_id, tag_id) {
+  // Construct the URL for create.php
+  var url = 'http://localhost/GP-2023/api/ElementAttribute/create.php?element_id=' + element_id + '&tag_id=' + tag_id;
+
+  // Make an AJAX request to create.php
+  $.ajax({
+    url: url,
+    method: 'POST',  // Replace with the appropriate HTTP method if needed
+    dataType: 'json',  // Expecting JSON response
+    success: function(response) {
+      // Handle the success response
+      console.log(response);
+    },
+    error: function(xhr, status, error) {
+      // Handle the error response
+      if (xhr.responseJSON && xhr.responseJSON.message) {
+        console.log(xhr.responseJSON.message);
+      } else {
+        console.log('An error occurred:', error);
+      }
+    }
+  });
+}
+
 
 
 function updateChildElementOrders(parentElementId) {
@@ -704,7 +711,7 @@ function updateChildElementOrders(parentElementId) {
 
   // Make the AJAX call to update the orders
   $.ajax({
-    url: 'http://localhost/GP-2023/api/element/update.php',
+    url: 'http://localhost/GP-2023/api/element/updateOrder.php',
     type: 'PUT',
     dataType: 'json',
     data: JSON.stringify(requestData),
@@ -713,8 +720,9 @@ function updateChildElementOrders(parentElementId) {
       // Perform any additional actions upon successful update
     },
     error: function(xhr, status, error) {
-      console.error('Failed to update element order:', error);
+      console.error('Failed to update element order:', xhr.responseText);
     }
+    
   });
 }
 
@@ -750,7 +758,63 @@ console.log('Hellooooooooooooo');
   xhr.send(JSON.stringify(data));
 }
 
+function createImageModal(newElement) {
+  var modal = document.createElement('div');
+  modal.className = 'modal';
+  modal.innerHTML = `
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form id="imageUploadForm" enctype="multipart/form-data">
+        <input type="file" id="imageFileInput">
+        <input type="number" name="height" placeholder="Height">
+        <input type="number" name="width" placeholder="Width">
+        <input type="submit" value="Upload">
+      </form>
+    </div>
+  `;
 
+  document.body.appendChild(modal);
+
+  var closeButton = modal.querySelector('.close');
+  var imageFileInput = modal.querySelector('#imageFileInput');
+
+  closeButton.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+
+  var imageUploadForm = modal.querySelector('#imageUploadForm');
+  imageUploadForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var file = imageFileInput.files[0];
+
+    if (file) {
+      var reader = new FileReader();
+
+      reader.onload = function(event) {
+        var src = event.target.result;
+        newElement.src = src;
+
+        var heightInput = modal.querySelector('input[name="height"]');
+        var widthInput = modal.querySelector('input[name="width"]');
+
+        if (heightInput.value) {
+          newElement.style.height = heightInput.value + 'px';
+        }
+
+        if (widthInput.value) {
+          newElement.style.width = widthInput.value + 'px';
+        }
+
+        modal.style.display = 'none';
+      };
+
+      reader.readAsDataURL(file);
+    }
+  });
+
+  modal.style.display = 'block';
+}
 
 
 // // Refresh the iframe every 5 seconds (adjust the interval as needed)

@@ -432,16 +432,20 @@ form a{
   z-index: 1; /* Sit on top */
   left: 0;
   top: 0;
-  width: 100%;
+  padding-left: 20%;
+  padding-top: 15%;
+  width: 50%;
   height: 100%;
   overflow: auto; /* Enable scroll if needed */
-  background-color: #474e5d;
-  padding-top: 50px;
+  /* background-color: #474e5d;
+  opacity: 0.5; */
+ 
 }
 
 /* Modal Content/Box */
 .modal-content {
-  background-color: #fefefe;
+  background-color: rgba(255, 255, 255, 1);
+  /* opacity: 1.0; */
   margin: 220%  15% ; 
   border: 1px solid #888;
   width: 50%; 

@@ -110,6 +110,8 @@
       }
 
       function executeSQL() {
+        $('#canvas').empty();
+        refreshIframe();
         // create an XMLHttpRequest object
         const xhr = new XMLHttpRequest();
 
@@ -252,7 +254,7 @@
 
 
 
-// <?php
+ <?php
 //    // Import the Element class from the model folder
 //     include_once 'models/Element.php';
 //     include_once 'config/Database.php';
@@ -361,7 +363,7 @@
 
 <div class="input-group mb-3" >
   <div class="input-group-prepend"style="display: inline-block; margin-right:10px;">
-    <label class="input-group-text" for="inputGroupSelect03" >Text-aligen</label>
+  <label class="input-group-text" for="inputGroupSelect03" >Text-aligen</label>
   </div>
   <select class="custom-select " id="inputGroupSelect03" style="display: inline-block;">
     <option value="center" selected>center</option>
@@ -425,19 +427,7 @@
   
     </div>
 </div>
-<div id="imgModal" class="imgModal">
-  <span onclick="document.getElementById('imgModal').style.display='none'" class="close" title="Close Modal">×</span>
-  <form class="modal-content" action="/action_page.php">
-    <div class="container">
-      <h1>Delete Account</h1>
-      <p>Are you sure you want to delete your account?</p>
-    
-      <div class="clearfix">
-        <button type="button" onclick="document.getElementById('imgModal').style.display='none'" class="cancelbtn">Cancel</button>
-        <button type="button" onclick="document.getElementById('imgModal').style.display='none'" class="deletebtn">Delete</button>
-      </div>
-      </div> </form> 
-         </div>
+
          
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>  
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
