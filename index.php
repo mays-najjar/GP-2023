@@ -17,6 +17,8 @@
     
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <!-- <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.3/css/all.css" integrity="xxxx" crossorigin="anonymous">   -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 
       <script src="https://kit.fontawesome.com/5076f4faae.js" crossorigin="anonymous"></script>
     

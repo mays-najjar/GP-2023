@@ -149,7 +149,11 @@ function canvasDrop(event){
   newElement.style.left = event.clientX.canvas + 'px';   //IN GENERAL >>  event.clientX property returns the horizontal coordinate (in pixels)  >>>>>     event.clientX.canvas expression sets the LEFT style of the new element    
   newElement.style.top = event.clientY.canvas + 'px';    //IN GENERAL >> event.clientY property returns the vertical coordinate (in pixels)     >>>>>     event.clientY.canvas sets the TOP style
   newElement.classList.add('selected');
-  newElement.onclick = selected(newElement);
+  // newElement.classList.add('sortable');
+  // newElement.onclick = () => element_properties(tagID, counter);
+  newElement.onclick = () => selected(newElement);
+  // newElement.onclick = selected(newElement);
+  // newElement.onclick = selected(newElement);
   newElement.setAttribute('data-content', newElement.textContent)
   newElement.setAttribute('draggable', 'true');
   newElement.setAttribute('tag_name', tagName);
@@ -295,29 +299,51 @@ xxhr.send(datta);
 //selected function for nelement
 
 function selected(tag) {
-  $(document).ready(function () {
-    // Add click event listener to each element
-    $(".nelement").on('click', function () {
-      // Deselect all the elements
-      $(".nelement").removeClass('selected');
-      // Select the clicked element
-      $(this).addClass('selected');
-      console.log("parentID is:");
-      console.log($(this).parent());
-      console.log("parent tagName is:");
-      console.log($(this).parent().prop('tagName'));
-        //  console.log(tagID);
-   var tag_ID = tag.getAttribute("tag_id");
-   console.log(tag_ID);
-     // element_properties ajax
-     element_properties(tag_ID,8);
-    //  document.getElementById("myModal").style.display = "block";
+  console.log(tag);
+  console.log("element id", tag.id);
+  var tagg_ID = tag.getAttribute("tag_id");
+  var eelementID = tag.id;
+  console.log("tag id", tagg_ID);
+
+  // element_properties ajax
+  // element_properties(tagg_ID, eelementID);
+
+  // Remove existing click event handlers
+  $('#canvas').off('click', '.nelement');
+
+  // Attach click event handler directly to the parent element (#canvas)
+  $('#canvas').on('click', '.nelement', function (event) {
+    event.stopPropagation(); // Stop event propagation to prevent selecting the parent element
+
+    // Retrieve the relevant information from the clicked nelement
     
+    var clickedElementId = $(this).attr('element_id');
+    var clickedElement =document.getElementById(clickedElementId);
+    var clicked_TagID = clickedElement.getAttribute("tag_id");
 
+console.log("Clicked elament :", clickedElement);
+    console.log("Clicked tag name:", clickedElement.tagName);
+    console.log("Clicked element ID:", clickedElementId);
+    console.log("Clicked tag ID:",clicked_TagID);
+    
+    element_properties(clicked_TagID,clickedElementId);
 
-    });
+    // Deselect all the elements
+    $(".nelement").removeClass('selected');
+
+    // Select the clicked element
+    $(this).addClass('selected');
+    $(this).parent().removeClass('selected');
+    $(this).parent().addClass('sortable');
+
+    console.log("parentID is:");
+    console.log($(this).parent());
+    console.log("parent tagName is:");
+    console.log($(this).parent().prop('tagName'));
   });
 }
+
+
 
 
 
@@ -390,6 +416,7 @@ xhr.onreadystatechange = function () {
   if (xhr.readyState === 4) {
     if (xhr.status === 200) {
       const response = JSON.parse(xhr.responseText);
+      console.log("createElementAttribute");
       console.log(response.message);
     } else {
       console.log('Error:', xhr.status);
@@ -573,7 +600,10 @@ function drop(event) {
   nodElement.style.left = event.clientX.canvas + 'px';   //IN GENERAL >>  event.clientX property returns the horizontal coordinate (in pixels)  >>>>>     event.clientX.canvas expression sets the LEFT style of the new element    
   nodElement.style.top = event.clientY.canvas + 'px';    //IN GENERAL >> event.clientY property returns the vertical coordinate (in pixels)     >>>>>     event.clientY.canvas sets the TOP style
 
-  nodElement.onclick = selected(tagID);
+  // nodElement.onclick = selected(tagID);
+  
+  // nodElement.onclick = () => element_properties(tagID, nodElement.id);
+  nodElement.onclick = () => selected(nodElement);
   targetElement.setAttribute('draggable', 'true');
   nodElement.setAttribute('tag_name', tagName);
   nodElement.setAttribute('tag_iD', tagID);
@@ -681,48 +711,47 @@ function createElementAttribute(element_id, tag_id) {
 
 
 
-function updateChildElementOrders(parentElementId) {
-  // Get the parent element
-  var parentElement = document.getElementById(parentElementId);
-  
-  // Get the direct children elements
-  var childrenElements = parentElement.children;
-
-  // Sort the children elements based on their vertical position
-  var sortedElements = Array.from(childrenElements).sort(function(a, b) {
-    var aTop = a.getBoundingClientRect().top;
-    var bTop = b.getBoundingClientRect().top;
-    return aTop - bTop;
-  });
-  
-  // Prepare the data to be sent
-  var requestData = {
-    element_id: parentElementId,
-    children_order: []
-  };
-  
-  // Generate the updated order of children
-  sortedElements.forEach(function(child, index) {
-    requestData.children_order.push({
-      child_id: child.id,
-      order: index + 1
-    });
+function updateChildElementOrders(parentId) {
+  const parentElement = document.getElementById(parentId);
+  const childElements = parentElement.querySelectorAll('.nelement');
+  const sortedChildElements = Array.from(childElements).sort((a, b) => {
+    const aRect = a.getBoundingClientRect();
+    const bRect = b.getBoundingClientRect();
+    return aRect.top - bRect.top;
   });
 
-  // Make the AJAX call to update the orders
-  $.ajax({
-    url: 'http://localhost/GP-2023/api/element/updateOrder.php',
-    type: 'PUT',
-    dataType: 'json',
-    data: JSON.stringify(requestData),
-    success: function(response) {
-      console.log(response.message);
-      // Perform any additional actions upon successful update
-    },
-    error: function(xhr, status, error) {
-      console.error('Failed to update element order:', xhr.responseText);
-    }
-    
+  sortedChildElements.forEach((child, index) => {
+    child.style.order = index + 1;
+    const elementId = child.getAttribute('element_id'); // Assuming element_id is an attribute of the child element
+
+    // Send updated order value to the API
+    const requestData = {
+      element_id: elementId,
+      children_order: index + 1
+    };
+
+    // Use the appropriate URL for your API endpoint
+    const apiUrl = 'http://localhost/GP-2023/api/element/updateOrder.php';
+
+    // Create an XMLHttpRequest object
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', apiUrl);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        console.log(response.message);
+      } else {
+        // Handle errors if any
+      }
+    };
+
+    xhr.onerror = function() {
+      // Handle errors if any
+    };
+
+    xhr.send(JSON.stringify(requestData));
   });
 }
 
@@ -739,7 +768,7 @@ function saveData() {
     element_id: counter,
     styleValues: select1Value + ", " + select2Value + ", " + select3Value + ", " + select4Value + ", " + select5Value + ", " + select6Value + ", " + select7Value
   };
-console.log('Hellooooooooooooo');
+
   var xhr = new XMLHttpRequest();
   var url = "http://localhost/GP-2023/api/StyleElement/update.php";
   xhr.open("PUT", url, true);
@@ -748,6 +777,7 @@ console.log('Hellooooooooooooo');
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         var response = JSON.parse(xhr.responseText);
+        console.log('Hellooooooooooooo');
         // Handle the response here
       } else {
         var error = JSON.parse(xhr.responseText);
