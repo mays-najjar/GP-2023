@@ -409,4 +409,28 @@ class Element
         printf("Error: %s. \n", $stmt->erro);
         return false;
     }
+
+    
+    public function updateContent()
+    {
+
+        $query = 'UPDATE ' . $this->table . '
+        SET content = :content
+        WHERE element_id = :element_id';
+
+        $stmt = $this->conn->prepare($query);
+        $this->content = htmlspecialchars(strip_tags($this->content));
+        $this->element_id = htmlspecialchars(strip_tags($this->element_id));
+
+
+        $stmt->bindParam(':content', $this->content);
+        $stmt->bindParam(':element_id', $this->element_id);
+
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        printf("Error: %s. \n", $stmt->erro);
+        return false;
+    }
 }

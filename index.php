@@ -144,16 +144,44 @@
 
   <div id="login"><a href="login.php">Log in / Sign Up</a></div>
 
-<form class="pageTitle " action="index.php">
+<form class="pageTitle " action=" ">
     <div class=" form-group">
        <label for="title">Page title:</label>
        
       <input type="text" class="form-control" id="title" placeholder="Enter page title" name="title">
     </div>
-    <button type="submit" name="title" class="btn" style=" width: 25%; padding: 0; margin-top:0px;">Save</button>
-   
-  </form>
+    <button type="submit" name="title" class="btn" style=" width: 25%; padding: 0; margin-top:0px;" onclick="updateElement()">Save</button>
+    </form>
 
+    <script>
+      function updateElement() {
+        event.preventDefault(); // Prevent form submission
+
+        // Get the input value
+        var content = document.getElementById('title').value;
+        var element_id = 4;
+        // Create the data object
+        var data = {
+          element_id: element_id,
+          content: content
+        };
+ // Send the AJAX request
+ var xhr = new XMLHttpRequest();
+        xhr.open('PUT', 'http://localhost/GP-2023/api/element/updateContent.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              var response = JSON.parse(xhr.responseText);
+              alert('Title updated');
+            } else {
+              alert('Error updating element');
+            }
+          }
+        };
+        xhr.send(JSON.stringify(data));
+      }
+    </script>
 
 
 <div id="toolbar" >

@@ -156,6 +156,9 @@ function canvasDrop(event){
   // newElement.onclick = selected(newElement);
   newElement.setAttribute('data-content', newElement.textContent)
   newElement.setAttribute('draggable', 'true');
+  newElement.setAttribute('contenteditable', 'true');
+  newElement.setAttribute('onkeypress','saveContent(event)');
+
   newElement.setAttribute('tag_name', tagName);
   newElement.setAttribute('tag_iD', tagID);
   newElement.setAttribute('element_iD', counter);
@@ -247,6 +250,36 @@ var order =index+1;
 // Sortable.create(document.querySelector('.sortable'), {
 //   animation: 1
 // });
+function saveContent(event) {
+  if (event.keyCode === 13) { // Check for Enter key
+    event.preventDefault(); // Prevent the default behavior of Enter key
+
+  element_id= event.target.id;  
+  const content = document.querySelector(".selected").innerHTML;
+  const data = {
+    element_id: element_id,
+    content: content
+  };
+
+  // Send AJAX request to the server
+  var xhr = new XMLHttpRequest();
+  xhr.open('PUT', 'http://localhost/GP-2023/api/element/updateContent.php', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        alert(response.message);
+      } else {
+        alert('Error updating element');
+      }
+    }
+  };
+  xhr.send(JSON.stringify(data));
+  refreshIframe(); 
+}
+
+}
 
  var sortableInstance = null;
  var sort =true;
