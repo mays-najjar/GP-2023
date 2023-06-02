@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2023 at 12:36 AM
+-- Generation Time: Jun 02, 2023 at 07:42 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -69,14 +69,10 @@ CREATE TABLE `element` (
 INSERT INTO `element` (`element_id`, `tag_id`, `content`, `parent_id`, `children_order`) VALUES
 (1, 15, NULL, NULL, NULL),
 (3, 17, NULL, 1, 1),
-(4, 16, '\'My Web Page\'', 3, 1),
-(5, 1, NULL, 1, 2),
-(62, 9, 'COLORED PRA', 5, 1),
-(63, 8, 'img', 5, 1),
-(64, 8, 'img', 5, 1),
-(65, 8, 'img', 5, 1),
-(66, 8, 'img', 5, 1),
-(67, 8, 'img', 5, 1);
+(4, 16, 'WEFW', 3, 1),
+(5, 1, NULL, 1, 3),
+(9, 3, 'h2', 5, 2),
+(10, 5, 'fsdf', 5, 3);
 
 -- --------------------------------------------------------
 
@@ -87,15 +83,8 @@ INSERT INTO `element` (`element_id`, `tag_id`, `content`, `parent_id`, `children
 CREATE TABLE `element_attribute` (
   `element_id` int(11) NOT NULL,
   `attribute_id` int(11) NOT NULL,
-  `attribute_value` varchar(255) NOT NULL
+  `attribute_value` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `element_attribute`
---
-
-INSERT INTO `element_attribute` (`element_id`, `attribute_id`, `attribute_value`) VALUES
-(62, 8, '1');
 
 -- --------------------------------------------------------
 
@@ -117,12 +106,11 @@ INSERT INTO `style` (`style_name`, `style_id`) VALUES
 ('border', 2),
 ('text-align', 3),
 ('padding', 4),
-('padding', 5),
-('margin', 6),
-('background-color', 7),
-('font-size', 8),
-('font-family', 9),
-('color', 10);
+('margin', 5),
+('background-color', 6),
+('color', 7),
+('height', 8),
+('width', 9);
 
 -- --------------------------------------------------------
 
@@ -133,7 +121,7 @@ INSERT INTO `style` (`style_name`, `style_id`) VALUES
 CREATE TABLE `style_element` (
   `element_id` int(11) NOT NULL,
   `style_id` int(11) NOT NULL,
-  `style_value` varchar(255) NOT NULL
+  `style_value` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -141,8 +129,24 @@ CREATE TABLE `style_element` (
 --
 
 INSERT INTO `style_element` (`element_id`, `style_id`, `style_value`) VALUES
-(62, 10, 'blue'),
-(62, 3, 'center');
+(9, 1, 'block'),
+(9, 2, '#000000'),
+(9, 3, 'center'),
+(9, 4, '1'),
+(9, 5, '1'),
+(9, 6, '#e64747'),
+(9, 7, '#000000'),
+(9, 8, ''),
+(9, 9, ''),
+(10, 1, ''),
+(10, 2, ''),
+(10, 3, ''),
+(10, 4, ''),
+(10, 5, ''),
+(10, 6, ''),
+(10, 7, ''),
+(10, 8, ''),
+(10, 9, '');
 
 -- --------------------------------------------------------
 
@@ -177,7 +181,8 @@ INSERT INTO `tag` (`tag_id`, `tag_name`, `category`) VALUES
 (14, 'button', 'basic'),
 (15, 'html', ''),
 (16, 'title', 'basic'),
-(17, 'head', 'basic');
+(17, 'head', 'basic'),
+(18, 'table', '');
 
 -- --------------------------------------------------------
 
@@ -240,8 +245,8 @@ ALTER TABLE `style`
 -- Indexes for table `style_element`
 --
 ALTER TABLE `style_element`
-  ADD KEY `fk_style_element_style` (`style_id`),
-  ADD KEY `fk_style_element_` (`element_id`);
+  ADD KEY `fk_style_element_` (`element_id`),
+  ADD KEY `fk_style_element_style` (`style_id`);
 
 --
 -- Indexes for table `tag`
@@ -271,7 +276,7 @@ ALTER TABLE `attribute`
 -- AUTO_INCREMENT for table `element`
 --
 ALTER TABLE `element`
-  MODIFY `element_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `element_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
 
 --
 -- AUTO_INCREMENT for table `style`
@@ -283,7 +288,7 @@ ALTER TABLE `style`
 -- AUTO_INCREMENT for table `tag`
 --
 ALTER TABLE `tag`
-  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tag_attribute`
@@ -306,8 +311,8 @@ ALTER TABLE `element_attribute`
 -- Constraints for table `style_element`
 --
 ALTER TABLE `style_element`
-  ADD CONSTRAINT `fk_style_element_` FOREIGN KEY (`element_id`) REFERENCES `element` (`element_id`),
-  ADD CONSTRAINT `fk_style_element_style` FOREIGN KEY (`style_id`) REFERENCES `style` (`style_id`);
+  ADD CONSTRAINT `fk_style_element_` FOREIGN KEY (`element_id`) REFERENCES `element` (`element_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_style_element_style` FOREIGN KEY (`style_id`) REFERENCES `style` (`style_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tag_attribute`
