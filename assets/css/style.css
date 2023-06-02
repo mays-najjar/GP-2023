@@ -185,7 +185,7 @@ float: right;
    background:radial-gradient(#9b9cb0,#7a8eb7 );
 }
 .account-page{
-  padding: 50px 0;
+  padding: 12px 0;
   background:radial-gradient(#484a72,#7a8eb7) ;
   /* background:radial-gradient(#7a8eb7,#484a72 );  */
 }
@@ -208,13 +208,14 @@ float: right;
 .form-container{
   background: #fff;
   width: 300px;
-  height: 400px;
+  height: 325px;
   position: relative;
   text-align: center;
   padding: 20px 0;
   margin: auto;
   box-shadow: 0 0 20px 0 rgba(0.1, 0.1, 0.1, .1);
-  overflow: hidden;            /*--------------------------------*/
+  overflow: hidden; 
+  border-radius: 20px;
 }
 .form-container span{
   font-weight: bold;
@@ -237,7 +238,7 @@ float: right;
   max-width: 300px;
   padding: 0 20px;
   position: absolute;
-  top: 130px;
+  top: 68px;
   transition: transform 1s ;
 }
 form input, form select {
@@ -555,10 +556,10 @@ pre {
   margin: 0 0 10px;
   font-size: 13px;
   line-height: 1.42857143;
-  color: #333;
+  color: #fff;
   word-break: break-all;
   word-wrap: break-word;
-  background-color: #060505;
+  background-color: #050000;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
