@@ -118,7 +118,7 @@
         const xhr = new XMLHttpRequest();
 
         // set up the request parameters
-        xhr.open('DELETE', 'http://localhost/New Folder (4)/GP-2023/api/element/deleteAll.php'); 
+        xhr.open('DELETE', 'http://localhost/GP-2023/api/element/deleteAll.php'); 
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
         // set up the callback function
@@ -167,7 +167,7 @@
         };
  // Send the AJAX request
  var xhr = new XMLHttpRequest();
-        xhr.open('PUT', 'http://localhost/New Folder (4)/GP-2023/api/element/updateContent.php', true);
+        xhr.open('PUT', 'http://localhost/GP-2023/api/element/updateContent.php', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
           if (xhr.readyState === 4) {
@@ -278,7 +278,7 @@
   <?php
   // echo '<button id="save-button">Save Canvas</button>'
   ?>
-  <iframe src="http://localhost/New Folder (4)/GP-2023/api/BuildGenerate/generate_code.php" id="preview">
+  <iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview">
 
   </iframe>
 
