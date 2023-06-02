@@ -232,7 +232,8 @@ var order =index+1;
 
   addToDatabase(counter,tagID,newElement.textContent,5,order);
  // element_properties ajax
-  element_properties(tagID,counter); 
+  element_properties(tagID,counter);
+element_style(counter); 
   createElementAttribute(counter, tagID);
   createStyleElement(counter);
   
@@ -330,7 +331,22 @@ const datta = "tag_ID=" + encodeURIComponent(tag_ID) + "&element_ID=" + encodeUR
 xxhr.send(datta);
 }
 //selected function for nelement
-
+function element_style(elementID) {
+  const xxhr = new XMLHttpRequest();
+  var element_ID = elementID;
+  xxhr.onreadystatechange = function() {
+     if (xxhr.readyState == 4 && xxhr.status == 200) {
+      console.log(" element_ID");
+      console.log(xxhr.responseText);
+      document.getElementById("style").innerHTML = xxhr.responseText;
+     }
+   };
+   
+  xxhr.open("POST", "style.php", true);
+  xxhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  const datta =  "element_ID=" + encodeURIComponent(element_ID);
+  xxhr.send(datta);
+  }
 function selected(tag) {
   console.log(tag);
   console.log("element id", tag.id);
@@ -359,7 +375,8 @@ console.log("Clicked elament :", clickedElement);
     console.log("Clicked element ID:", clickedElementId);
     console.log("Clicked tag ID:",clicked_TagID);
     
-    element_properties(clicked_TagID,clickedElementId);
+   element_properties(clicked_TagID,clickedElementId);
+    element_style(clickedElementId);
 
     // Deselect all the elements
     $(".nelement").removeClass('selected');
