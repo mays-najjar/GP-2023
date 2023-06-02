@@ -71,7 +71,7 @@ canvas.addEventListener('dragover', (event) => {
 //get ajax
 var xhttp = new XMLHttpRequest();
 var myTags = [];// array to store data
-xhttp.open("GET", "http://localhost/GP-2023/api/tag/read.php");  // فتح اتصال مع السيرفر
+xhttp.open("GET", "http://localhost/New Folder (4)/GP-2023/api/tag/read.php");  // فتح اتصال مع السيرفر
 xhttp.send();
 xhttp.addEventListener('readystatechange', function () {
   if (this.readyState == 4 && this.status == 200) {
@@ -232,8 +232,8 @@ var order =index+1;
 
   addToDatabase(counter,tagID,newElement.textContent,5,order);
  // element_properties ajax
-  element_properties(tagID,counter);
-element_style(counter); 
+  element_properties(tagID,counter); 
+  element_style(counter);
   createElementAttribute(counter, tagID);
   createStyleElement(counter);
   
@@ -264,7 +264,7 @@ function saveContent(event) {
 
   // Send AJAX request to the server
   var xhr = new XMLHttpRequest();
-  xhr.open('PUT', 'http://localhost/GP-2023/api/element/updateContent.php', true);
+  xhr.open('PUT', 'http://localhost/New Folder (4)/GP-2023/api/element/updateContent.php', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.onload = function() {
     if (xhr.readyState === 4) {
@@ -330,7 +330,7 @@ xxhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 const datta = "tag_ID=" + encodeURIComponent(tag_ID) + "&element_ID=" + encodeURIComponent(element_ID);
 xxhr.send(datta);
 }
-//selected function for nelement
+
 function element_style(elementID) {
   const xxhr = new XMLHttpRequest();
   var element_ID = elementID;
@@ -347,6 +347,8 @@ function element_style(elementID) {
   const datta =  "element_ID=" + encodeURIComponent(element_ID);
   xxhr.send(datta);
   }
+//selected function for nelement
+
 function selected(tag) {
   console.log(tag);
   console.log("element id", tag.id);
@@ -370,12 +372,12 @@ function selected(tag) {
     var clickedElement =document.getElementById(clickedElementId);
     var clicked_TagID = clickedElement.getAttribute("tag_id");
 
-console.log("Clicked elament :", clickedElement);
+    console.log("Clicked elament :", clickedElement);
     console.log("Clicked tag name:", clickedElement.tagName);
     console.log("Clicked element ID:", clickedElementId);
     console.log("Clicked tag ID:",clicked_TagID);
     
-   element_properties(clicked_TagID,clickedElementId);
+    element_properties(clicked_TagID,clickedElementId);
     element_style(clickedElementId);
 
     // Deselect all the elements
@@ -412,7 +414,7 @@ function addToDatabase(element_id,tag_id,content,parent_id,children_order){
  // Send an AJAX request to create the element on the server
 
  const xhr = new XMLHttpRequest();
-const url = 'http://localhost/GP-2023/api/element/create.php';
+const url = 'http://localhost/New Folder (4)/GP-2023/api/element/create.php';
 let data = {
   "element_id": element_id,
   "tag_id": tag_id,
@@ -454,7 +456,7 @@ function createElement() {
 function createElementAttribute(element_id, tag_id) {
   // Construct the URL for create.php
   const xhr = new XMLHttpRequest();
-const url = 'http://localhost/GP-2023/api/ElementAttribute/create.php';
+const url = 'http://localhost/New Folder (4)/GP-2023/api/ElementAttribute/create.php';
 const data = {
   "element_id": element_id,
   "tag_id": tag_id
@@ -482,7 +484,7 @@ xhr.send(JSON.stringify(data));
 function createStyleElement(element_id) {
   // Construct the URL for create.php
   const xhr = new XMLHttpRequest();
-const url = 'http://localhost/GP-2023/api/StyleElement/create.php';
+const url = 'http://localhost/New Folder (4)/GP-2023/api/StyleElement/create.php';
 const data = {
   "element_id": element_id,
 };
@@ -560,7 +562,7 @@ function addToDatabase(element_id,tag_id,content,parent_id,children_order){
   // Send an AJAX request to create the element on the server
  
   const xhr = new XMLHttpRequest();
- const url = 'http://localhost/GP-2023/api/element/create.php';
+ const url = 'http://localhost/New Folder (4)/GP-2023/api/element/create.php';
  let data = {
    "element_id": element_id,
    "tag_id": tag_id,
@@ -708,7 +710,7 @@ function updateOrder(parentElement) {
     };
 
     // Use the appropriate URL for your API endpoint
-    const apiUrl = 'http://localhost/GP-2023/api/element/update.php';
+    const apiUrl = 'http://localhost/New Folder (4)/GP-2023/api/element/update.php';
 
     // Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest();
@@ -737,7 +739,7 @@ function updateOrder(parentElement) {
 
 function createElementAttribute(element_id, tag_id) {
   // Construct the URL for create.php
-  var url = 'http://localhost/GP-2023/api/ElementAttribute/create.php?element_id=' + element_id + '&tag_id=' + tag_id;
+  var url = 'http://localhost/New Folder (4)/GP-2023/api/ElementAttribute/create.php?element_id=' + element_id + '&tag_id=' + tag_id;
 
   // Make an AJAX request to create.php
   $.ajax({
@@ -781,7 +783,7 @@ function updateChildElementOrders(parentId) {
     };
 
     // Use the appropriate URL for your API endpoint
-    const apiUrl = 'http://localhost/GP-2023/api/element/updateOrder.php';
+    const apiUrl = 'http://localhost/New Folder (4)/GP-2023/api/element/updateOrder.php';
 
     // Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest();
@@ -805,7 +807,7 @@ function updateChildElementOrders(parentId) {
   });
 }
 
-function saveData() {
+function saveData(element_id) {
   var select1Value = document.getElementById("inputGroupSelect01").value;
   var select2Value = document.getElementById("inputGroupSelect02").value;
   var select3Value = document.getElementById("inputGroupSelect03").value;
@@ -813,21 +815,19 @@ function saveData() {
   var select5Value = document.getElementById("inputGroupSelect05").value;
   var select6Value = document.getElementById("inputGroupSelect06").value;
   var select7Value = document.getElementById("inputGroupSelect07").value;
-
-  var data = {
-    element_id: counter,
-    styleValues: select1Value + ", " + select2Value + ", " + select3Value + ", " + select4Value + ", " + select5Value + ", " + select6Value + ", " + select7Value
+    var data = {
+      element_id: element_id,
+      styleValues: select1Value + ", " + select2Value + ", " + select3Value + ", " + select4Value + ", " + select5Value + ", " + select6Value + ", " + select7Value
   };
 
   var xhr = new XMLHttpRequest();
-  var url = "http://localhost/GP-2023/api/StyleElement/update.php";
+  var url = "http://localhost/New Folder (4)/GP-2023/api/StyleElement/update.php";
   xhr.open("PUT", url, true);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         var response = JSON.parse(xhr.responseText);
-        console.log('Hellooooooooooooo');
         // Handle the response here
       } else {
         var error = JSON.parse(xhr.responseText);
@@ -836,6 +836,8 @@ function saveData() {
     }
   };
   xhr.send(JSON.stringify(data));
+  refreshIframe();
+
 }
 
 function createImageModal(newElement) {
