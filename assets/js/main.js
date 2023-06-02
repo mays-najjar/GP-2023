@@ -71,7 +71,7 @@ canvas.addEventListener('dragover', (event) => {
 //get ajax
 var xhttp = new XMLHttpRequest();
 var myTags = [];// array to store data
-xhttp.open("GET", "http://localhost/New Folder (4)/GP-2023/api/tag/read.php");  // فتح اتصال مع السيرفر
+xhttp.open("GET", "http://localhost/GP-2023/api/tag/read.php");  // فتح اتصال مع السيرفر
 xhttp.send();
 xhttp.addEventListener('readystatechange', function () {
   if (this.readyState == 4 && this.status == 200) {
@@ -264,7 +264,7 @@ function saveContent(event) {
 
   // Send AJAX request to the server
   var xhr = new XMLHttpRequest();
-  xhr.open('PUT', 'http://localhost/New Folder (4)/GP-2023/api/element/updateContent.php', true);
+  xhr.open('PUT', 'http://localhost/GP-2023/api/element/updateContent.php', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.onload = function() {
     if (xhr.readyState === 4) {
@@ -414,7 +414,7 @@ function addToDatabase(element_id,tag_id,content,parent_id,children_order){
  // Send an AJAX request to create the element on the server
 
  const xhr = new XMLHttpRequest();
-const url = 'http://localhost/New Folder (4)/GP-2023/api/element/create.php';
+const url = 'http://localhost/GP-2023/api/element/create.php';
 let data = {
   "element_id": element_id,
   "tag_id": tag_id,
@@ -456,7 +456,7 @@ function createElement() {
 function createElementAttribute(element_id, tag_id) {
   // Construct the URL for create.php
   const xhr = new XMLHttpRequest();
-const url = 'http://localhost/New Folder (4)/GP-2023/api/ElementAttribute/create.php';
+const url = 'http://localhost/GP-2023/api/ElementAttribute/create.php';
 const data = {
   "element_id": element_id,
   "tag_id": tag_id
@@ -484,7 +484,7 @@ xhr.send(JSON.stringify(data));
 function createStyleElement(element_id) {
   // Construct the URL for create.php
   const xhr = new XMLHttpRequest();
-const url = 'http://localhost/New Folder (4)/GP-2023/api/StyleElement/create.php';
+const url = 'http://localhost/GP-2023/api/StyleElement/create.php';
 const data = {
   "element_id": element_id,
 };
@@ -562,7 +562,7 @@ function addToDatabase(element_id,tag_id,content,parent_id,children_order){
   // Send an AJAX request to create the element on the server
  
   const xhr = new XMLHttpRequest();
- const url = 'http://localhost/New Folder (4)/GP-2023/api/element/create.php';
+ const url = 'http://localhost/GP-2023/api/element/create.php';
  let data = {
    "element_id": element_id,
    "tag_id": tag_id,
@@ -710,7 +710,7 @@ function updateOrder(parentElement) {
     };
 
     // Use the appropriate URL for your API endpoint
-    const apiUrl = 'http://localhost/New Folder (4)/GP-2023/api/element/update.php';
+    const apiUrl = 'http://localhost/GP-2023/api/element/update.php';
 
     // Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest();
@@ -739,7 +739,7 @@ function updateOrder(parentElement) {
 
 function createElementAttribute(element_id, tag_id) {
   // Construct the URL for create.php
-  var url = 'http://localhost/New Folder (4)/GP-2023/api/ElementAttribute/create.php?element_id=' + element_id + '&tag_id=' + tag_id;
+  var url = 'http://localhost/GP-2023/api/ElementAttribute/create.php?element_id=' + element_id + '&tag_id=' + tag_id;
 
   // Make an AJAX request to create.php
   $.ajax({
@@ -783,7 +783,7 @@ function updateChildElementOrders(parentId) {
     };
 
     // Use the appropriate URL for your API endpoint
-    const apiUrl = 'http://localhost/New Folder (4)/GP-2023/api/element/updateOrder.php';
+    const apiUrl = 'http://localhost/GP-2023/api/element/updateOrder.php';
 
     // Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest();
@@ -821,7 +821,7 @@ function saveData(element_id) {
   };
 
   var xhr = new XMLHttpRequest();
-  var url = "http://localhost/New Folder (4)/GP-2023/api/StyleElement/update.php";
+  var url = "http://localhost/GP-2023/api/StyleElement/update.php";
   xhr.open("PUT", url, true);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onreadystatechange = function () {
