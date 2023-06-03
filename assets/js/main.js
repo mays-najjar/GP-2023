@@ -354,6 +354,36 @@ function enableNestedSorting() {
   });
 }
 
+// Function to update the parent of an element on the server side
+function updateParent(elementID, parentID) {
+  // Create a new XMLHttpRequest
+  var xhr = new XMLHttpRequest();
+
+  // Set the request method and URL
+  xhr.open('PUT', 'http://localhost/GP-2023/api/element/updateParentId.php', true);
+
+  // Set the request headers
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  // Set the onload callback function
+  xhr.onload = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        alert(response.message);
+      } else {
+        alert('Error updating parent');
+      }
+    }
+  };
+
+  // Create the request body as a JSON string
+  var requestBody = JSON.stringify({ element_id: elementID, parent_id: parentID });
+
+  // Send the request with the JSON body
+  xhr.send(requestBody);
+}
+
 
 var demo = document.getElementById("demo");
 // 
@@ -651,6 +681,10 @@ function drop(event) {
   console.log(newParentID);
   
   updateChildElementOrders(newParentID);
+  if (newParentID=='canvas'){
+    updateParent(draggedElementId,5);
+  } else{
+  updateParent(draggedElementId,newParentID);}
   // if (targetElement === draggedElement) {
   //   return;
   // }
