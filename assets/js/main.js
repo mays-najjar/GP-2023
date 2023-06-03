@@ -103,6 +103,7 @@ function canvasDrop(event){
     // The dropped element has the class "nelement"
     console.log('Dropped element has class "nelement"');
     drop(event);
+    enableNestedSorting(); // Enable nested sorting after dropping nelements
   } else {
     // The dropped element does not have the class "nelement"
     console.log('Dropped element does not have class "nelement"');
@@ -296,25 +297,34 @@ function saveContent(event) {
 
       // Set contenteditable attribute to false for each nelement
       var nelements = document.querySelectorAll('.nelement');
-      nelements.forEach(function(nelement) {
+      nelements.forEach(function (nelement) {
         nelement.setAttribute('contenteditable', 'true');
       });
-    } else {
-      sortableInstance = Sortable.create(document.querySelector('.sortable'), {
-        animation: 1
+
+      // Disable nested sorting for nelements
+      var nestedSortables = document.querySelectorAll('.nelement .sortable');
+      nestedSortables.forEach(function (sortable) {
+        sortable.sortableInstance.option("disabled", true);
       });
-      console.log("sorting enabled");
+    } else {
+      sortableInstance.option("disabled", false);
       sort = true;
       document.getElementById('sortButton').textContent = "Disable sorting";
+      console.log("sorting enabled");
 
       // Remove contenteditable attribute from each nelement
       var nelements = document.querySelectorAll('.nelement');
-      nelements.forEach(function(nelement) {
+      nelements.forEach(function (nelement) {
         nelement.removeAttribute('contenteditable');
       });
+
+      // Enable nested sorting for nelements
+      var nestedSortables = document.querySelectorAll('.nelement .sortable');
+      nestedSortables.forEach(function (sortable) {
+        sortable.sortableInstance.option("disabled", false);
+      });
     }
-  } 
-  else {
+  } else {
     sortableInstance = Sortable.create(document.querySelector('.sortable'), {
       animation: 1
     });
@@ -324,6 +334,25 @@ function saveContent(event) {
   }
 }
 
+
+// Function to enable sorting within nested nelements
+function enableNestedSorting() {
+  nelementsArray.forEach(nelement => {
+    const sortableInstance = Sortable.create(nelement, {
+      group: 'nested',
+      animation: 1500,
+      handle: '.nelement',
+      draggable: '.nelement',
+      ghostClass: 'sortable-ghost',
+      onUpdate: function (evt) {
+        const item = evt.item;
+        const newIndex = Array.from(item.parentNode.children).indexOf(item);
+        const elementId = item.id;
+        // Update the order or perform any other necessary actions
+      }
+    });
+  });
+}
 
 
 var demo = document.getElementById("demo");
