@@ -286,24 +286,40 @@ function saveContent(event) {
  var sort =true;
 
 
-function toggleSortable() {
-  if (sortableInstance ) { 
-    if (sort==true) {sortableInstance.option("disabled", true);
-    sort =false;
-    document.getElementById('sortButton').textContent = "Enable sorting";
-    console.log("sorting disable");
-  } else {
+ function toggleSortable() {
+  if (sortableInstance) {
+    if (sort) {
+      sortableInstance.option("disabled", true);
+      sort = false;
+      document.getElementById('sortButton').textContent = "Enable sorting";
+      console.log("sorting disabled");
+
+      // Set contenteditable attribute to false for each nelement
+      var nelements = document.querySelectorAll('.nelement');
+      nelements.forEach(function(nelement) {
+        nelement.setAttribute('contenteditable', 'true');
+      });
+    } else {
+      sortableInstance = Sortable.create(document.querySelector('.sortable'), {
+        animation: 1
+      });
+      console.log("sorting enabled");
+      sort = true;
+      document.getElementById('sortButton').textContent = "Disable sorting";
+
+      // Remove contenteditable attribute from each nelement
+      var nelements = document.querySelectorAll('.nelement');
+      nelements.forEach(function(nelement) {
+        nelement.removeAttribute('contenteditable');
+      });
+    }
+  } 
+  else {
     sortableInstance = Sortable.create(document.querySelector('.sortable'), {
       animation: 1
-    });   
-    console.log("sorting enable");
-    sort=true;
-    document.getElementById('sortButton').textContent = "Disable sorting";
-  }
-  } else {
-    sortableInstance = Sortable.create(document.querySelector('.sortable'), {
-      animation: 1
-    });   console.log("sorting enable"); sort=true;
+    });
+    console.log("sorting enabled");
+    sort = true;
     document.getElementById('sortButton').textContent = "Disable sorting";
   }
 }
