@@ -283,8 +283,8 @@ function saveContent(event) {
 
 }
 
- var sortableInstance = null;
- var sort =true;
+ var sortableInstance = false;
+ var sort =false;
 
 
  function toggleSortable() {
@@ -328,9 +328,22 @@ function saveContent(event) {
     sortableInstance = Sortable.create(document.querySelector('.sortable'), {
       animation: 1
     });
-    console.log("sorting enabled");
+    sortableInstance.option("disabled", false);
     sort = true;
     document.getElementById('sortButton').textContent = "Disable sorting";
+    console.log("sorting enabled");
+
+    // Remove contenteditable attribute from each nelement
+    var nelements = document.querySelectorAll('.nelement');
+    nelements.forEach(function (nelement) {
+      nelement.removeAttribute('contenteditable');
+    });
+
+    // Enable nested sorting for nelements
+    var nestedSortables = document.querySelectorAll('.nelement .sortable');
+    nestedSortables.forEach(function (sortable) {
+      sortable.sortableInstance.option("disabled", false);
+    });
   }
 }
 
