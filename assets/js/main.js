@@ -4,9 +4,11 @@ const toolbar = document.getElementById('toolbar');
 // var selected_tag =document.getElementById('selected_tag');
 let tempElementID = "";
 let counter = 7;
+let TRcount =2;
 let initialPosition = null;
 var myTags = [];// array to store data
 var nelementsArray =[];
+var trArray =[];
 let tempElementName = "";
 // Define the value to send to the session
 let id_value = "";
@@ -139,8 +141,24 @@ function canvasDrop(event){
     if(tagName=="img"){
  newElement = document.createElement('img');
  createImageModal(newElement);
+} else if( tagName=="tr"){
+  console.log("trrrrrrrrrrrrrrrr");
+  newElement = document.createElement('tr');
+  trArray.push(newElement)
+  newElement.style.display='block';
+  // newElement.style.height='10%';
+  newElement.style.margin = '5%';
+  newElement.style.borderCollapse = 'collapse';
+  newElement.style.border = '3% solid #000';
+
+}else if( tagName=="th"){
+  newElement = document.createElement('th');
+  
+} else if( tagName=="table"){
+  newElement = document.createElement('table');
+   newElement.classList.add("table");
 }
-  else{   newElement = document.createElement(tagName);}
+  else{ if(tagName!="th"){  newElement = document.createElement(tagName);}}
   
 
   newElement.className = 'nelement';                 //the DIV class IS (nelement),
@@ -178,8 +196,32 @@ function canvasDrop(event){
   //newElement.ondrag(draged());
   //selected_tag.textContent = tagName; 
 
-  canvas.appendChild(newElement);
-
+  if (tagName=="tr"){
+    const tablee= document.querySelector('table');
+    tablee.appendChild(newElement);
+    console.log( "table",document.querySelector('table'));
+    addToDatabase(counter,tagID,newElement.textContent,tablee.id,TRcount);
+    TRcount=TRcount+1;
+  }else if (tagID=='19'){
+    const tablee= document.querySelector('table');
+    const TR=trArray[0];
+    console.log( "TR",TR);
+    TR.appendChild(newElement);
+    console.log( "table",document.querySelector('table'));
+    addToDatabase(counter,tagID,newElement.textContent,TR.id,TRcount);
+    TRcount=TRcount+1;
+  }else if (tagName=="td"){
+    const tablee= document.querySelector('table');
+      const TR= tablee.querySelectorAll('tr');
+    const lastRow = TR[TR.length - 1];
+    lastRow.appendChild(newElement);
+    console.log( "table",document.querySelector('table'));
+    addToDatabase(counter,tagID,newElement.textContent,lastRow.id,TRcount);
+    TRcount=TRcount+1;
+  }else {
+    if(tagName!="th"){
+  canvas.appendChild(newElement);}
+}
 nelementsArray.push(newElement);
 console.log(nelementsArray);
 const index=nelementsArray.indexOf(newElement);
@@ -201,23 +243,6 @@ var order =index+1;
   // updateProperties(newElement.id);
   // show the properties block and set its values based on the dropped element
   const propertiesBlock = document.getElementById('element_properties');
-  //propertiesBlock.style.display = 'block';
-
-  //  tempElementID =tagName;
-  //  console.log("Temporary element ID:", tempElementID);
-  //  id_value=newElement.id ;
-
-  //------------------------------------
-
-  // Remove the dragged element from its original position
-  // if (draggedElement) {
-  //   draggedElement.remove();
-  // }
-
-
-
-  //--------------------------------
-  // post ajax
 
  
 
@@ -231,7 +256,8 @@ var order =index+1;
 
   createElement();
 
-  addToDatabase(counter,tagID,newElement.textContent,5,order);
+  if(tagName!="tr"){
+  addToDatabase(counter,tagID,newElement.textContent,5,order);}
  // element_properties ajax
   element_properties(tagID,counter); 
   element_style(counter);
@@ -408,7 +434,7 @@ var element_ID = elementID;
 xxhr.onreadystatechange = function() {
    if (xxhr.readyState == 4 && xxhr.status == 200) {
     console.log(" tag_ID & element_ID");
-    console.log(xxhr.responseText);
+    // console.log(xxhr.responseText);
     document.getElementById("element_properties").innerHTML = xxhr.responseText;
    }
  };
@@ -425,7 +451,7 @@ function element_style(elementID) {
   xxhr.onreadystatechange = function() {
      if (xxhr.readyState == 4 && xxhr.status == 200) {
       console.log(" element_ID");
-      console.log(xxhr.responseText);
+      // console.log(xxhr.responseText);
       document.getElementById("style").innerHTML = xxhr.responseText;
      }
    };
@@ -515,7 +541,7 @@ xhr.setRequestHeader('Content-Type', 'application/json');
 xhr.onreadystatechange = function () {
   if (xhr.readyState === 4 && xhr.status === 200) {
     const response = JSON.parse(xhr.responseText);
-    console.log(response.message);
+    // console.log(response.message);
   }
 };
 xhr.send(JSON.stringify(data));
@@ -663,7 +689,7 @@ function addToDatabase(element_id,tag_id,content,parent_id,children_order){
  xhr.onreadystatechange = function () {
    if (xhr.readyState === 4 && xhr.status === 200) {
      const response = JSON.parse(xhr.responseText);
-     console.log(response.message);
+    //  console.log(response.message);
    }
  };
  xhr.send(JSON.stringify(data));
@@ -996,48 +1022,101 @@ function createImageModal(newElement) {
 
 
 
-// ///////////////////////
-// const updateElementOrder = (parentElement) => {
-//   const childElements = Array.from(parentElement.children).filter(element => element.classList.contains('nelement'));
-//   childElements.forEach((element, index) => {
-//     element.style.order = index + 1;
-//   });
-// };
+function displayOnCanvas(newElement,tagName,tagID){
+  newElement.className = 'nelement';                 //the DIV class IS (nelement),
+  newElement.id =counter;
+  id_value = tagName; //???????
+  newElement.textContent = tagName;              //the DIV textContent property is set to the elementText value. 
+  newElement.style.left = event.clientX.canvas + 'px';   //IN GENERAL >>  event.clientX property returns the horizontal coordinate (in pixels)  >>>>>     event.clientX.canvas expression sets the LEFT style of the new element    
+  newElement.style.top = event.clientY.canvas + 'px';    //IN GENERAL >> event.clientY property returns the vertical coordinate (in pixels)     >>>>>     event.clientY.canvas sets the TOP style
+  newElement.classList.add('selected');
+  newElement.onclick = () => selected(newElement);
+  newElement.setAttribute('data-content', newElement.textContent)
+  newElement.setAttribute('draggable', 'true');
+  newElement.setAttribute('contenteditable', 'true');
+  newElement.setAttribute('onkeypress','saveContent(event)');
 
-// updateElementOrder(canvas);
-// // Function to update the order of each nelement
-// function updateElementOrder(parentElement) {
-//   const childElements = Array.from(parentElement.children).filter(element => element.classList.contains('nelement'));
-//   childElements.forEach((element, index) => {
-//     element.style.order = index + 1;
-//   });
-// }
+  newElement.setAttribute('tag_name', tagName);
+  newElement.setAttribute('tag_iD', tagID);
+  newElement.setAttribute('element_iD', counter);
+  newElement.setAttribute('tag_level', 4);
+  if(tagName!="img"){
+    // console.log("you can drop on it , not image");
+    newElement.setAttribute('ondrop','canvasdrop(event)');
+  newElement.setAttribute('ondragover','allowDrop(event)');
+  }
+  newElement.setAttribute('ondragstart','drag(event)');
 
-// // on drop fun
-// updateElementOrder(canvas);
+  newElement.setAttribute("data-toggle", "tooltip");
+  newElement.setAttribute("title", "double click to edit content");
+  canvas.appendChild(newElement);
 
-// // Add event listener for selecting an element
-// newElement.addEventListener('click', function (event) {
-//   event.stopPropagation();
-//   const selectedElements = document.querySelectorAll(".selected");
-//   selectedElements.forEach(function (element) {
-//     element.classList.remove("selected");
-//   });
-//   newElement.classList.add('selected');
-// });
+nelementsArray.push(newElement);
+console.log(nelementsArray);
+const index=nelementsArray.indexOf(newElement);
+console.log("index IS");
+console.log(index);
 
-// const deleteButton = document.createElement('button');
-// deleteButton.className = 'delete-button';
-// deleteButton.textContent = 'Delete';
-// deleteButton.addEventListener('click', function (event) {
-//   event.stopPropagation();
-//   canvas.removeChild(newElement);
-//   const index = nelementsArray.indexOf(newElement);
-//   if (index > -1) {
-//     nelementsArray.splice(index, 1);
-//   }
-//   updateElementOrder(canvas);
-// });
+const targetElement = event.target;
+  const targetIndex = parseInt(targetElement.getAttribute('index'));
+  console.log(targetIndex);
+  newElement.setAttribute('index',index);
+var order =index+1;
+  const propertiesBlock = document.getElementById('element_properties');
+  
 
-// newElement.appendChild(deleteButton);
-// }
+  createElement();
+
+  addToDatabase(counter,tagID,newElement.textContent,5,order);
+ // element_properties ajax
+  element_properties(tagID,counter); 
+  element_style(counter);
+  createElementAttribute(counter, tagID);
+  createStyleElement(counter);
+  
+
+  //counter is set for auto-increment element_id
+  refreshIframe();  //
+}
+
+// 
+// Add event listener for delete element button
+const deleteButton = document.getElementById('delete-element');
+// deleteButton.addEventListener('click', deleteElement);
+
+function deleteElement() {
+  // Get the selected element
+  const selectedElement = document.querySelector('.selected');
+  
+  if (selectedElement) {
+    // Remove the selected element from the canvas
+    selectedElement.remove();
+
+    // Delete the element from the database using AJAX
+    const elementId = selectedElement.id;
+    const xhr = new XMLHttpRequest();
+    xhr.open('DELETE', 'http://localhost/GP-2023/api/element/delete.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          alert(response.message);
+        } else {
+          alert('Error deleting element');
+        }
+      }
+    };
+    xhr.send(JSON.stringify({ element_id: elementId }));
+
+    // Clear the element properties block
+    const propertiesBlock = document.getElementById('element_properties');
+    propertiesBlock.innerHTML = '';
+
+    // Deselect the deleted element
+    selectedElement.classList.remove('selected');
+  } else {
+    alert('No element selected');
+  }
+  refreshIframe();
+}

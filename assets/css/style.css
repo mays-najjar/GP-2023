@@ -430,6 +430,19 @@ form a{
   border-style: dotted;
   position: relative;
 }
+table {
+  cursor: pointer;
+  user-select: none;
+  border: #444;
+  border: 2px;
+  border-style: double;
+  position: relative;
+  width: 80%;
+
+}
+tr {
+  margin: 2%;
+}
 /* The Modal (background) */
 .imgModal {
   display: none;
@@ -448,13 +461,49 @@ form a{
 }
 
 /* Modal Content/Box */
-.modal-content {
+.tableModal-content {
   background-color: rgba(255, 255, 255, 1);
   /* opacity: 1.0; */
   margin: 220%  15% ; 
   border: 1px solid #888;
   width: 50%; 
 }
+/* table modal */
+.tableModal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.tableModal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 /* .arrow-up,
 .arrow-down {
   display: none;

@@ -256,6 +256,7 @@
   <span class="left " style="background-color: #F4A62A;"></span>
   <span class="left " style="background-color: #16A085;"></span>
 </div>
+<button id="delete-element" onclick="deleteElement()"><i class="fa-regular fa-trash-can" style="color: #c6cedd;"></i></button>
   <button id="reload" onclick="refreshIframe()"><i class="fa-solid fa-rotate-right" style="color: #ffffff;"></i></button>
 </div>
     <div id="canvas" class=" sortable" ondrop="canvasDrop(event)">
@@ -382,6 +383,17 @@
     </div>
 </div>
 
+<!-- Table Modal -->
+<div id="tableModal" class="tableModal">
+  <div class="tableModal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <label for="rowInput">Number of Rows:</label>
+    <input type="number" id="rowInput" min="1" value="1">
+    <label for="colInput">Number of Columns:</label>
+    <input type="number" id="colInput" min="1" value="1">
+    <button onclick="generateTable()">Generate Table</button>
+  </div>
+</div>
          
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>  
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
