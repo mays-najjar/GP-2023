@@ -1,5 +1,73 @@
 
 
+<?php
+// Start the session
+session_start();
+
+// Check if the user is already logged in
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+  // User is logged in, perform necessary actions
+  // For example, you can display a welcome message or redirect them to a member-only area
+  echo "Welcome back, " . $_SESSION['username'] . "!";
+} else {
+  // User is not logged in
+
+  // Check if the "remember me" cookie is set
+  if (isset($_COOKIE['rememberme'])) {
+      // Retrieve the user information from the cookie and log them in
+      $username = $_COOKIE['rememberme'];
+
+      // Perform any necessary validation or database lookup to verify the user
+
+      // Set session variables
+      $_SESSION['loggedin'] = true;
+      $_SESSION['username'] = $username;
+
+      echo "Welcome back, " . $_SESSION['username'] . "!";
+  } else {
+      // User is a guest, no session or cookie found
+      echo "Welcome, guest!";
+
+      // Perform actions for guest users
+      // Any work done by the guest will not be saved after the website is closed
+  }
+}
+
+// Login function - to be called when the user submits the login form
+function login($username, $remember) {
+  // Perform validation and database lookup to verify the user
+
+  // Set session variables
+  $_SESSION['loggedin'] = true;
+  $_SESSION['username'] = $username;
+
+  // Set "remember me" cookie if requested
+  if ($remember) {
+      $cookieExpiry = time() + (30 * 24 * 60 * 60); // Set cookie expiry to 30 days
+      setcookie('rememberme', $username, $cookieExpiry);
+  }
+
+  // Redirect or perform other actions after successful login
+  header('Location: member-area.php');
+  exit;
+}
+
+// Logout function - to be called when the user logs out
+function logout() {
+  // Unset all session variables
+  session_unset();
+
+  // Destroy the session
+  session_destroy();
+
+  // Remove the "remember me" cookie if set
+  setcookie('rememberme', '', time() - 3600);
+
+  // Redirect or perform other actions after logout
+  header('Location: index.php');
+  exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
