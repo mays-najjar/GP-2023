@@ -114,15 +114,25 @@ function logout() {
     <nav style="text-align: center;" id="nav">
          <div class='logo'>
          <img src='assets/img/logo.jpg'alt='logo' style="mix-blend-mode: multiply;width:200px ;" > </div>
-        
-         <div class="modes" >
+         
+   <form class="pageTitle " action=" " style="    padding: 0px;">
+    <div class=" form-group" style="    padding: 0px;">
+       <label for="title">Page title:</label>
+       
+      <input type="text" class="form-control" id="title" placeholder="Enter page title" name="title" style="display: inline-block;    width: 60%;">
+    
+    <button type="submit" name="title" class="btn" style=" width: 7%; padding: 0; " onclick="updateElement()">Save</button>
+    </div>
+  </form>
+         <!-- <div class="modes" >
             <input type="radio" id="designMode" name="mode" value="design" checked="">
             <label for="design">Design Mode</label>
             <input type="radio" id="codeMode" name="mode" value="code">
             <label for="css">Code Mode</label>
+         
+        </div> -->
 
-        </div>
-        <div  class="save-and-preview-buttons">
+  <div  class="save-and-preview-buttons">
             <button class="save-button three_btns "  onclick="downloadHtml()"> 
             <i class="fa-solid fa-download" style="color: #ffffff; "></i>
             <span class="hedden-content" >Save as html</span></button>
@@ -241,14 +251,7 @@ function closeModal() {
 
   <div id="login"><a href="login.php">Log in / Sign Up</a></div>
 
-<form class="pageTitle " action=" ">
-    <div class=" form-group">
-       <label for="title">Page title:</label>
-       
-      <input type="text" class="form-control" id="title" placeholder="Enter page title" name="title">
-    </div>
-    <button type="submit" name="title" class="btn" style=" width: 25%; padding: 0; margin-top:0px;" onclick="updateElement()">Save</button>
-    </form>
+
 
     <script>
       function updateElement() {
@@ -347,13 +350,17 @@ function closeModal() {
     <!-- --------------------CANVAS----------------------- -->
     
     <div id="displayDesign" class="col-xs-8">
-      <div><div class="canvas-head " >
+      <div class="design-area"style="    margin-top: -1%;">
+      <div class="canvas-head canvas-tool" >
+      <button id="sortButton" onclick="toggleSortable()"><i class="fa-solid fa-sort" style="color: #2055b9;"></i> Enable Sorting</button>
+      <button id="delete-element" onclick="deleteElement()" ><i class="fa-regular fa-trash-can" style="color: #2055b9;"></i></button>
+      </div>
+      <div class="canvas-head" style="margin-left: 0.1%;">
     <div class="three-circle">
   <span class="left " style="background-color: #E74C3C;"></span>
   <span class="left " style="background-color: #F4A62A;"></span>
   <span class="left " style="background-color: #16A085;"></span>
 </div>
-<button id="delete-element" onclick="deleteElement()"><i class="fa-regular fa-trash-can" style="color: #c6cedd;"></i></button>
   <button id="reload" onclick="refreshIframe()"><i class="fa-solid fa-rotate-right" style="color: #ffffff;"></i></button>
 </div>
     <div id="canvas" class=" sortable" ondrop="canvasDrop(event)">
@@ -372,7 +379,7 @@ function closeModal() {
   </div>
 
 </div>
-  <button id="sortButton" onclick="toggleSortable()">Enable Sorting</button>
+  
   <?php
   // echo '<button id="save-button">Save Canvas</button>'
   ?>

@@ -263,7 +263,8 @@ var order =index+1;
   element_style(counter);
   createElementAttribute(counter, tagID);
   createStyleElement(counter);
-  
+  displayProperties();
+  $("#Properties").css("display", "block");
   //counter is set for auto-increment element_id
   refreshIframe();  //
 //} // end if condition
@@ -1119,4 +1120,8 @@ function deleteElement() {
     alert('No element selected');
   }
   refreshIframe();
+}
+
+function displayProperties(){
+  $("#Properties").css("display", "inline-block");
 }

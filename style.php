@@ -3,7 +3,7 @@ $conn = mysqli_connect('localhost', 'root', '', 'html_tag') or die('connection f
 
 // Retrieve the element's attributes and their values
 $element_id = $_POST['element_ID'];
-echo "<br>Element Id:" . $element_id;
+// echo "<br>Element Id:" . $element_id;
 ?>
 <div id="style">
  <div class="input-group mb-3" >

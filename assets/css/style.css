@@ -2,7 +2,7 @@ html body{
   /* background-color: #484a72; */
   background:radial-gradient(#484a72, #7a8eb7);
   min-width: 760px;
-
+  /* overflow: hidden; */
 }
 *{
   font-size: 12px;  
@@ -34,6 +34,7 @@ html body{
 /* save & preview butttons */
 .save-and-preview-buttons{
   width: 220px;
+  align-self: center;
 }
 #nav> div {
   text-align: right;
@@ -122,7 +123,7 @@ margin-right: 0px;
 
 .modes{
   /* background:radial-gradient(#484a72, #4b6db1); */
-  align-self: center;
+  
   text-size-adjust: 300;
   /* margin-top: 20px; */
   /* margin-left: 300px; */
@@ -183,9 +184,10 @@ margin-right: 0px;
   width: 15%;
   float: right;
   min-height: 400px;
-  margin-top: 30px;
+  margin-top: 40px;
   text-align: center;
   border-radius:5px;
+  right: 1%;
 }
 #indicator{
   width: 65px;
@@ -320,17 +322,17 @@ form a{
 /* ----------------pageTitle----------------- */
 .pageTitle{
   /* text-align: center; */
-  /* width: 15%; */
+  width: 62%;
   min-height: fit-content;
   float: left;
   padding: 5px;
   margin-top: 10px;
   margin-left:2px;
   margin-right:2px;
-  background:radial-gradient(#484a72,#7a8eb7 );
+  /* background:radial-gradient(#484a72,#7a8eb7 ); */
   border-radius:20px;
-  border-style:groove ;
-  border-color: #484a72;
+  /* border-style:groove ;
+  border-color: #484a72; */
 }
 .btn{
   display: inline-block;
@@ -350,7 +352,7 @@ form a{
   /* width: 15%; */
   min-height: fit-content;
   float: left;
-  margin-top: 10px;
+  margin-top: 40px;
   margin-left:2px;
   margin-right:2px;
   background:radial-gradient(#7a8eb7,#484a72 );
@@ -396,7 +398,7 @@ form a{
     width: 50%;
     min-height: 500px;
     display: inline-block;
-    background-color: rgb(248, 243, 243);
+    background-color: rgb(231, 224, 224);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     padding: 0;
@@ -409,10 +411,23 @@ form a{
     background: #333;
     height: 35px;
     padding: 0px 0px 0px 11px;
+    margin-bottom: -10px;
     text-align: center;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    width : 100%;
+    width: 49.7%;
+    display: inline-block;
+  }
+  .canvas-tool{
+    height: 44px;
+    padding: 7px 0px 0px 11px;
+    background: rgb(231, 224, 224);
+    margin-bottom: -10px;
+    margin-left: .09%;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border: #484a72;
+    border-style: groove;
   }
   #reload{
     float: right;
@@ -459,11 +474,12 @@ form a{
 }
 
 #sortButton{
-  /* margin-left: -8%; */
-  margin-left: -102px;
-  position: fixed;
-  z-index: 1;
-  margin-top: .1%;
+  margin-left: -3%;
+    margin-right: 62%;
+  /* position: fixed; */
+  /* z-index: 1; */
+  /* margin-top: -0.9%; */
+  color: #2055b9;
  
 }
 .nelement{
