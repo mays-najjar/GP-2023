@@ -124,11 +124,7 @@ function logout() {
     <button type="submit" name="title" class="btn" style=" width: 7%; padding: 0; " onclick="updateElement()">Save</button>
     </div>
   </form>
-         <!-- <div class="modes" >
-            <input type="radio" id="designMode" name="mode" value="design" checked="">
-            <label for="design">Design Mode</label>
-            <input type="radio" id="codeMode" name="mode" value="code">
-            <label for="css">Code Mode</label>
+         <!-- 
          
         </div> -->
 
@@ -446,6 +442,13 @@ function closeModal() {
 </div>
 </div>
 </div></div>
+<div>
+<!-- <div class="modes" >
+            <input type="radio" id="designMode" name="mode" value="design" checked="">
+            <label for="design">Design Mode</label>
+            <input type="radio" id="codeMode" name="mode" value="code">
+            <label for="css">Code Mode</label>
+</div> -->
 <div  id="properties" class="col-xs-3">
 
                     <div class="form-btn">

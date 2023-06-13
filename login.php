@@ -23,10 +23,10 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
       $_SESSION['loggedin'] = true;
       $_SESSION['username'] = $username;
 
-      echo "Welcome back, " . $_SESSION['username'] . "!";
+    //   echo "Welcome back, " . $_SESSION['username'] . "!";
   } else {
       // User is a guest, no session or cookie found
-      echo "Welcome, guest!";
+    //   echo "Welcome, guest!";
 
       // Perform actions for guest users
       // Any work done by the guest will not be saved after the website is closed
@@ -140,8 +140,10 @@ function logout() {
     <div class="container">
         <div class="row">
             <div class="footer-col-1">
-                <a href="#"><h3>Developed by</h3></a>
-                <p>Download App for Android and ios mobile phone</p>
+                <a href="#"><h3 style="color:#333 ;">Developed by</h3></a>
+                <p>Eng Afnan Aish</p>
+                <p>Eng Hala Shraim</p>
+                <p>Eng Mays Najjar</p>
                 <!-- <div class="app-logo">
                     <img src="assets/img/play-store.jpg">
                     <img src="assets/img/app-store.jpg">
@@ -150,22 +152,20 @@ function logout() {
 
             <div class="footer-col-2">
                    <img src="assets/img/logo.jpg" style="mix-blend-mode: multiply;width:200px ;"  width="125px">
-                <p>Developed by Afnan , Hala , Mays.</p>
+                
             </div>
            
 
             <div class="footer-col-3" >
                 <h3>Contact us</h3>
                 <ul>
-                    <li>Facebook</li>
-                    <li>Instagram</li>
-                    <li>Tiktok</li>
-                    <li>Snapchat</li>
-                </ul>
+                    <li>Linkedin</li>
+                    <li>Email</li>
+                    <br><br>
+                    </ul>
                 </div>
                 </div>
-                <hr>
-                <p class="copy-right">Copyright 2022 - Intos Art</p>
+                
             </div>
         </div>
 
