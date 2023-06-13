@@ -564,7 +564,7 @@ tr {
   cursor: pointer;
 }
 
-/* .arrow-up,
+.arrow-up,
 .arrow-down {
   display: none;
   content: "";
@@ -578,17 +578,17 @@ tr {
   border-right: 8px solid transparent;
   border-bottom: 12px solid #000;
   cursor: pointer;
-} */
-/* 
+}
+
 .arrow-up {
   border-bottom: 15px solid black;
 }
 
 .arrow-down {
   border-top: 15px solid black;
-} */
+}
 
-/* .nelement:hover .arrow-up,
+.nelement:hover .arrow-up,
 .nelement:hover .arrow-down {
   display: block;
   content: "";
@@ -602,7 +602,7 @@ tr {
   border-right: 8px solid transparent;
   border-top: 12px solid #000;
   cursor: pointer;
-} */
+}
 
 /* ---------------content modal---------------- */
 /* The Modal (background) */
@@ -668,9 +668,9 @@ pre {
   color: #fff;
   word-break: break-all;
   word-wrap: break-word;
-  background-color: #050000;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  /* background-color: #050000; */
+  /* border: 1px solid #ccc;
+  border-radius: 4px; */
 }
 /* ------------------------GRID----------------------------- */
 .grid-container {

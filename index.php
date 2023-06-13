@@ -221,7 +221,7 @@ function logout() {
   var iframe = document.getElementById("codeIframe");
 
   // Set the source URL for the iframe
-  iframe.src = "https://www.example.com"; // Replace with your desired URL
+  iframe.src = "code.php"; // Replace with your desired URL
 
   // Display the modal
   modal.style.display = "block";
@@ -442,7 +442,7 @@ function closeModal() {
     // Build the DOM tree for the given root node ID and store the generated HTML in a variable
    $element->codeMode();
 
-    ?>
+    ?> </pre>
 </div>
 </div>
 </div></div>
@@ -503,7 +503,8 @@ function closeModal() {
  <div id="codeModal" class="modal">
   <div class="modal-content" style="background-color: #c6cedd; height:90%;">
     <span class="close" onclick="closeModal()">&times;</span>
-    <iframe id="codeIframe" frameborder="0" style="width: 100%; height: 90%;"></iframe>
+    <iframe id="codeIframe" frameborder="0" style="width: 100%; height: 90%;">
+  </iframe>
   </div>
 </div>
 

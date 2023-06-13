@@ -140,7 +140,7 @@ function logout() {
     <div class="container">
         <div class="row">
             <div class="footer-col-1">
-                <a href="#"><h3>Download our App</h3></a>
+                <a href="#"><h3>Developed by</h3></a>
                 <p>Download App for Android and ios mobile phone</p>
                 <!-- <div class="app-logo">
                     <img src="assets/img/play-store.jpg">

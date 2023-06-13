@@ -313,13 +313,14 @@ function saveContent(event) {
  var sortableInstance = false;
  var sort =false;
 
-
+ nelement.removeAttribute('ondrop');
+ nelement.removeAttribute('ondragover');
  function toggleSortable() {
   if (sortableInstance) {
     if (sort) {
       sortableInstance.option("disabled", true);
       sort = false;
-      document.getElementById('sortButton').textContent = "Enable sorting";
+      document.getElementById('sortButton').innerHTML = '<i class="fa-solid fa-sort" style="color: #2055b9;"></i> Enable sorting';
       console.log("sorting disabled");
 
       // Set contenteditable attribute to false for each nelement
@@ -550,23 +551,32 @@ xhr.send(JSON.stringify(data));
 }
 
 function createElement() {
-  // const elements = document.getElementsByClassName('nelement');
-  // for (let i = 0; i < elements.length; i++) {
-  //   const element = elements[i];
-  //   const arrowUp = document.createElement('div');
-  //   arrowUp.className = 'arrow-up';
-  //   arrowUp.onclick = () => {
-  //     changeElementOrder(i, i - 1);
-  //   };
-  //   element.appendChild(arrowUp);
+  const elements = document.getElementsByClassName('nelement');
+  for (let i = 0; i < elements.length; i++) {
+    const element = elements[i];
+    const arrowUp = document.createElement('div');
+    arrowUp.className = 'arrow-up';
+    arrowUp.onclick = () => {
+      changeElementOrder(i, i - 1);
+      console.log("oooooooooooooorrrrrrrrrrder",$(elements[i]).parent().attr('id'));
+      if($(elements[i]).parent().attr('id')=="canvas"){
+        updateChildElementOrders("canvas");
+      }else{
+      updateChildElementOrders(elements[i].parent().attr('id'));}
+    };
+    element.appendChild(arrowUp);
 
-  //   const arrowDown = document.createElement('div');
-  //   arrowDown.className = 'arrow-down';
-  //   arrowDown.onclick = () => {
-  //     changeElementOrder(i, i + 1);
-  //   };
-  //   element.appendChild(arrowDown);
-  // }
+    const arrowDown = document.createElement('div');
+    arrowDown.className = 'arrow-down';
+    arrowDown.onclick = () => {
+      changeElementOrder(i, i + 1);
+      if($(elements[i]).parent().attr('id')=="canvas"){
+        updateChildElementOrders("canvas");
+      }else{
+      updateChildElementOrders(elements[i].parent().attr('id'));}
+    };
+    element.appendChild(arrowDown);
+  }
 }
 function createElementAttribute(element_id, tag_id) {
   // Construct the URL for create.php
@@ -720,11 +730,8 @@ function drop(event) {
   console.log("new parent Element ID");
   console.log(newParentID);
   
-  updateChildElementOrders(newParentID);
-  if (newParentID=='canvas'){
-    updateParent(draggedElementId,5);
-  } else{
-  updateParent(draggedElementId,newParentID);}
+  
+ 
   // if (targetElement === draggedElement) {
   //   return;
   // }
@@ -732,6 +739,11 @@ function drop(event) {
     console.log("you already in in this parent "); 
     console.log("order must changed"); 
 
+    if (targetElement==canvas){
+      updateChildElementOrders("canvas");
+    } else{
+    updateChildElementOrders(newParentID);
+  }
   const targetIndex = nelementsArray.indexOf(targetElement);
   console.log ("targetIndex"); console.log (targetIndex);
   //   // var parentElement = event.target.parentNode;
@@ -748,6 +760,11 @@ function drop(event) {
     // canvasElements.splice(targetIndex, 0, removedElement);
     // updateCanvas();
   } else {
+    
+    if (targetElement==canvas){
+    updateParent(draggedElementId,5);
+  } else{
+  updateParent(draggedElementId,newParentID);}
     console.log("you not in canvas");
     targetElement.appendChild(draggedElement);
  
@@ -804,6 +821,10 @@ function refreshIframe() {
      iframe.contentWindow.location.reload();
      // call the Function to update the order 
     //  updateOrder(canvas);
+    
+  var CodeIframe = document.getElementById("codeIframe");
+  // Reload the iframe content
+  CodeIframe.contentWindow.location.reload();
 }
 function updateOrder(parentElement) {
   const childElements = parentElement.querySelectorAll('.nelement');
@@ -884,6 +905,8 @@ function createElementAttribute(element_id, tag_id) {
 
 function updateChildElementOrders(parentId) {
   const parentElement = document.getElementById(parentId);
+  console.log(parentId);
+  console.log(parentElement);
   const childElements = parentElement.querySelectorAll('.nelement');
   const sortedChildElements = Array.from(childElements).sort((a, b) => {
     const aRect = a.getBoundingClientRect();
@@ -924,6 +947,7 @@ function updateChildElementOrders(parentId) {
 
     xhr.send(JSON.stringify(requestData));
   });
+  refreshIframe();
 }
 
 function saveData(element_id) {
@@ -1125,3 +1149,28 @@ function deleteElement() {
 function displayProperties(){
   $("#Properties").css("display", "inline-block");
 }
+
+// Get all elements with the class "nelement"
+const nnelements = document.getElementsByClassName('nelement');
+
+// Iterate over each element
+for (let i = 0; i < elements.length; i++) {
+  const element = nnelements[i];
+
+  // Get the arrow-up and arrow-down elements within the current nelement
+  const arrowUp = element.querySelector('.arrow-up');
+  const arrowDown = element.querySelector('.arrow-down');
+
+  // Attach click event listeners to the arrow icons
+  arrowUp.addEventListener('click', () => {
+    const nelementParentID = element.parent().attr('id');
+    updateChildElementOrders(nelementParentID);
+  });
+
+  arrowDown.addEventListener('click', () => {
+    const nelementParentID = element.parent().attr('id');
+    updateChildElementOrders(nelementParentID);
+  });
+}
+
+
