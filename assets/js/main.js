@@ -963,7 +963,7 @@ function saveData(element_id) {
 
     var data = {
       element_id: element_id,
-      styleValues: select1Value + ", " + select4Value + "px " + select3Value + "  " + select2Value + ", " + select5Value + ", " + select6Value + ", " + select7Value + ", " + select8Value + ", " + select9Value 
+      styleValues: select1Value + ", " + select4Value + "px " + select3Value + "  " + select2Value + ", " + select5Value + ", " + select6Value + "% " + ", " + select7Value + "% "+ ", " + select8Value + "% "+ ", " + select9Value + "% "
   };
 
   var xhr = new XMLHttpRequest();
