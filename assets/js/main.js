@@ -958,9 +958,12 @@ function saveData(element_id) {
   var select5Value = document.getElementById("inputGroupSelect05").value;
   var select6Value = document.getElementById("inputGroupSelect06").value;
   var select7Value = document.getElementById("inputGroupSelect07").value;
+  var select8Value = document.getElementById("inputGroupSelect08").value;
+  var select9Value = document.getElementById("inputGroupSelect09").value;
+
     var data = {
       element_id: element_id,
-      styleValues: select1Value + ", " + select2Value + ", " + select3Value + ", " + select4Value + ", " + select5Value + ", " + select6Value + ", " + select7Value
+      styleValues: select1Value + ", " + select4Value + "px " + select3Value + "  " + select2Value + ", " + select5Value + ", " + select6Value + ", " + select7Value + ", " + select8Value + ", " + select9Value 
   };
 
   var xhr = new XMLHttpRequest();
@@ -982,6 +985,7 @@ function saveData(element_id) {
   refreshIframe();
 
 }
+
 
 function createImageModal(newElement) {
   var modal = document.createElement('div');
