@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2023 at 07:42 PM
+-- Generation Time: Jun 15, 2023 at 06:34 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -57,7 +57,7 @@ INSERT INTO `attribute` (`attribute_id`, `attribute_name`) VALUES
 CREATE TABLE `element` (
   `element_id` int(11) NOT NULL,
   `tag_id` int(11) NOT NULL,
-  `content` varchar(50) DEFAULT NULL,
+  `content` mediumtext DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL,
   `children_order` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -69,11 +69,8 @@ CREATE TABLE `element` (
 INSERT INTO `element` (`element_id`, `tag_id`, `content`, `parent_id`, `children_order`) VALUES
 (1, 15, NULL, NULL, NULL),
 (3, 17, NULL, 1, 1),
-(4, 16, 'WEFW', 3, 1),
+(4, 16, 'My Web page', 3, 1),
 (5, 1, NULL, 1, 3),
-(9, 3, 'h2', 5, 2),
-(10, 5, 'fsdf', 5, 3);
-
 -- --------------------------------------------------------
 
 --
@@ -83,8 +80,14 @@ INSERT INTO `element` (`element_id`, `tag_id`, `content`, `parent_id`, `children
 CREATE TABLE `element_attribute` (
   `element_id` int(11) NOT NULL,
   `attribute_id` int(11) NOT NULL,
-  `attribute_value` varchar(255) DEFAULT NULL
+  `attribute_value` mediumtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `element_attribute`
+--
+
+
 
 -- --------------------------------------------------------
 
@@ -128,25 +131,7 @@ CREATE TABLE `style_element` (
 -- Dumping data for table `style_element`
 --
 
-INSERT INTO `style_element` (`element_id`, `style_id`, `style_value`) VALUES
-(9, 1, 'block'),
-(9, 2, '#000000'),
-(9, 3, 'center'),
-(9, 4, '1'),
-(9, 5, '1'),
-(9, 6, '#e64747'),
-(9, 7, '#000000'),
-(9, 8, ''),
-(9, 9, ''),
-(10, 1, ''),
-(10, 2, ''),
-(10, 3, ''),
-(10, 4, ''),
-(10, 5, ''),
-(10, 6, ''),
-(10, 7, ''),
-(10, 8, ''),
-(10, 9, '');
+
 
 -- --------------------------------------------------------
 
