@@ -71,8 +71,6 @@ INSERT INTO `element` (`element_id`, `tag_id`, `content`, `parent_id`, `children
 (3, 17, NULL, 1, 1),
 (4, 16, 'My Web page', 3, 1),
 (5, 1, NULL, 1, 3),
-(8, 11, 'By using innerText, the variable content will contain the full content, including line breaks and multiple paragraphs, as entered by the user using the contenteditable attribute.\n', 5, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -89,10 +87,7 @@ CREATE TABLE `element_attribute` (
 -- Dumping data for table `element_attribute`
 --
 
-INSERT INTO `element_attribute` (`element_id`, `attribute_id`, `attribute_value`) VALUES
-(8, 2, NULL),
-(8, 3, NULL),
-(8, 8, NULL);
+
 
 -- --------------------------------------------------------
 
@@ -136,16 +131,7 @@ CREATE TABLE `style_element` (
 -- Dumping data for table `style_element`
 --
 
-INSERT INTO `style_element` (`element_id`, `style_id`, `style_value`) VALUES
-(8, 1, ''),
-(8, 2, ''),
-(8, 3, ''),
-(8, 4, ''),
-(8, 5, ''),
-(8, 6, ''),
-(8, 7, ''),
-(8, 8, ''),
-(8, 9, '');
+
 
 -- --------------------------------------------------------
 
