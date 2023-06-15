@@ -94,6 +94,20 @@ $element_id = $_POST['element_ID'];
 
   <input type="color" class="form-control " id="inputGroupSelect09" style="display: inline-block;">
 </div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
+    <label class="input-group-text" for="inputGroupSelect10">Hight</label>
+  </div>
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect10" style="display: inline-block; width: 50px; ">
+  
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
+    <label class="input-group-text" for="inputGroupSelect11">Width</label>
+  </div>
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect11" style="display: inline-block; width: 50px; ">
+  
+</div>
 <!-- Add an onclick event to the "Save" button -->
 <button type="button" class="btn btn-primary" id="saveButton" onclick="saveData('<?php echo $element_id; ?>')">Save</button>
 

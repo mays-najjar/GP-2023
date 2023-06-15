@@ -477,8 +477,8 @@ function closeModal() {
             </script>   
   
 
-  <div id="element_properties" style="display: none;">   Proparites      </div>
-  <div id="style" style="display: inline-block;">   Style     </div>
+  <div id="element_properties" style="display: none;">         </div>
+  <div id="style" style="display: inline-block;">        </div>
 
  
             <!-- <iframe src="properties_info.php" title="properties_info" class="col-xs-12" name="my-iframe">

@@ -1181,4 +1181,32 @@ for (let i = 0; i < elements.length; i++) {
   });
 }
 
+function updateElementAttributes() {
+  var form = document.querySelector('.form-group');
+  var inputs = form.getElementsByTagName('input');
+  var attributeValues = [];
 
+  for (var i = 0; i < inputs.length; i++) {
+    var value = inputs[i].value;
+    attributeValues.push(value);
+  }
+
+  var data = {
+    element_id: 13,
+    tag_id: 9,
+    attribute_values: attributeValues.join(', ')
+  };
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('PUT', 'http://localhost/GP-2023/api/ElementAttribute/update.php', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  xhr.onload = function() {
+    if (xhr.status >= 200 && xhr.status < 400) {
+      var response = JSON.parse(xhr.responseText);
+      console.log(response.message);
+    }
+  };
+
+  xhr.send(JSON.stringify(data));
+}

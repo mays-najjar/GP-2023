@@ -21,7 +21,7 @@ $elementAttribute->element_id = $data->element_id;
 $tagId = $data->tag_id;
 $attributeValues = explode(', ', $data->attributesValue);
 $attributeIds = $elementAttribute->getAttributeIdsByTagId($tagId);
-
+var_dump($attributeIds);
 // Get the minimum count between attributeIds and attributeValues
 $count = min(count($attributeIds), count($attributeValues));
 
