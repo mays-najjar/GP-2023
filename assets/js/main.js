@@ -877,29 +877,33 @@ function updateOrder(parentElement) {
 }
 
 
+
 function createElementAttribute(element_id, tag_id) {
   // Construct the URL for create.php
-  var url = 'http://localhost/GP-2023/api/ElementAttribute/create.php?element_id=' + element_id + '&tag_id=' + tag_id;
-
-  // Make an AJAX request to create.php
-  $.ajax({
-    url: url,
-    method: 'POST',  // Replace with the appropriate HTTP method if needed
-    dataType: 'json',  // Expecting JSON response
-    success: function(response) {
-      // Handle the success response
-      console.log(response);
-    },
-    error: function(xhr, status, error) {
-      // Handle the error response
-      if (xhr.responseJSON && xhr.responseJSON.message) {
-        console.log(xhr.responseJSON.message);
+  const xhr = new XMLHttpRequest();
+  const url = 'http://localhost/GP-2023/api/ElementAttribute/create.php';
+  const data = {
+    "element_id": element_id,
+    "tag_id": tag_id
+  };
+  
+  xhr.open('POST', url, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        console.log(response.message);
       } else {
-        console.log('An error occurred:', error);
+        console.log('Error:', xhr.status);
       }
     }
-  });
-}
+  };
+  
+  xhr.send(JSON.stringify(data));
+  
+    
+  }
 
 
 
