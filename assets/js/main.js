@@ -964,10 +964,18 @@ function saveData(element_id) {
   var select7Value = document.getElementById("inputGroupSelect07").value;
   var select8Value = document.getElementById("inputGroupSelect08").value;
   var select9Value = document.getElementById("inputGroupSelect09").value;
+  var select10Value = document.getElementById("inputGroupSelect10").value;
+  var select11Value = document.getElementById("inputGroupSelect11").value;
+  var select12Value = document.getElementById("inputGroupSelect12").value;
+  var select13Value = document.getElementById("inputGroupSelect13").value;
+  var select14Value = document.getElementById("inputGroupSelect14").value;
+  var select15Value = document.getElementById("inputGroupSelect15").value;
+  var select16Value = document.getElementById("inputGroupSelect16").value;
+  var select17Value = document.getElementById("inputGroupSelect17").value;
 
     var data = {
       element_id: element_id,
-      styleValues: select1Value + ", " + select4Value + "px " + select3Value + "  " + select2Value + ", " + select5Value + ", " + select6Value + "% " + ", " + select7Value + "% "+ ", " + select8Value + "% "+ ", " + select9Value + "% "
+      styleValues: select1Value + ", " + select4Value + "px " + select3Value + "  " + select2Value + ", " + select5Value + ", " +  select8Value + "px " + select7Value + "px "+ + select9Value + "px "+select6Value + "px " + ", " + select12Value + "px "+ select11Value + "px " + select13Value + "px "+ select10Value + "px "+", "+ select14Value + ", "+ select15Value + ", "+ select16Value + ", " + select17Value
   };
 
   var xhr = new XMLHttpRequest();
