@@ -17,19 +17,63 @@ $element_id = $_POST['element_ID'];
     <option value="none">none</option>
   </select>
 </div>
+<div class="input-group mb-3" style="">
+  <div class="input-group-prepend"style="display: inline-block; margin-right:10px;">
+  <label class="input-group-text" for="inputGroupSelect05" >Text-aligen</label>
+  </div>
+  <select class="custom-select " id="inputGroupSelect05" style="display: inline-block;">
+    <option value="center" selected>center</option>
+    <option value="end">end</option>
+    <option value="left">left</option>
+    <option value="right">right</option>
+  </select>
+</div>
+
 
 <div class="input-group mb-3">
   <div class="input-group-prepend" style="display: inline-block; margin-right: 10px;">
-    <label class="input-group-text" for="inputGroupSelect02">Border Color</label>
+    <label class="input-group-text" for="inputGroupSelect14">Background Color</label>
   </div>
 
-  <input type="color" class="form-control " id="inputGroupSelect02" style="display: inline-block;">
+  <input type="color" class="form-control " id="inputGroupSelect14" style="display: inline-block;">
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend" style="display: inline-block; margin-right: 10px;">
+    <label class="input-group-text" for="inputGroupSelect15">Text Color</label>
+  </div>
+
+  <input type="color" class="form-control " id="inputGroupSelect15" style="display: inline-block;">
+</div>
+<div class="input-group mb-3" style="display: inline-block; width: 49%;">
+  <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
+    <label class="input-group-text" for="inputGroupSelect16">Hight</label>
+  </div>
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect16" style="display: inline-block; width: 40px; ">
+  
+</div>
+<div class="input-group mb-3" style="display: inline-block; width: 49%;">
+  <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
+    <label class="input-group-text" for="inputGroupSelect17">Width</label>
+  </div>
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect17" style="display: inline-block; width: 37px; ">
+  
 </div>
 
-<div class="input-group mb-3" >
-  <div class="input-group-prepend"style="display: inline-block; margin-right:10px;">
-    <label class="input-group-text" for="inputGroupSelect03" >Border Style </label>
+<label class="input-group-text" style="padding-right:99%; color:#585353;">Border </label>
+<div class="input-group mb-3" style="display: inline-block;width: 19%;     margin-top: -8px;">
+  <div class="input-group-prepend" style="display: inline-block; margin-right: 10px;">
+    <label class="input-group-text" for="inputGroupSelect02" > </label>
   </div>
+
+  <div style="display: inline-block;" data-toggle="tooltip" data-placement="top" title="Border Color">
+  <input type="color" class="form-control " id="inputGroupSelect02" ></div>
+</div>
+
+<div class="input-group mb-3"  style="display: inline-block;width: 33%;">
+  <div class="input-group-prepend"style="display: inline-block; margin-right:10px;">
+    <label class="input-group-text" for="inputGroupSelect03" >   </label>
+  </div>
+  <div style="display: inline-block;" data-toggle="tooltip" data-placement="top" title="Border style">
   <select class="custom-select " id="inputGroupSelect03" style="display: inline-block;">
     <option value="dashed" selected>dashed</option>
     <option value="dotted">dotted</option>
@@ -44,70 +88,73 @@ $element_id = $_POST['element_ID'];
     <option value="ridge">ridge</option>
     <option value="solid">solid</option>
     <option value="unset">unset</option>
-  </select>
+  </select></div>
 </div>
 
-<div class="input-group mb-3">
+<div class="input-group mb-3" style="display: inline-block;width: 33%;">
   <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
-    <label class="input-group-text" for="inputGroupSelect04">Border Radius</label>
+    <label class="input-group-text" for="inputGroupSelect04"> </label>
   </div>
-  <input type="number" value="1" class="custom-select" id="inputGroupSelect04" style="display: inline-block; width: 50px; ">
-</div>
+  <div style="display: inline-block;" data-toggle="tooltip" data-placement="top" title="Border radius">
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect04" style="display: inline-block; width: 40px; ">
+</div></div>
 
-<div class="input-group mb-3" >
-  <div class="input-group-prepend"style="display: inline-block; margin-right:10px;">
-  <label class="input-group-text" for="inputGroupSelect05" >Text-aligen</label>
+
+
+<label class="input-group-text" style="padding-right:99%; color:#585353;">Padding </label> <br>
+<div class="input-group mb-3" style="display: inline-block;width: 49%;">
+  <div class="input-group-prepend" style="display: inline-block; margin-right:10px;" >
+    <label class="input-group-text" for="inputGroupSelect06"> Left</label>
   </div>
-  <select class="custom-select " id="inputGroupSelect05" style="display: inline-block;">
-    <option value="center" selected>center</option>
-    <option value="end">end</option>
-    <option value="left">left</option>
-    <option value="right">right</option>
-  </select>
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect06" style="display: inline-block; width: 40px; ">
 </div>
-
-<div class="input-group mb-3">
+<div class="input-group mb-3" style="display: inline-block; width: 49%;">
   <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
-    <label class="input-group-text" for="inputGroupSelect06">Padding</label>
+    <label class="input-group-text" for="inputGroupSelect07"> Right</label>
   </div>
-  <input type="number" value="1" class="custom-select" id="inputGroupSelect06" style="display: inline-block; width: 50px; ">
-  
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect07" style="display: inline-block; width: 40px; ">
+ </div>
+ <div class="input-group mb-3" style="display: inline-block;width: 43%;">
+  <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
+    <label class="input-group-text" for="inputGroupSelect08"> Top </label>
+  </div>
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect08" style="display: inline-block; width: 40px; ">
+  </div>
+  <div class="input-group mb-3" style="display: inline-block;width: 55%;">
+  <div class="input-group-prepend" style="display: inline-block;  margin-right:10px; ">
+    <label class="input-group-text" for="inputGroupSelect09"> bottom</label>
+  </div>
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect09" style="display: inline-block; width: 40px; ">  
 </div>
 
-<div class="input-group mb-3">
-  <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
-    <label class="input-group-text" for="inputGroupSelect07">Margin</label>
-  </div>
-  <input type="number" value="1" class="custom-select" id="inputGroupSelect07" style="display: inline-block; width: 50px; ">
-</div>
-<div class="input-group mb-3">
-  <div class="input-group-prepend" style="display: inline-block; margin-right: 10px;">
-    <label class="input-group-text" for="inputGroupSelect08">Background Color</label>
-  </div>
+<label class="input-group-text" style="padding-right:99%;color:#585353;">Margin </label> <br>
 
-  <input type="color" class="form-control " id="inputGroupSelect08" style="display: inline-block;">
-</div>
-<div class="input-group mb-3">
-  <div class="input-group-prepend" style="display: inline-block; margin-right: 10px;">
-    <label class="input-group-text" for="inputGroupSelect09">Text Color</label>
+<div class="input-group mb-3" class="margin" style="display: inline-block;width: 49%;">
+  <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
+    <label class="input-group-text" for="inputGroupSelect10">Left</label>
   </div>
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect10" style="display: inline-block; width: 40px; ">
+</div>
+<div class="input-group mb-3"  class="margin" style="display: inline-block;width: 49%;">
+  <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
+    <label class="input-group-text" for="inputGroupSelect11">Right</label>
+  </div>
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect11" style="display: inline-block; width: 40px; ">
+ </div>
+ <div class="input-group mb-3"  class="margin" style="display: inline-block;width: 43%;">
+  <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
+    <label class="input-group-text" for="inputGroupSelect12">Top</label>
+  </div>
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect12" style="display: inline-block; width: 39px; ">
+  </div>
+  <div class="input-group mb-3"  class="margin" style="display: inline-block;width: 55%;">
+  <div class="input-group-prepend" style="display: inline-block;  margin-right:10px;">
+    <label class="input-group-text" for="inputGroupSelect13">bottom</label>
+  </div>
+  <input type="number" value="1" class="custom-select" id="inputGroupSelect13" style="display: inline-block; width: 40px; ">  
+</div>
 
-  <input type="color" class="form-control " id="inputGroupSelect09" style="display: inline-block;">
-</div>
-<div class="input-group mb-3">
-  <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
-    <label class="input-group-text" for="inputGroupSelect10">Hight</label>
-  </div>
-  <input type="number" value="1" class="custom-select" id="inputGroupSelect10" style="display: inline-block; width: 50px; ">
-  
-</div>
-<div class="input-group mb-3">
-  <div class="input-group-prepend" style="display: inline-block; margin-right:10px;">
-    <label class="input-group-text" for="inputGroupSelect11">Width</label>
-  </div>
-  <input type="number" value="1" class="custom-select" id="inputGroupSelect11" style="display: inline-block; width: 50px; ">
-  
-</div>
+
 <!-- Add an onclick event to the "Save" button -->
 <button type="button" class="btn btn-primary" id="saveButton" onclick="saveData('<?php echo $element_id; ?>')">Save</button>
 
