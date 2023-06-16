@@ -564,7 +564,7 @@ tr {
   cursor: pointer;
 }
 
-/* .arrow-up,
+.arrow-up,
 .arrow-down {
   display: none;
   content: "";
@@ -602,7 +602,7 @@ tr {
   border-right: 8px solid transparent;
   border-top: 12px solid #000;
   cursor: pointer;
-} */
+}
 
 /* ---------------content modal---------------- */
 /* The Modal (background) */

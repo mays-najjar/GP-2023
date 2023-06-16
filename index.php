@@ -386,7 +386,7 @@ function zoomOut() {
   <?php
   // echo '<button id="save-button">Save Canvas</button>'
   ?>
-  <iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview" >
+  <iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview" onload="initializeZoom()">
 
   </iframe>
 

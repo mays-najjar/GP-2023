@@ -21,6 +21,12 @@ const tempElementInput = document.getElementById("temp-element-id");
 var hasNelementClass = 0 ;
 
 
+function initializeZoom() {
+  var iframe = document.getElementById('preview');
+  if (iframe) {
+    iframe.contentDocument.body.style.zoom = '50%'; // Adjust the zoom level as desired
+  }
+}
 function zoomIn() {
   var iframe = document.getElementById('preview');
   if (iframe) {
@@ -349,6 +355,16 @@ function saveContent(event) {
       nestedSortables.forEach(function (sortable) {
         sortable.sortableInstance.option("disabled", true);
       });
+
+      // Hide arrow icons
+      var arrowUpIcons = document.querySelectorAll('.arrow-up');
+      var arrowDownIcons = document.querySelectorAll('.arrow-down');
+      arrowUpIcons.forEach(function (arrowUpIcon) {
+        arrowUpIcon.style.display = 'none';
+      });
+      arrowDownIcons.forEach(function (arrowDownIcon) {
+        arrowDownIcon.style.display = 'none';
+      });
     } else {
       sortableInstance.option("disabled", false);
       sort = true;
@@ -365,6 +381,16 @@ function saveContent(event) {
       var nestedSortables = document.querySelectorAll('.nelement .sortable');
       nestedSortables.forEach(function (sortable) {
         sortable.sortableInstance.option("disabled", false);
+      });
+
+      // Show arrow icons
+      var arrowUpIcons = document.querySelectorAll('.arrow-up');
+      var arrowDownIcons = document.querySelectorAll('.arrow-down');
+      arrowUpIcons.forEach(function (arrowUpIcon) {
+        arrowUpIcon.style.display = 'block';
+      });
+      arrowDownIcons.forEach(function (arrowDownIcon) {
+        arrowDownIcon.style.display = 'block';
       });
     }
   } else {
@@ -386,6 +412,16 @@ function saveContent(event) {
     var nestedSortables = document.querySelectorAll('.nelement .sortable');
     nestedSortables.forEach(function (sortable) {
       sortable.sortableInstance.option("disabled", false);
+    });
+
+    // Show arrow icons
+    var arrowUpIcons = document.querySelectorAll('.arrow-up');
+    var arrowDownIcons = document.querySelectorAll('.arrow-down');
+    arrowUpIcons.forEach(function (arrowUpIcon) {
+      arrowUpIcon.style.display = 'block';
+    });
+    arrowDownIcons.forEach(function (arrowDownIcon) {
+      arrowDownIcon.style.display = 'block';
     });
   }
 }
@@ -566,32 +602,46 @@ xhr.send(JSON.stringify(data));
 }
 
 function createElement() {
-  // const elements = document.getElementsByClassName('nelement');
-  // for (let i = 0; i < elements.length; i++) {
-  //   const element = elements[i];
-  //   const arrowUp = document.createElement('div');
-  //   arrowUp.className = 'arrow-up';
-  //   arrowUp.onclick = () => {
-  //     changeElementOrder(i, i - 1);
-  //     console.log("oooooooooooooorrrrrrrrrrder",$(elements[i]).parent().attr('id'));
-  //     if($(elements[i]).parent().attr('id')=="canvas"){
-  //       updateChildElementOrders("canvas");
-  //     }else{
-  //     updateChildElementOrders(elements[i].parent().attr('id'));}
-  //   };
-  //   element.appendChild(arrowUp);
+  const elements = document.getElementsByClassName('nelement');
+  for (let i = 0; i < elements.length; i++) {
+    const element = elements[i];
+    const arrowUp = document.createElement('div');
+    arrowUp.className = 'arrow-up';
+    arrowUp.onclick = () => {
+      changeElementOrder(i, i - 1);
+      console.log("oooooooooooooorrrrrrrrrrder", $(elements[i]).parent().attr('id'));
+      if ($(elements[i]).parent().attr('id') == "canvas") {
+        updateChildElementOrders("canvas");
+      } else {
+        updateChildElementOrders(elements[i].parent().attr('id'));
+      }
+    };
+    element.appendChild(arrowUp);
 
-  //   const arrowDown = document.createElement('div');
-  //   arrowDown.className = 'arrow-down';
-  //   arrowDown.onclick = () => {
-  //     changeElementOrder(i, i + 1);
-  //     if($(elements[i]).parent().attr('id')=="canvas"){
-  //       updateChildElementOrders("canvas");
-  //     }else{
-  //     updateChildElementOrders(elements[i].parent().attr('id'));}
-  //   };
-  //   element.appendChild(arrowDown);
-  // }
+    const arrowDown = document.createElement('div');
+    arrowDown.className = 'arrow-down';
+    arrowDown.onclick = () => {
+      changeElementOrder(i, i + 1);
+      if ($(elements[i]).parent().attr('id') == "canvas") {
+        updateChildElementOrders("canvas");
+      } else {
+        updateChildElementOrders(elements[i].parent().attr('id'));
+      }
+    };
+    element.appendChild(arrowDown);
+  }
+
+  // Hide arrow icons initially if sorting is disabled
+  if (!sort) {
+    var arrowUpIcons = document.querySelectorAll('.arrow-up');
+    var arrowDownIcons = document.querySelectorAll('.arrow-down');
+    arrowUpIcons.forEach(function (arrowUpIcon) {
+      arrowUpIcon.style.display = 'none';
+    });
+    arrowDownIcons.forEach(function (arrowDownIcon) {
+      arrowDownIcon.style.display = 'none';
+    });
+  }
 }
 function createElementAttribute(element_id, tag_id) {
   // Construct the URL for create.php
@@ -992,11 +1042,7 @@ function saveData(element_id) {
 
     var data = {
       element_id: element_id,
-<<<<<<< Updated upstream
       styleValues: select1Value + ", " + select4Value + "px " + select3Value + "  " + select2Value + ", " + select5Value + ", " +  select8Value + "% " + select7Value + "% "+ select9Value + "% "+select6Value +  "% " + ", " + select12Value + "% "+ select11Value + "% " + select13Value + "% "+ select10Value + "% " + ", "+ select14Value + ", "+ select15Value + ", "+ select16Value + "%" + ", " + select17Value + "% "
-=======
-      styleValues: select1Value + ", " + select4Value + "px " + select3Value + "  " + select2Value + ", " + select5Value + ", " +  select8Value + "% " + select7Value + "% "+ + select9Value + "% "+select6Value + "% " + ", " + select12Value + "% "+ select11Value + "% " + select13Value + "% "+ select10Value + "% "+", "+ select14Value + ", "+ select15Value + ", "+ select16Value + "% "+", "+select17Value + "% "
->>>>>>> Stashed changes
   };
 
   var xhr = new XMLHttpRequest();
