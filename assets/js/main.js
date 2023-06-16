@@ -19,6 +19,21 @@ let draggedIndex=0;
 const tempElementInput = document.getElementById("temp-element-id");
 // variable to store value if dropped element is have nelement Class or not
 var hasNelementClass = 0 ;
+
+
+function zoomIn() {
+  var iframe = document.getElementById('preview');
+  if (iframe) {
+    iframe.contentDocument.body.style.zoom = parseFloat(iframe.contentDocument.body.style.zoom) + 1;
+  }
+  
+}
+
+function zoomOut() {
+  var iframe = document.getElementById('preview');
+  if (iframe) {
+  iframe.contentDocument.body.style.zoom = parseFloat(iframe.contentDocument.body.style.zoom) - 1;
+}}
 // Add event listener for dragging elements from toolbar
 document.querySelectorAll('.element').forEach(element => {
 
