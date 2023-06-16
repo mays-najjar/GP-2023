@@ -975,7 +975,7 @@ function saveData(element_id) {
 
     var data = {
       element_id: element_id,
-      styleValues: select1Value + ", " + select4Value + "px " + select3Value + "  " + select2Value + ", " + select5Value + ", " +  select8Value + "px " + select7Value + "px "+ + select9Value + "px "+select6Value + "px " + ", " + select12Value + "px "+ select11Value + "px " + select13Value + "px "+ select10Value + "px "+", "+ select14Value + ", "+ select15Value + ", "+ select16Value + ", " + select17Value
+      styleValues: select1Value + ", " + select4Value + "px " + select3Value + "  " + select2Value + ", " + select5Value + ", " +  select8Value + "% " + select7Value + "% "+ select9Value + "% "+select6Value +  "% " + ", " + select12Value + "% "+ select11Value + "% " + select13Value + "% "+ select10Value + "% " + ", "+ select14Value + ", "+ select15Value + ", "+ select16Value + "%" + ", " + select17Value + "% "
   };
 
   var xhr = new XMLHttpRequest();

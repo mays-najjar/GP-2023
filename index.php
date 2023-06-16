@@ -141,50 +141,38 @@ function logout() {
                 <span class="hedden-content" >Empty Page
             </button>
         </div>
-         
-        <?php
-     //Import the Element class from the model folder
-    include_once 'models/Element.php';
-    include_once 'config/Database.php';
-
-    // Instantiate a new Element object
-    $database = new Database();
-    $db = $database->connect();
-
-    $element = new Element($db);
-    ini_set('display_errors', true);
-    error_reporting(E_ALL);
-
-    // Build the DOM tree for the given root node ID
-    $html = $element->generate_html_from_database3();
-    ?>
     <script>
       function downloadHtml() {
       
-        // create a new Blob object with the HTML content
-        const blob = new Blob([<?php echo json_encode($html); ?>], {
-          type: 'text/html'
-        });
+        fetch('http://localhost/GP-2023/api/BuildGenerate/generate_code.php')
+    .then(response => response.text())
+    .then(html => {
+      // create a new Blob object with the HTML content
+      const blob = new Blob([html], {
+        type: 'text/html'
+      });
+
+      // create a new URL object for the Blob
+      const url = URL.createObjectURL(blob);
+
+      // create a new anchor element to trigger the download
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'my_html_file.html';
+
+      // append the anchor element to the document
+      document.body.appendChild(a);
+
+      // trigger the download
+      a.click();
+
+      // clean up the anchor element and URL object
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+}
 
 
-        // create a new URL object for the Blob
-        const url = URL.createObjectURL(blob);
-
-        // create a new anchor element to trigger the download
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'my_html_file.html';
-
-        // append the anchor element to the document
-        document.body.appendChild(a);
-
-        // trigger the download
-        a.click();
-
-        // clean up the anchor element
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }
 
       function executeSQL() {
         $('#canvas').empty();
