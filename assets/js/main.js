@@ -551,32 +551,32 @@ xhr.send(JSON.stringify(data));
 }
 
 function createElement() {
-  const elements = document.getElementsByClassName('nelement');
-  for (let i = 0; i < elements.length; i++) {
-    const element = elements[i];
-    const arrowUp = document.createElement('div');
-    arrowUp.className = 'arrow-up';
-    arrowUp.onclick = () => {
-      changeElementOrder(i, i - 1);
-      console.log("oooooooooooooorrrrrrrrrrder",$(elements[i]).parent().attr('id'));
-      if($(elements[i]).parent().attr('id')=="canvas"){
-        updateChildElementOrders("canvas");
-      }else{
-      updateChildElementOrders(elements[i].parent().attr('id'));}
-    };
-    element.appendChild(arrowUp);
+  // const elements = document.getElementsByClassName('nelement');
+  // for (let i = 0; i < elements.length; i++) {
+  //   const element = elements[i];
+  //   const arrowUp = document.createElement('div');
+  //   arrowUp.className = 'arrow-up';
+  //   arrowUp.onclick = () => {
+  //     changeElementOrder(i, i - 1);
+  //     console.log("oooooooooooooorrrrrrrrrrder",$(elements[i]).parent().attr('id'));
+  //     if($(elements[i]).parent().attr('id')=="canvas"){
+  //       updateChildElementOrders("canvas");
+  //     }else{
+  //     updateChildElementOrders(elements[i].parent().attr('id'));}
+  //   };
+  //   element.appendChild(arrowUp);
 
-    const arrowDown = document.createElement('div');
-    arrowDown.className = 'arrow-down';
-    arrowDown.onclick = () => {
-      changeElementOrder(i, i + 1);
-      if($(elements[i]).parent().attr('id')=="canvas"){
-        updateChildElementOrders("canvas");
-      }else{
-      updateChildElementOrders(elements[i].parent().attr('id'));}
-    };
-    element.appendChild(arrowDown);
-  }
+  //   const arrowDown = document.createElement('div');
+  //   arrowDown.className = 'arrow-down';
+  //   arrowDown.onclick = () => {
+  //     changeElementOrder(i, i + 1);
+  //     if($(elements[i]).parent().attr('id')=="canvas"){
+  //       updateChildElementOrders("canvas");
+  //     }else{
+  //     updateChildElementOrders(elements[i].parent().attr('id'));}
+  //   };
+  //   element.appendChild(arrowDown);
+  // }
 }
 function createElementAttribute(element_id, tag_id) {
   // Construct the URL for create.php
@@ -819,7 +819,9 @@ function refreshIframe() {
   var iframe = document.getElementById("preview");
      // Reload the iframe content
      iframe.contentWindow.location.reload();
-     // call the Function to update the order 
+    //  iframe.contentDocument.body.style.zoom = '50%';
+
+    // call the Function to update the order 
     //  updateOrder(canvas);
     
   var CodeIframe = document.getElementById("codeIframe");
@@ -975,7 +977,11 @@ function saveData(element_id) {
 
     var data = {
       element_id: element_id,
+<<<<<<< Updated upstream
       styleValues: select1Value + ", " + select4Value + "px " + select3Value + "  " + select2Value + ", " + select5Value + ", " +  select8Value + "% " + select7Value + "% "+ select9Value + "% "+select6Value +  "% " + ", " + select12Value + "% "+ select11Value + "% " + select13Value + "% "+ select10Value + "% " + ", "+ select14Value + ", "+ select15Value + ", "+ select16Value + "%" + ", " + select17Value + "% "
+=======
+      styleValues: select1Value + ", " + select4Value + "px " + select3Value + "  " + select2Value + ", " + select5Value + ", " +  select8Value + "% " + select7Value + "% "+ + select9Value + "% "+select6Value + "% " + ", " + select12Value + "% "+ select11Value + "% " + select13Value + "% "+ select10Value + "% "+", "+ select14Value + ", "+ select15Value + ", "+ select16Value + "% "+", "+select17Value + "% "
+>>>>>>> Stashed changes
   };
 
   var xhr = new XMLHttpRequest();
@@ -1218,3 +1224,5 @@ function updateElementAttributes() {
 
   xhr.send(JSON.stringify(data));
 }
+
+document.getElementById("selectBody").onclick = () => "selected(canvas)";

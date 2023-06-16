@@ -564,7 +564,7 @@ tr {
   cursor: pointer;
 }
 
-.arrow-up,
+/* .arrow-up,
 .arrow-down {
   display: none;
   content: "";
@@ -602,7 +602,7 @@ tr {
   border-right: 8px solid transparent;
   border-top: 12px solid #000;
   cursor: pointer;
-}
+} */
 
 /* ---------------content modal---------------- */
 /* The Modal (background) */
@@ -654,7 +654,7 @@ tr {
 #codeCanvas{
  
   min-height: 500px;
-  background-color: #444;
+  /* background-color: #444; */
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   padding: 0;
@@ -668,7 +668,7 @@ pre {
   color: #fff;
   word-break: break-all;
   word-wrap: break-word;
-  /* background-color: #050000; */
+  background-color: #444;
   /* border: 1px solid #ccc;
   border-radius: 4px; */
 }

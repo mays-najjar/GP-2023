@@ -328,12 +328,13 @@ function closeModal() {
     </div>
 
   </div>
-   
-   </div> 
+   <br>
+ <!-- <button class="btn selectBody nelement" id="selectBody" >body</button>  -->
+ </div> 
 
     <!-- --------------------CANVAS----------------------- -->
     
-    <div id="displayDesign" class="col-xs-8">
+    <div id="displayDesign" class="col-xs-8" style="padding: 0px;">
       <div class="design-area"style="    margin-top: -1%;">
       <div class="canvas-head canvas-tool" >
       <button id="sortButton" onclick="toggleSortable()"><i class="fa-solid fa-sort" style="color: #2055b9;"></i> Enable Sorting</button>
@@ -345,6 +346,24 @@ function closeModal() {
   <span class="left " style="background-color: #F4A62A;"></span>
   <span class="left " style="background-color: #16A085;"></span>
 </div>
+<!-- <button style="background-color: #333; color:dimgrey;" onclick="zoomIn()">&#43;</button>  -->
+ <!-- <button style="background-color: #333; color:dimgrey;" onclick="zoomOut()">&#8722;</button>   -->
+ 
+ <script>
+    function zoomIn() {
+  var iframe = document.getElementById('preview');
+  if (iframe) {
+    iframe.contentDocument.body.style.zoom = parseFloat(iframe.contentDocument.body.style.zoom) + 1;
+  }
+  
+}
+
+function zoomOut() {
+  var iframe = document.getElementById('preview');
+  if (iframe) {
+  iframe.contentDocument.body.style.zoom = parseFloat(iframe.contentDocument.body.style.zoom) - 1;
+}}
+  </script>
   <button id="reload" onclick="refreshIframe()"><i class="fa-solid fa-rotate-right" style="color: #ffffff;"></i></button>
 </div>
     <div id="canvas" class=" sortable" ondrop="canvasDrop(event)">
@@ -367,7 +386,7 @@ function closeModal() {
   <?php
   // echo '<button id="save-button">Save Canvas</button>'
   ?>
-  <iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview">
+  <iframe src="http://localhost/GP-2023/api/BuildGenerate/generate_code.php" id="preview" >
 
   </iframe>
 

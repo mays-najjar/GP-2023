@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="assets/css/style.css" />   
 
-<div class="canvas-head " style="width: 99%;">
+<div class="canvas-head " style="width: 200%;">
     <div class="three-circle">
   <span class="left " style="background-color: #E74C3C;"></span>
   <span class="left " style="background-color: #F4A62A;"></span>
@@ -8,7 +8,7 @@
 </div>
                 
 <div class="title">
-  <span id="pageTitle" style="padding-right: 12%;">index</span>
+  <span id="pageTitle" style="padding-right: 12%;"></span>
 </div>
   </div>  
 <div id="codeCanvas" >
@@ -33,3 +33,11 @@
 
     ?> </pre>
 </div>
+<style>
+html body{
+  /* background-color: #484a72; */
+  background:#444;
+  min-width: 760px;
+  /* overflow: hidden; */
+}
+  </style>
